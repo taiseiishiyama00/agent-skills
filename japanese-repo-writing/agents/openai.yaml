@@ -1,0 +1,4 @@
+interface:
+  display_name: "Japanese Repo Writing"
+  short_description: "リポジトリ作業の説明文を日本語で整える。"
+  default_prompt: "$japanese-repo-writing を使って、このリポジトリ作業の説明文を日本語で整理してください。"

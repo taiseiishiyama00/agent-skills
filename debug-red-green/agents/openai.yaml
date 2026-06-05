@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug Red-Green"
+  short_description: "バグ修正を再現、Red、Greenの順で進める。"
+  default_prompt: "$debug-red-green を使って、このバグを再現して失敗テストから修正してください。"

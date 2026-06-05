@@ -1,0 +1,4 @@
+interface:
+  display_name: "Develop Feature Workflow"
+  short_description: "機能開発をTOBE設計から検証まで進める。"
+  default_prompt: "$develop-feature-workflow を使って、この機能変更を設計から実装と検証まで進めてください。"

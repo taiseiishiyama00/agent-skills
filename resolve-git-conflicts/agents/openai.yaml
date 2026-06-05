@@ -1,0 +1,4 @@
+interface:
+  display_name: "Resolve Git Conflicts"
+  short_description: "Gitのマージコンフリクトを安全に解決する。"
+  default_prompt: "$resolve-git-conflicts を使って、このGitコンフリクトを安全に解決してください。"

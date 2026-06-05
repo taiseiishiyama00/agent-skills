@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review PR Diff"
+  short_description: "PRやブランチ差分を重大リスク中心にレビューする。"
+  default_prompt: "$review-pr-diff を使って、このPRまたはブランチ差分をレビューしてください。"
