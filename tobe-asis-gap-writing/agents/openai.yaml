@@ -1,0 +1,4 @@
+interface:
+  display_name: "TOBE ASIS GAP Writing"
+  short_description: "Structure PR and backlog text by TOBE/ASIS/GAP"
+  default_prompt: "Use $tobe-asis-gap-writing to draft a PR or backlog description with TOBE, ASIS, GAP, and action sections."
