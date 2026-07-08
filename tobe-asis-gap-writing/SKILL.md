@@ -22,6 +22,7 @@ PR、issue、バックログなどの説明文を、対象プログラムやシ�
 1. 対象を判定する。
    - PR 説明または PR コメント: 実装済みの変更、差分、確認内容を中心にする。
    - issue またはバックログ: 目的、完了条件、対応予定、受け入れ条件を中心にする。
+   - Azure DevOps の Bug チケット: 添付画像のように `Repro Steps`、`System Info`、`Acceptance Criteria` が表示される前提で、TOBE / ASIS / GAP / 対応方針は `Acceptance Criteria` に記載する。再現手順や環境情報が主題の場合だけ、`Repro Steps` や `System Info` に分けて書く。
    - 作業依頼: 依頼者と実装者が同じ完了イメージを持てることを優先する。
 
 2. TOBE を書く。
@@ -93,6 +94,14 @@ PR、issue、バックログなどの説明文を、対象プログラムやシ�
 - ...
 
 ```
+
+## Azure DevOps Bug チケット記載先
+
+添付画像のように Bug チケットで `Repro Steps`、`System Info`、`Acceptance Criteria` が表示される場合は、TOBE / ASIS / GAP / 対応方針の本文を `Acceptance Criteria` に記載する。
+
+- `Acceptance Criteria`: TOBE / ASIS / GAP / 対応方針を書く。
+- `Repro Steps`: 再現手順そのものが必要な場合に限って書く。
+- `System Info`: OS、ブラウザ、環境、バージョンなど、再現や調査に必要な環境情報がある場合に限って書く。
 
 ## 出力ルール
 
