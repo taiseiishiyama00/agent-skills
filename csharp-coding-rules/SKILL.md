@@ -38,7 +38,7 @@ pwsh -NoProfile -File <skill-directory>/scripts/cleanup-csharp.ps1 `
   -Include <changed-file-1.cs>, <changed-file-2.cs>
 ```
 
-スクリプトは `.editorconfig` に従って、Visual Studio の「Format Document」（文字コード・改行を含む）と「Remove and Sort Usings」を実行し、`--verify-no-changes` で再実行時に差分が出ないことまで確認する。GUI、手作業、別の formatter で代替しない。終了コードが0でなければ原因を直して再実行する。成功後は対象外の差分や挙動変更がないことを確認する。
+スクリプトは `.editorconfig` に従うコードクリーンアップを実行し、同じ対象への `--verify-no-changes` で再実行時に差分が出ないことまで確認する。GUI、手作業、別の formatter で代替しない。終了コードが0でなければ原因を直して再実行する。成功後は対象外の差分や挙動変更がないことを確認する。
 
 ## 完了前チェック
 

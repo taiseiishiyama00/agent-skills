@@ -64,11 +64,12 @@ function Invoke-DotnetFormat {
 Push-Location $workspaceDirectory
 try {
     $includeArguments = @('--include') + $relativeFiles
+    $commonArguments = @($workspacePath) + $includeArguments
 
-    Invoke-DotnetFormat -FormatArguments (@('whitespace', $workspacePath) + $includeArguments + @('--verbosity', 'minimal'))
-    Invoke-DotnetFormat -FormatArguments (@('style', $workspacePath) + $includeArguments + @('--diagnostics', 'IDE0005', '--severity', 'info', '--no-restore', '--verbosity', 'minimal'))
-    Invoke-DotnetFormat -FormatArguments (@('whitespace', $workspacePath) + $includeArguments + @('--no-restore', '--verify-no-changes', '--verbosity', 'minimal'))
-    Invoke-DotnetFormat -FormatArguments (@('style', $workspacePath) + $includeArguments + @('--diagnostics', 'IDE0005', '--severity', 'info', '--no-restore', '--verify-no-changes', '--verbosity', 'minimal'))
+    Invoke-DotnetFormat -FormatArguments (@('whitespace') + $commonArguments + @('--verbosity', 'minimal'))
+    Invoke-DotnetFormat -FormatArguments (@('style') + $commonArguments + @('--severity', 'info', '--no-restore', '--verbosity', 'minimal'))
+    Invoke-DotnetFormat -FormatArguments (@('whitespace') + $commonArguments + @('--no-restore', '--verify-no-changes', '--verbosity', 'minimal'))
+    Invoke-DotnetFormat -FormatArguments (@('style') + $commonArguments + @('--severity', 'info', '--no-restore', '--verify-no-changes', '--verbosity', 'minimal'))
 }
 finally {
     Pop-Location
