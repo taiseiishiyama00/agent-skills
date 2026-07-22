@@ -1,6 +1,6 @@
 ---
 name: csharp-coding-rules
-description: C#、ASP.NET Core、.NET Core、.NET の実装・修正・レビューで使用する。DI、static class、ファイル分割、XML comment、コメント、可読性、固定手順のコードクリーンアップ、文字コードに関するコーディングルール。
+description: C#、ASP.NET Core、.NET Core、.NET の実装・修正・レビューで使用する。DI、static class、ファイル分割、XML comment、コメント、可読性、引数の null check、固定手順のコードクリーンアップに関するコーディングルール。
 ---
 
 # C# Coding Rules
@@ -11,7 +11,20 @@ description: C#、ASP.NET Core、.NET Core、.NET の実装・修正・レビュ
 - static class は、拡張メソッド、定数、entry point、小さな純粋関数に限る。
 - 1ファイル1型とし、型名とファイル名を一致させる。interface と実装も分ける。既存の複数型は今回触る範囲で分割する。
 - 意図は命名と責務分割で表す。コメントはコードから読めない「なぜ」だけを書き、処理をなぞるコメントは削除する。
-- 外部から参照される public method には、目的、引数、戻り値、例外条件の XML comment を書く。
+
+## 公開境界
+
+次のいずれかに該当する method だけを公開境界とする。
+
+- HTTP API の入口となる Controller action または Minimal API handler。
+- プロジェクト直下に `PublicAPI.Shipped.txt` または `PublicAPI.Unshipped.txt` があるライブラリの public method。
+
+公開境界では次を行う。
+
+- 公開契約側の宣言に、目的、引数、戻り値、例外条件の XML comment を書く。interface がある場合は interface 側だけに書く。
+- 実装の先頭で、null を許容しない参照型引数を宣言順に `ArgumentNullException.ThrowIfNull` で検証する。
+
+公開境界以外の method には、規約を理由に XML comment または null check を追加しない。nullable (`T?`) 引数、値型、同じ引数を既に null 検証している場合も null check を追加しない。
 
 ## 完了時コードクリーンアップ
 
