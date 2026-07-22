@@ -25,13 +25,7 @@ pwsh -NoProfile -File <skill-directory>/scripts/cleanup-csharp.ps1 `
   -Include <changed-file-1.cs>, <changed-file-2.cs>
 ```
 
-スクリプトは Visual Studio の「Format Document」と「Remove and Sort Usings」に相当する処理を行い、同じ処理の `--verify-no-changes` まで実行する。GUI、手作業、別の formatter で代替しない。終了コードが0でなければ原因を直して再実行する。成功後は対象外の差分や挙動変更がないことを確認する。
-
-## 文字コード / 改行コード
-
-- 編集前に `.editorconfig` の `charset` / `end_of_line` と、`git check-attr --all -- <file>` の `working-tree-encoding` / `eol` を確認する。矛盾があれば推測せず止める。
-- `working-tree-encoding=UTF-8` と `charset=utf-8-bom` は両立し、BOM は `.editorconfig` に従う。`utf-8` と `utf-8-bom` は区別する。
-- 文字コードと改行は付属スクリプトだけで整える。実行後に手修正した場合は再実行する。無関係なファイルは変換しない。
+スクリプトは `.editorconfig` に従って、Visual Studio の「Format Document」（文字コード・改行を含む）と「Remove and Sort Usings」を実行し、`--verify-no-changes` で再実行時に差分が出ないことまで確認する。GUI、手作業、別の formatter で代替しない。終了コードが0でなければ原因を直して再実行する。成功後は対象外の差分や挙動変更がないことを確認する。
 
 ## 完了前チェック
 
