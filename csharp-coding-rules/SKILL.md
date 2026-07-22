@@ -1,38 +1,40 @@
 ---
 name: csharp-coding-rules
-description: C#、ASP.NET Core、.NET Core、.NET の実装・修正・レビューで使用する。DI、static class、ファイル分割、コメント、可読性に関するコーディングルール。
+description: C#、ASP.NET Core、.NET Core、.NET の実装・修正・レビューで使用する。DI、static class、ファイル分割、XML comment、コメント、可読性、固定手順のコードクリーンアップ、文字コードに関するコーディングルール。
 ---
 
 # C# Coding Rules
 
-## 適用方針
+## 設計 / 可読性
 
-C# / .NET の実装では、テストしやすく、差し替えやすく、読みやすいコードを優先する。
+- 業務ロジックと外部依存は static class に置かず、interface を constructor injection する。DI の命名と lifetime は既存規約に合わせる。
+- static class は、拡張メソッド、定数、entry point、小さな純粋関数に限る。
+- 1ファイル1型とし、型名とファイル名を一致させる。interface と実装も分ける。既存の複数型は今回触る範囲で分割する。
+- 意図は命名と責務分割で表す。コメントはコードから読めない「なぜ」だけを書き、処理をなぞるコメントは削除する。
+- 外部から参照される public method には、目的、引数、戻り値、例外条件の XML comment を書く。
 
-## DI / static class
+## 完了時コードクリーンアップ
 
-- DI が使える環境では、業務ロジックや外部依存を static class に置かず、interface と DI で注入する。
-- static class は、拡張メソッド、定数、framework entry point、小さな純粋関数など差し替え不要な用途に限る。
-- 呼び出し側は具象 class を直接 new せず、constructor injection で interface を受け取る。
-- DI 登録場所、service 命名、lifetime は既存プロジェクトの規約に合わせる。
+C# を変更したら、今回触った `.cs` だけを対象に次を必ず実行する。既存差分、生成コード、外部由来コードは含めない。コードを変更しないレビューでは実行しない。
 
-## ファイル分割
+各 `.cs` から最も近い単一の `*.csproj` を workspace とする。見つからない、または複数ある場合は推測せず完了報告を止める。
 
-- 1 ファイルに複数の class、interface、record、struct、enum、delegate、DTO などを定義しない。
-- 型名とファイル名を一致させる。
-- interface と実装 class は別ファイルに分ける。
-- 既存ファイルに複数型がある場合は、今回触る型を中心に安全な範囲で分割する。
+```powershell
+pwsh -NoProfile -File <skill-directory>/scripts/cleanup-csharp.ps1 `
+  -Workspace <project.csproj> `
+  -Include <changed-file-1.cs>, <changed-file-2.cs>
+```
 
-## コメント / 可読性
+スクリプトは Visual Studio の「Format Document」と「Remove and Sort Usings」に相当する処理を行い、同じ処理の `--verify-no-changes` まで実行する。GUI、手作業、別の formatter で代替しない。終了コードが0でなければ原因を直して再実行する。成功後は対象外の差分や挙動変更がないことを確認する。
 
-- コメントで説明しないと読めないコードにせず、命名、型、メソッド分割、責務分割で意図を表す。
-- コメントは、コードから読み取れない制約、仕様理由、外部システム都合など「なぜ」に絞る。
-- 処理内容をなぞるだけのコメントは削除する。
-- public API の XML comment は、プロジェクト規約や公開 API として必要な場合だけ書く。
+## 文字コード / 改行コード
+
+- 編集前に `.editorconfig` の `charset` / `end_of_line` と、`git check-attr --all -- <file>` の `working-tree-encoding` / `eol` を確認する。矛盾があれば推測せず止める。
+- `working-tree-encoding=UTF-8` と `charset=utf-8-bom` は両立し、BOM は `.editorconfig` に従う。`utf-8` と `utf-8-bom` は区別する。
+- 文字コードと改行は付属スクリプトだけで整える。実行後に手修正した場合は再実行する。無関係なファイルは変換しない。
 
 ## 完了前チェック
 
-- 作業完了前に、変更範囲に対して `dotnet build`、近傍テスト、またはリポジトリで定義された lint / format / analyzer コマンドを実行し、warning、analyzer 診断、EditorConfig 由来のエラーを確認する。
-- 新規または変更したコードに起因する warning / EditorConfig エラーは、できるだけ減らしてから完了報告する。
-- 既存由来の warning が残る場合は、今回の変更で増やしていないことを確認し、残した理由や未解消の件数を最終報告に含める。
-- 検証コマンドを実行できない場合は、実行できなかった理由と残リスクを明記する。
+- 変更範囲の `dotnet build`、近傍テスト、既定の lint / analyzer を実行する。
+- 今回の変更による warning と EditorConfig エラーを残さない。既存分は増えていないことを確認し、件数と理由を報告する。
+- 実行できない検証は、理由と残リスクを報告する。

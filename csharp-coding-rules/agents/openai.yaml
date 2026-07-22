@@ -1,4 +1,4 @@
 interface:
   display_name: "C# Coding Rules"
-  short_description: "C#とASP.NET CoreのDI、可読性、警告確認ルールを守る。"
+  short_description: "C#の設計、クリーンアップ、文字コード、完了前検証を守る。"
   default_prompt: "$csharp-coding-rules を使って、このC# / .NETコードを実装またはレビューしてください。"
