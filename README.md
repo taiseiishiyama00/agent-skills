@@ -14,6 +14,7 @@
 | `japanese-repo-writing` | リポジトリ作業の日本語コミュニケーションと、日本語 Markdown ドキュメント作成用。 |
 | `resolve-git-conflicts` | merge、rebase、cherry-pick、pull などで発生した Git コンフリクト解消用。 |
 | `review-pr-diff` | PR やブランチ差分を中心にしたコードレビュー用。 |
+| `update-agent-skills` | グローバルとプロジェクトのスキルを同期して更新し、必要なPR作成まで行う。 |
 
 ## 使い方
 

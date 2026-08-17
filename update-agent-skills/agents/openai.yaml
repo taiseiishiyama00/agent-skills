@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update Agent Skills"
+  short_description: "グローバルとプロジェクトのスキルを更新し、必要なPRまで進める。"
+  default_prompt: "$update-agent-skills を使って、このスキル変更をグローバルとプロジェクトへ反映し、必要なドラフトPRを作成してください。"
