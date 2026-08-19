@@ -37,8 +37,8 @@ Azure DevOpsのWork Itemを、対象プロジェクトのWeb画面に表示さ�
 | 分類 | 確認する項目 |
 | --- | --- |
 | 共通 | Title、State、Reason、Area、Iteration、Parent、Discussion、Tags |
-| Bug | Repro Steps、System Info、Acceptance Criteria、Priority、Severity、Reported By |
-| Product Backlog Item | Description、Acceptance Criteria、Priority、Effort、Value Area、Business Value |
+| Bug | Repro Steps、System Info、Acceptance Criteria、Priority、Severity、Effort、Remaining Work、Activity、Reported By |
+| Product Backlog Item | Description、Acceptance Criteria、Priority、Effort、Business Value、Value Area、Backlog Priority |
 | 関連情報 | Development、Build、Related Work、Attachments |
 
 4. 項目が画面に表示されない場合は、そのフィールドを別の欄へ無理に詰め込まない。プロジェクトのプロセスで利用できる欄を確認し、未入力理由を記録する。
@@ -52,6 +52,7 @@ Azure DevOpsのWork Itemを、対象プロジェクトのWeb画面に表示さ�
 - **Repro Steps**: 前提条件、操作手順、期待結果、実際の結果、エラーメッセージを順番に書く。レビューで再現できない場合は、判明している手順と不足情報を分ける。
 - **System Info**: アプリケーション、バージョン、環境、Agent/Projectなどの再現に必要な情報を書く。秘密情報やトークンは書かない。
 - **Acceptance Criteria**: 修正後に確認できる条件を書く。再現しないこと、状態が残らないこと、UIが継続することなど、観測可能な文にする。
+- **Effort、Remaining Work、Activity**: 見積りや作業量が依頼・チーム規約で決まっている場合だけ設定する。根拠のない数値を補わない。
 - **DescriptionまたはDiscussion**: 背景、原因の仮説、影響範囲、対応方針を書く。画面にDescriptionがない場合は、Repro StepsやAcceptance Criteriaへ背景を重複させず、表示される適切な欄に分割する。
 
 ### Product Backlog Item
@@ -59,7 +60,7 @@ Azure DevOpsのWork Itemを、対象プロジェクトのWeb画面に表示さ�
 - **Title**: 利用者またはプロダクトの価値が分かる形で書く。
 - **Description**: 背景、現状、目的、対象範囲、対応方針を書く。
 - **Acceptance Criteria**: 完了を判定できる成果物、対象、失敗時の扱い、検証方法を書く。
-- **Priority、Effort、Value Area、Iteration**: 依頼または親・チームの既定値を画面で確認した場合だけ設定する。
+- **Priority、Effort、Business Value、Value Area、Backlog Priority、Iteration**: 依頼または親・チームの既定値を画面で確認した場合だけ設定する。見積りや価値を根拠なく補わない。
 
 ### 依頼文の整理
 
@@ -79,7 +80,7 @@ Azure DevOpsのWork Itemを、対象プロジェクトのWeb画面に表示さ�
 - Work Item ID、種別、Titleが依頼どおりである。
 - BugならRepro Steps、System Info、Acceptance Criteriaが表示される。
 - Product Backlog ItemならDescription、Acceptance Criteriaなど、作成前に確認した欄が表示される。
-- State、Reason、Area、Iteration、Priority、Severity、Effortが意図した値である。
+- State、Reason、Area、Iteration、Priority、Severity、Effort、Remaining Work、Activityが意図した値である（画面に表示される項目のみ）。
 - Related WorkにParentが表示され、親IDが正しい。
 - 保存時のエラーや未入力欄が残っていない。
 
