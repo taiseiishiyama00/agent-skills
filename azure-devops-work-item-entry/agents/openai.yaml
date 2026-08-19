@@ -1,0 +1,4 @@
+interface:
+  display_name: "Azure DevOps Work Item登録"
+  short_description: "Web画面の表示項目に合わせてBugやバックログを登録・検証する。"
+  default_prompt: "$azure-devops-work-item-entry を使って、Azure DevOpsのWeb画面を確認し、表示項目を埋めてWork Itemを登録してください。"
