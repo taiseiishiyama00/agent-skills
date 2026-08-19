@@ -1,4 +1,4 @@
 interface:
   display_name: "C# Coding Rules"
-  short_description: "C#の設計、公開境界、クリーンアップ、完了前検証を守る。"
+  short_description: "C#の設計、テスト構成、NSubstitute、クリーンアップ、完了前検証を守る。"
   default_prompt: "$csharp-coding-rules を使って、このC# / .NETコードを実装またはレビューしてください。"
