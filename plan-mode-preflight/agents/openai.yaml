@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Mode Preflight"
+  short_description: "Plan Modeの前にリードオンリーで調査し、根拠付きの修正計画を作る。"
+  default_prompt: "$plan-mode-preflight を使って、計画を提示する前にリードオンリーで事前調査し、調査結果と実装To Doを分離した計画を作成してください。"

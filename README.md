@@ -12,6 +12,7 @@
 | `debug-red-green` | バグ修正、失敗テスト、flaky テスト、回帰、実行時エラー、ログベースのデバッグ用。 |
 | `develop-feature-workflow` | TOBE 設計から最小 diff 実装、検証、レビューまで通す機能開発ワークフロー。 |
 | `japanese-repo-writing` | リポジトリ作業の日本語コミュニケーションと、日本語 Markdown ドキュメント作成用。 |
+| `plan-mode-preflight` | Plan Modeの前にリードオンリーで事前調査し、根拠付きの修正方針と実装To Doを整理する。 |
 | `resolve-git-conflicts` | merge、rebase、cherry-pick、pull などで発生した Git コンフリクト解消用。 |
 | `review-pr-diff` | PR やブランチ差分を中心にしたコードレビュー用。 |
 | `update-agent-skills` | グローバルとプロジェクトのスキルを同期して更新し、必要なPR作成まで行う。 |
