@@ -1,0 +1,7 @@
+interface:
+  display_name: "YouTube動画制作"
+  short_description: "複数チャンネルの長尺・Shorts制作と投稿を安全に進行"
+  default_prompt: "$youtube-video-production を使って対象チャンネルと作品の状態を確認し、次の制作工程を進めてください。"
+
+policy:
+  allow_implicit_invocation: true

@@ -11,12 +11,18 @@
 | `csharp-coding-rules` | C# / .NET 実装で DI、1 ファイル 1 型、コメントに頼らない可読性を守るためのコーディングルール。 |
 | `debug-red-green` | バグ修正、失敗テスト、flaky テスト、回帰、実行時エラー、ログベースのデバッグ用。 |
 | `develop-feature-workflow` | TOBE 設計から最小 diff 実装、検証、レビューまで通す機能開発ワークフロー。 |
-| `ittan-seiri-video-production` | 「いったん整理。」の長尺・Shorts制作、レビュー、YouTube投稿を安全に進める。 |
+| `youtube-video-production` | 設定済みの複数YouTubeチャンネルで、長尺・Shorts制作、レビュー、投稿を安全に進める。 |
 | `japanese-repo-writing` | リポジトリ作業の日本語コミュニケーションと、日本語 Markdown ドキュメント作成用。 |
 | `plan-mode-preflight` | Plan Modeの前にリードオンリーで事前調査し、根拠付きの修正方針と実装To Doを整理する。 |
 | `resolve-git-conflicts` | merge、rebase、cherry-pick、pull などで発生した Git コンフリクト解消用。 |
 | `review-pr-diff` | PR やブランチ差分を中心にしたコードレビュー用。 |
 | `update-agent-skills` | グローバルとプロジェクトのスキルを同期して更新し、必要なPR作成まで行う。 |
+
+## 共通手順と対象固有値の境界
+
+スキルには複数の対象で再利用する判断・手順・安全条件だけを書き、チャンネル名、作品名、環境固有パス、設定値などの具体は対象repoの設定へ置きます。同じ情報をスキルとrepoへ重複させません。具体を共通へ昇格するのは、2つ目の利用先でも責務と条件が一致すると確認できた場合だけです。
+
+`youtube-video-production` は全チャンネル共通の制作手順を所有し、チャンネル具体は `youtube-video-pipeline/config/channels/<channel-id>.json`、作品具体は `youtube-production/channels/<channel-id>/projects` を正本とします。
 
 ## 使い方
 

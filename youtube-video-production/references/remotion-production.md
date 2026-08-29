@@ -1,0 +1,39 @@
+# Remotion制作
+
+## 責務
+
+制作全体の工程制御とパラメータは `youtube-video-pipeline` が担う。rendererでは技術共通、形式共通、チャンネル固有、作品固有を混ぜずに管理する。
+
+実装前にrendererの `docs/ARCHITECTURE.md` を全文読み、パイプラインの次の出力を実装契約として使用する。
+
+```sh
+npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
+```
+
+## 実装手順
+
+1. パイプラインで音声、字幕、映像設計、登録済み素材を同期する。
+2. チャンネル固有素材を `public/assets/channels/<channel-id>`、全チャンネル共通素材を `public/assets/common` へ追加する。
+3. Remotionやフォントなど技術だけの共通処理を `src/common` に実装する。
+4. 複数チャンネルで再利用する形式の契約と表現を `src/formats/<format-id>` に実装する。
+5. ブランドとComposition登録を `src/channels/<channel-id>`、作品固有の構成と演出をその `videos/<project-id>` に実装する。
+6. ルートはチャンネルComposition集合だけを読み込み、作品を直接列挙しない。
+7. 型、Lint、テストを実行する。
+8. パイプラインで全シーン静止画を生成し、人のレビュー承認を得る。
+9. パイプラインで確認用動画を描画し、人の承認後に全編描画とQAを行う。
+
+## 素材境界
+
+- 作品固有素材の原本はGoogle Driveへ置く。
+- `public/input/<channel-id>/<projectId>` と `src/generated/<channel-id>` はパイプラインが作るGit管理外の同期コピーであり、直接編集しない。
+- アバター、ロゴなど1チャンネルのものは `public/assets/channels/<channel-id>`、BGMや効果音など複数チャンネルが同一条件で使うものは `public/assets/common` へ置く。
+- 既存の共通部品を優先し、作品固有の都合で人物・字幕・安全域の共通配置を上書きしない。
+- 上位層から特定チャンネルや作品へ依存させない。2つ目の利用先が確定するまで、推測で共通化しない。
+
+## 検証
+
+```sh
+npm run check
+```
+
+必要に応じてComposition一覧、代表フレーム、全シーン静止画、最終動画を確認する。縦画面は実寸だけでなくYouTube Studio一覧相当の縮小サイズでも、フック、人物、字幕が判別できることを確認する。
