@@ -11,6 +11,7 @@
 | `csharp-coding-rules` | C# / .NET 実装で DI、1 ファイル 1 型、コメントに頼らない可読性を守るためのコーディングルール。 |
 | `debug-red-green` | バグ修正、失敗テスト、flaky テスト、回帰、実行時エラー、ログベースのデバッグ用。 |
 | `develop-feature-workflow` | TOBE 設計から最小 diff 実装、検証、レビューまで通す機能開発ワークフロー。 |
+| `ittan-seiri-video-production` | 「いったん整理。」の長尺・Shorts制作、レビュー、YouTube投稿を安全に進める。 |
 | `japanese-repo-writing` | リポジトリ作業の日本語コミュニケーションと、日本語 Markdown ドキュメント作成用。 |
 | `plan-mode-preflight` | Plan Modeの前にリードオンリーで事前調査し、根拠付きの修正方針と実装To Doを整理する。 |
 | `resolve-git-conflicts` | merge、rebase、cherry-pick、pull などで発生した Git コンフリクト解消用。 |

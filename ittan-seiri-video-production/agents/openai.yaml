@@ -1,0 +1,7 @@
+interface:
+  display_name: "いったん整理。動画制作"
+  short_description: "長尺・Shorts制作からYouTube投稿まで安全に進行"
+  default_prompt: "$ittan-seiri-video-production を使って対象作品の状態を確認し、次の制作工程を進めてください。"
+
+policy:
+  allow_implicit_invocation: true
