@@ -43,11 +43,11 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 - 長尺またはShortsの工程全体、次工程の判断: [references/workflow.md](references/workflow.md)
 - Shortの台本、縦画面、安全域、サムネイル、公開前後の確認: [references/shorts-production.md](references/shorts-production.md)
 - 終了画面、チャンネル登録、Shortの関連動画、専用Edge操作: [references/youtube-studio.md](references/youtube-studio.md)
-- RemotionのMECEな所有境界、Composition実装、テスト: [references/remotion-production.md](references/remotion-production.md)
+- Remotionの所有境界、Composition実装、テスト: [references/remotion-production.md](references/remotion-production.md)
 
 複数領域にまたがる依頼では該当する参照をすべて読み、関係のない参照は読み込まない。
 
-## MECEな所有境界
+## 所有境界
 
 配置は「最も狭い所有者」を選ぶ。
 
