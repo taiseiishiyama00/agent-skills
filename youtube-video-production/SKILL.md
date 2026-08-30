@@ -41,6 +41,7 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 
 - 新規登録、TTS、字幕、素材、同期、レビュー、QA、YouTube Data API操作: [references/pipeline-cli.md](references/pipeline-cli.md)
 - 長尺またはShortsの工程全体、次工程の判断: [references/workflow.md](references/workflow.md)
+- 社会・経済・テクノロジーなどのニュース解説台本の調査、フック、TVコント、10分以内の構成、生活への接続: [references/news-explainer-script.md](references/news-explainer-script.md)
 - Shortの台本、縦画面、安全域、サムネイル、公開前後の確認: [references/shorts-production.md](references/shorts-production.md)
 - 終了画面、チャンネル登録、Shortの関連動画、専用Edge操作: [references/youtube-studio.md](references/youtube-studio.md)
 - Remotionの所有境界、Composition実装、テスト: [references/remotion-production.md](references/remotion-production.md)
