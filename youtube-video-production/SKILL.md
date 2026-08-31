@@ -64,6 +64,9 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 
 - `paid-api` はユーザーの許可を得るまで実行しない。TTS生成は `--allow-paid-api` なしで呼ばない。
 - `human` の承認を推測・代行しない。ユーザーが明示した承認だけを記録する。
+- 動きを含む映像は、Driveレビューへ入れる前に実尺のmotion clip、8時点以上のcontact sheet、reviewContextを作り、実装者以外の3エージェントで独立レビューする。静止画だけでアニメーション品質を承認しない。
+- レビュアーはmotion-physics、art-composition、editing-semanticsを1役ずつ担当し、全員の提出完了まで互いの判定を共有しない。3名全員PASS、blocker/majorゼロ、各項目3.5/5以上、平均4.0/5以上を満たさなければDriveレビューへ進めない。
+- 1名でもREWORKなら修正後にmotion clipとcontact sheetを再生成し、前回合格者を含む3名全員で再レビューする。結果は入力ハッシュとともに `animation-quality-review.json` へ保存する。
 - MP4描画前に長尺と初期化済み全Shortsの音声・全シーン画像レビューを生成し、人のレビュー承認を得る。
 - 台本、音声、素材、映像実装、レビュー成果物が変わった場合は古い承認やQAを再利用しない。
 - YouTubeへの変更前に、OAuthで認証された実チャンネルIDとprofileの `youtubeChannelId` が一致することを確認する。不一致時は操作しない。
@@ -92,6 +95,7 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 - 発話の `referenceIds` と `video-plan.json` のリファレンス定義を一致させる。
 - 意味の異なる発話へ同じ汎用図解を使い回さず、レビュー静止画だけでもvisual IDごとの差が分かるようにする。
 - 全シーンレビューでは、台詞との意味一致、質問での答え先出し、素材の有無、動きの設計、箇条書きの構造、効果音キューを確認する。汎用カードの反復、具体物の画像不足、静止画の貼り付け、意味より先の情報表示が1件でもあれば承認可能と扱わない。
+- アニメーションレビューでは、背景・線・マーカーだけが動いて動作主体が静止する、物理的に連結した要素の接点がずれる、Sequence境界で姿勢が跳ぶ、入退場が横滑りだけ、通常動作中に見切れる、縦版が単純クロップになる状態を1件でも承認可能と扱わない。
 - 作品固有実装は `src/channels/<channel-id>/videos/<project-id>` へ閉じ、形式として再利用する表現だけを `src/formats/<format-id>`、技術だけの共通処理を `src/common` へ置く。
 
 ## 変更後の確認
