@@ -64,6 +64,8 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 
 - `paid-api` はユーザーの許可を得るまで実行しない。TTS生成は `--allow-paid-api` なしで呼ばない。
 - `human` の承認を推測・代行しない。ユーザーが明示した承認だけを記録する。
+- 同じ人物が歩く、走る、引く、振り向くなど複数の連続動作を行う、手と綱・足と地面など複数の接点を拘束する、または縦横・複数作品で同じリグを再利用する場合は、実装前にRiveを第一候補として評価する。採否、編集元、runtime素材、ライセンス、代替方式を `animation-engine-decision.json` へ記録する。
+- RiveをRemotionへ組み込む場合は `autoplay` や `requestAnimationFrame` の実時間へ依存させず、Remotionの `frame` と `fps` から一定刻みで状態を進める。Riveを採用しない場合も、関節運動、足の接地、物理接点、状態間補間を同等に検証する。
 - 動きを含む映像は、Driveレビューへ入れる前に実尺のmotion clip、8時点以上のcontact sheet、reviewContextを作り、実装者以外の3エージェントで独立レビューする。静止画だけでアニメーション品質を承認しない。
 - レビュアーはmotion-physics、art-composition、editing-semanticsを1役ずつ担当し、全員の提出完了まで互いの判定を共有しない。3名全員PASS、blocker/majorゼロ、各項目3.5/5以上、平均4.0/5以上を満たさなければDriveレビューへ進めない。
 - 1名でもREWORKなら修正後にmotion clipとcontact sheetを再生成し、前回合格者を含む3名全員で再レビューする。結果は入力ハッシュとともに `animation-quality-review.json` へ保存する。
@@ -85,6 +87,7 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 - `public/input/<channel-id>/<project-id>` と `src/generated/<channel-id>` は同期コピーであり、直接編集しない。
 - 素材追加とComposition実装を別工程にする。
 - 各発話の映像設計に `semanticBeat`、`visualStrategy`、`assetIds`、`motion`、`sfxCue` を持たせ、台詞のどの意味を何で見せるかを実装前に確定する。
+- 多関節キャラクターは単純なSVGグループ移動から始めず、Riveの骨、IK、制約、状態遷移で解けるかを先に判定する。ライブラリを追加するだけで品質向上とみなさず、実際のリグ、キー、接点、遷移をレビュー対象にする。
 - 表現の優先順位は、因果・時間変化・物理的な比喩ならアニメーション、人物・場所・商品・出来事など具体物なら権利確認済みの外部写真・動画、抽象概念だけなら動く図解とする。図解を先に選ばない。
 - 外部写真・動画はインターネット上の公式素材、パブリックドメイン、利用条件が明確なストック素材を優先する。利用可能な外部素材がない場合を除き、題材固有画像を自作して代替しない。
 - 写真を枠内へ静止貼り付けせず、パン、ズーム、クロップ移動、マスク、パララックスのいずれかで映像として動かす。汎用カード、PowerPoint風の囲み、静止テキストだけを主画面にしない。

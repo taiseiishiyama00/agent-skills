@@ -16,12 +16,13 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 2. チャンネル固有素材を `public/assets/channels/<channel-id>`、全チャンネル共通素材を `public/assets/common` へ追加する。
 3. Remotionやフォントなど技術だけの共通処理を `src/common` に実装する。
 4. 複数チャンネルで再利用する形式の契約と表現を `src/formats/<format-id>` に実装する。
-5. ブランドとComposition登録を `src/channels/<channel-id>`、作品固有の構成と演出をその `videos/<project-id>` に実装する。
-6. ルートはチャンネルComposition集合だけを読み込み、作品を直接列挙しない。
-7. 型、Lint、テストを実行する。
-8. 動きを含むシーンは実尺motion clipと8時点以上のcontact sheetを生成し、実装者以外の3エージェントが独立レビューする。
-9. 3名全員の合格結果を `animation-quality-review.json` へ保存してから、パイプラインで全シーン静止画を生成し、人のレビュー承認を得る。
-10. パイプラインで確認用動画を描画し、人の承認後に全編描画とQAを行う。
+5. 多関節人物、接点拘束、再利用キャラはRiveを第一候補として評価し、採否と代替リグを `animation-engine-decision.json` に記録する。
+6. ブランドとComposition登録を `src/channels/<channel-id>`、作品固有の構成と演出をその `videos/<project-id>` に実装する。
+7. ルートはチャンネルComposition集合だけを読み込み、作品を直接列挙しない。
+8. 型、Lint、テストを実行する。
+9. 動きを含むシーンは実尺motion clipと8時点以上のcontact sheetを生成し、実装者以外の3エージェントが独立レビューする。
+10. 3名全員の合格結果を `animation-quality-review.json` へ保存してから、パイプラインで全シーン静止画を生成し、人のレビュー承認を得る。
+11. パイプラインで確認用動画を描画し、人の承認後に全編描画とQAを行う。
 
 ## 素材境界
 
@@ -45,6 +46,9 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 
 ## アニメーション品質ゲート
 
+- 同じ人物が複数の連続動作を行う、手足など複数関節の接点を固定する、または縦横・複数作品でリグを再利用する場合はRiveの骨、IK、制約、State Machineを第一候補にする。採否、編集元、runtime用 `.riv`、素材ライセンス、非採用時の代替方式を `animation-engine-decision.json` に残す。
+- RemotionからRiveを使う場合は `autoplay` や `requestAnimationFrame` に任せず、`useCurrentFrame()` とfpsに基づいて低レベルruntimeを一定刻みで進める。同じframeを再描画して同じ絵になることを代表フレームのハッシュで確認する。
+- Rive非採用は免除ではない。代替リグでも関節運動、足の接地、手と綱などの物理接点、状態間の予備動作と補間を満たす。
 - motion clipは実際の尺・fps・縦横構図で、動作の開始、接触、主動作、離脱、終了を含める。contact sheetはその主要8時点以上を並べる。
 - motion-physicsは接点、重心、足運び、連動、境界ジャンプ、art-compositionは造形、奥行き、余白、見切れ、重なり、editing-semanticsは意味順、ビート、主体動作、長尺・縦尺の同等性を担当する。
 - 実装者はレビュアーに含めず、各担当は他者の判定を見ずにPASSまたはREWORK、blocker/major/minor、項目別5点評価、根拠フレームを提出する。
