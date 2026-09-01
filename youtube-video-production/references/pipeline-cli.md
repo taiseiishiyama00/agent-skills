@@ -117,17 +117,19 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 
 ```sh
 npm run pipeline -- --channel <channel-id> review generate <project-id>
-npm run pipeline -- --channel <channel-id> approve <project-id> review
-npm run pipeline -- --channel <channel-id> remotion preview <project-id>
-npm run pipeline -- --channel <channel-id> approve <project-id> preview
+npm run pipeline -- --channel <channel-id> approve <project-id> review --segment <segment-id>
+npm run pipeline -- --channel <channel-id> review generate <project-id> --segment <segment-id>
 npm run pipeline -- --channel <channel-id> remotion full <project-id>
 npm run pipeline -- --channel <channel-id> qa <project-id>
 npm run pipeline -- --channel <channel-id> approve <project-id> final
 ```
 
-- `review generate` は長尺と初期化済み全Shortsを同期し、音声と全シーン静止画をGoogle Driveへ生成する。
-- 人が生成物を確認し、明示的に承認するまでpreview、full、Short renderを実行しない。
-- 承認は成果物のSHA-256へ結び付く。台本、音声、素材、映像実装、レビュー素材、動画の変更後に古い承認を再利用しない。
+- `review generate` は長尺を章境界ベースで最大6本の連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。
+- 初回または横断変更時はオプションなしで全segmentを生成する。局所修正時だけ `--segment <segment-id>` で該当MP4を再生成する。影響範囲が不明なら全生成する。
+- 人が各MP4を確認し、`approve ... review --segment <segment-id>` で個別承認する。全MP4を一度に確認した場合だけ `--all` を使用できる。
+- 各承認はsegment MP4のSHA-256へ結び付く。部分再生成では変更segmentの承認だけが失効し、共通部品、全体構成、音声、字幕時刻、共通素材などの横断変更では全segmentを再生成して全承認を取り直す。
+- 全segmentが最新hashで承認されるまで `remotion full` と通常のShort renderを実行しない。
+- 音声単体、全シーン静止画、contact sheet、motion clip、旧preview動画を生成・承認する旧レビュー工程は存在しない。
 - QAも全編動画のhashへ結び付け、別の動画へ流用しない。
 
 ## 作品データ
@@ -141,7 +143,7 @@ npm run pipeline -- --channel <channel-id> approve <project-id> final
 - `caption-plan.json`: 意味チャンクとMFA時刻
 - `video-plan.json`: 映像、発話、リファレンス、素材参照、エンディング尺
 - `asset-manifest.json`: 出典、権利、用途、hash
-- `素材/レビュー`: 人が確認する音声、全シーン画像、対応表、manifest、index
+- `素材/レビュー`: 人が確認する分割MP4、segment対応表、manifest、index
 - `.pipeline/state.json`: 実行履歴と承認
 - `.pipeline/qa-report.json`: 全編動画に紐付くQA結果
 - `投稿/youtube-post.json`: 長尺・Shortの投稿文、公開設定、サムネイル、投稿ID、Studio操作対象

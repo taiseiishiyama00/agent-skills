@@ -57,9 +57,9 @@ Short台本の保存、Google Docsでの共同編集、ユーザーコメント�
 - 多関節人物、接点拘束、長尺と共用するキャラはRiveを第一候補として評価し、採否、編集元、runtime素材、ライセンス、代替方式を `animation-engine-decision.json` に記録する。RiveはRemotionのframeとfpsから決定論的に進め、実時間自動再生を使わない。
 - 写真は縦向けクロップを作り、パン、ズーム、マスクなどの動きを付ける。汎用カードや静止テキストだけで画面を埋めない。
 - 列挙は縦方向と順次表示を基本にし、横並びで意味構造を潰さない。
-- 動きの切替へ権利確認済みの効果音を同期し、全シーンレビューで画像・動き・意味順を検査する。
+- 動きの切替へ権利確認済みの効果音を同期し、Short全編MP4で画像・動き・意味順・同期を検査する。
 - 重要なオブジェクトは字幕cueに合わせて更新し、長時間の完全静止を避ける。
-- 動きを含むシーンは縦尺の実尺motion clip、8時点以上のcontact sheet、reviewContextを作る。静止画だけで動きの品質を判断しない。
+- Shortは縦尺の全編MP4と、確認対象を動画内時刻で示すreviewContextを作る。音声単体、静止画、contact sheet、motion clipを別の承認成果物にしない。
 
 ## Shortサムネイル
 
@@ -76,8 +76,8 @@ Studioアプリで複数動画が一様に灰色の場合は、設定漏れと�
 
 ## 公開前チェック
 
-- 長尺と全Shortsの音声・全シーン画像レビューが最新で、人が明示承認している。
-- 長尺と全Shortsの `animation-quality-review.json` が最新の実装・motion clip・contact sheetに紐づいている。
+- 長尺の全segment MP4と全Shortsの全編MP4が最新で、各segmentを人が明示承認している。
+- 長尺と全Shortsの `animation-quality-review.json` が最新のsegment MP4、reviewContext、実装入力に紐づいている。
 - Short自身のGoogle Doc `台本`、同期済み `台本.md`、TTS・字幕・映像設計の発話内容が一致している。
 - Google Doc上のユーザーコメントが反映済み、または要確認として未解決のまま明示されている。
 - 冒頭1秒で主題が分かる。
