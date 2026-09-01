@@ -18,6 +18,7 @@ description: バグ修正、失敗テスト、flaky テスト、回帰、実行�
 - 無関係なリファクタリング、整形、依存更新を混ぜない。
 - 修正方針が複数あり得る場合は、候補・根拠・トレードオフを出してユーザーと決める。
 - テストまたは再現コマンドの証拠なしに「直った」と主張しない。
+- ブラウザー UI のバグは、再現確認と修正確認の両方を Playwright によるユーザー操作で行う。unit / integration test だけで UI の再現や修正完了を判断しない。
 
 ## 事前確認
 コード変更前に、可能な範囲で次を特定する。不足分はリポジトリから推論し、進行を止める情報だけユーザーへ確認する。
@@ -33,7 +34,11 @@ description: バグ修正、失敗テスト、flaky テスト、回帰、実行�
 最初に git 状態を見て、ユーザーの未コミット変更を把握する。
 
 ## 1. 再現
-失敗を再現する最小コマンドを実行する。
+失敗を再現する最小のユーザー操作またはコマンドを実行する。
+
+ブラウザー UI が関係する場合は、production code を変更する前に、Playwright のブラウザー操作でチケットや再現手順と同じ操作を行う。ページを開く、画面上の要素をクリックする、入力する、選択するなど、利用者が行う経路を使い、DOM やアプリ状態の直接書き換え、内部 API の直接呼び出し、データベース操作で再現状態を作らない。統合ブラウザーの操作ツールや既存の Playwright UI test を使用し、URL、操作手順、画面上の結果、必要なスクリーンショットまたはアクセシビリティスナップショットを記録する。
+
+認証、起動環境、テストデータなどが不足して Playwright で実操作できない場合は、UI の再現未確認として止める。内部実装の推測や unit test の失敗だけを根拠に、UI の根本原因を断定したり production code を編集したりしない。必要な準備がユーザー判断を要する場合は確認を求める。
 
 - 対象は unit / integration / UI test、CLI、API、最小ローカルシナリオのいずれか。
 - コマンド、終了コード、主要な失敗出力、決定的かどうかを記録する。
@@ -105,10 +110,13 @@ Root cause:
 ## 7. Green
 狭い範囲から広い範囲へ検証する。
 
-1. Red テスト
-2. 近傍テスト
-3. 関連する integration / UI test
-4. 必要に応じて lint、build、typecheck
+ブラウザー UI のバグでは、修正後に再現時と同じ Playwright のユーザー操作を最初に繰り返し、期待する画面上の結果になったことを確認する。その後、次の順で自動テストなどを実行する。
+
+1. Playwright による修正確認
+2. Red テスト
+3. 近傍テスト
+4. 関連する integration / UI test
+5. 必要に応じて lint、build、typecheck
 
 失敗したら修正を積み増す前に仮説へ戻る。
 
@@ -123,6 +131,7 @@ Green 後にだけ行う。
 ## 9. 回帰確認
 根本原因に直接関係する edge case だけ追加で見る。
 
+- ブラウザー UI の変更は、Playwright のユーザー操作で正常系と対象 edge case を確認する。自動テストを追加しても、実操作による確認の代替にはしない。
 - null / empty / boundary
 - timezone / ordering
 - async race
@@ -154,6 +163,7 @@ Summary:
 - fix:
 - tests changed:
 - validation:
+- Playwright reproduction and fix verification (for browser UI bugs):
 - temporary debug removed:
 - residual risk:
 ```
