@@ -1,4 +1,4 @@
 interface:
-  display_name: "Git の設計"
-  short_description: "Git の設計資料の参照先を統一する。"
-  default_prompt: "$git-design を使って、Git の設計資料の参照先または変更先を確認してください。"
+  display_name: "会社の製品設計"
+  short_description: "会社の製品設計資料の参照先を統一する。"
+  default_prompt: "$git-design を使って、会社の製品設計資料の参照先または変更先を確認してください。"
