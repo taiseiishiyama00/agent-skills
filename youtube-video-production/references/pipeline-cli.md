@@ -116,7 +116,7 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 
 ## レビュー、描画、QA、承認
 
-CLIの承認状態は、制作成果物の `台本`、`分割レビューMP4`、`全編MP4` という3ゲートに対応させる。サムネイル、投稿文、投稿設定を新しい承認ゲートとして追加しない。台本ゲートは [script-collaboration.md](script-collaboration.md)、各ゲート前の独立レビューは `SKILL.md` の共通品質ゲートに従う。
+CLIの承認状態は、制作成果物の `台本`、`分割レビューMP4`、`全編MP4` という3ゲートに対応させる。サムネイル、投稿文、投稿設定を新しい承認ゲートとして追加しない。台本レビューの実行条件は [script-collaboration.md](script-collaboration.md)、MP4ゲート前の独立レビューは `SKILL.md` の共通品質ゲートに従う。
 
 ```sh
 npm run pipeline -- --channel <channel-id> review generate <project-id>
