@@ -13,6 +13,7 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 ## 実装手順
 
 1. パイプラインで音声、字幕、映像設計、登録済み素材を同期する。
+   - Gemini TTSの速度変換はpipelineがrenderer用WAVと計画へ反映する。Remotionで作品固有の `playbackRate` や追加の時刻変換を重ねない。
 2. チャンネル固有素材を `public/assets/channels/<channel-id>`、全チャンネル共通素材を `public/assets/common` へ追加する。
 3. Remotionやフォントなど技術だけの共通処理を `src/common` に実装する。
 4. 複数チャンネルで再利用する形式の契約と表現を `src/formats/<format-id>` に実装する。

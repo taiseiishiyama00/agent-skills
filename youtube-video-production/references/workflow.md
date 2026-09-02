@@ -11,7 +11,7 @@
 3. 横動画台本の事実を確認し、一次情報中心のリファレンスを集める。
 4. Google Docへ初稿を保存し、既存のユーザーコメントを反映してユーザーへ確認用リンクを渡す。未解決コメントがある、またはユーザーが台本を確定していない場合はTTSへ進まない。
 5. 台本確定後、Google Docから `source/scripts/long.md` を同期し、発話内容とMarkdown構造を検証する。
-6. `source/scripts/long.md` を入力として、章単位、または入力上限内の連続生成block単位で音声を生成し、章WAVと横動画masterを確定する。
+6. `source/scripts/long.md` を入力として、章単位、または入力上限内の連続生成block単位で音声を生成し、Gemini TTSの通常章を1.25倍、`id: skit` のコント章を1.5倍にして章WAVと横動画masterを確定する。
 7. 横動画台本から一度に表示できる字幕の意味チャンクを作る。
 8. 音声から各字幕チャンクの頭出し時刻を取得し、監査する。
 9. 発話ごとに `semanticBeat`、`visualStrategy`、`assetIds`、`motion`、`sfxCue` を決める。質問の発話では後続の答えを画面へ含めない。
@@ -46,7 +46,7 @@ Short動画制作では、`source/scripts` のGoogle Doc `short` を人間編集
 3. ユーザーのコメントを読み、対象箇所をGoogle Doc上で修正する。未解決コメントがある、またはユーザーがShort台本を確定していない場合はTTSへ進まない。
 4. Short台本確定後、Google Docから `source/scripts/short.md` を同期する。横動画台本から発話を再構成したり、Short台本を黙って上書きしたりしない。
 5. `source/scripts/short.md` の発話内容を変更せず、Short用の映像設計と字幕計画を作る。
-6. Short台本をひとまとまりの音声として生成する。
+6. Short台本をひとまとまりの音声として生成し、横動画と同じくGemini TTSの通常章を1.25倍、`id: skit` のコント章を1.5倍にする。
 7. Short台本から一度に表示できる字幕の意味チャンクを作る。
 8. 音声から各字幕チャンクの頭出し時刻を取得し、監査する。
 9. 横動画で登録済みの素材と共通Remotionオブジェクトを再利用できるか確認する。

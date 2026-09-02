@@ -62,6 +62,8 @@ npm run pipeline -- --channel <channel-id> tts generate <project-id>
 - 台本の独立行にある角括弧の時間インサートは読み上げず、次の発話を新しいTTS区間にする。
 - 連続生成blockを使う場合は入力上限を事前確認し、生成rawをhash付きで保全してから章境界を確定する。
 - Google Drive上の元WAVは変更せず、renderer用コピーだけをチャンネル設定の方式で全章一貫して正規化する。
+- Gemini TTSのrenderer用コピーは、横動画とShortのどちらも通常章を1.25倍、`id: skit` のコント章を1.5倍にする。発話、字幕cue、場面切替も同じ比率で同期する。
+- 音声速度はprofileのTTS共通設定を使い、Short専用値やRemotionの作品固有 `playbackRate` で上書きしない。
 - 同じ音声を再生成して重複課金しない。manifest、入力hash、quarantineの再利用可否を先に確認する。
 
 ## 字幕同期
