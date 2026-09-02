@@ -9,7 +9,7 @@
 - `ITTAN-SHORT-008` Shortの重要な顔、数字、字幕、CTAは上160px、右200px、下360px、左80pxの安全域内に置く。
 - `ITTAN-SHORT-009` Shortの字幕は最大2行、1行15文字以内にする。
 - `ITTAN-AUDIO-001` 実効発話速度は、句読点、記号、空白を除いた発話文字数を各発話の実時間合計で割って算出する。
-- `ITTAN-AUDIO-002` 通常章の実効発話速度は平均6.0〜7.5文字/秒、コント章は平均5.5〜7.0文字/秒にする。
+- `ITTAN-AUDIO-002` 通常章の実効発話速度は平均6.0〜6.5文字/秒、コント章は平均7.0〜7.5文字/秒にする。
 - `ITTAN-AUDIO-004` 発話、字幕、場面切替、口の動き、効果音を同期する。
 - `ITTAN-AUDIO-005` 音声は48kHz、320kbpsにする。
 - `ITTAN-AUDIO-006` 各章の完成音声はIntegrated Loudness -19 LUFS、True Peak -3 dBTP、LRA 7にする。
