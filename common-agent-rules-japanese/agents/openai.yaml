@@ -1,0 +1,4 @@
+interface:
+  display_name: "エージェント共通ルール（日本語）"
+  short_description: "対話と成果物を日本語で整える。"
+  default_prompt: "$common-agent-rules-japanese を使って、対話または人が読む成果物を共通ルールに従って整えてください。"
