@@ -115,6 +115,8 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 
 ## レビュー、描画、QA、承認
 
+CLIの承認状態は、制作成果物の `台本`、`分割レビューMP4`、`全編MP4` という3ゲートに対応させる。サムネイル、投稿文、投稿設定を新しい承認ゲートとして追加しない。台本ゲートは [script-collaboration.md](script-collaboration.md)、各ゲート前の独立レビューは `SKILL.md` の共通品質ゲートに従う。
+
 ```sh
 npm run pipeline -- --channel <channel-id> review generate <project-id>
 npm run pipeline -- --channel <channel-id> approve <project-id> review --segment <segment-id>
@@ -126,9 +128,11 @@ npm run pipeline -- --channel <channel-id> approve <project-id> final
 
 - `review generate` は長尺を章境界ベースで最大6本の連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。
 - 初回または横断変更時はオプションなしで全segmentを生成する。局所修正時だけ `--segment <segment-id>` で該当MP4を再生成する。影響範囲が不明なら全生成する。
+- 人へ渡す前に、最新のMP4と入力hashで分割レビューMP4の共通品質ゲートを通す。
 - 人が各MP4を確認し、`approve ... review --segment <segment-id>` で個別承認する。全MP4を一度に確認した場合だけ `--all` を使用できる。
 - 各承認はsegment MP4のSHA-256へ結び付く。部分再生成では変更segmentの承認だけが失効し、共通部品、全体構成、音声、字幕時刻、共通素材などの横断変更では全segmentを再生成して全承認を取り直す。
 - 全segmentが最新hashで承認されるまで `remotion full` と通常のShort renderを実行しない。
+- `remotion full` とShort renderの後はQAを実行し、最新の全編MP4で共通品質ゲートを通してから `approve ... final` を記録する。Shortの投稿用全編MP4が承認済みレビューMP4と同一hashなら、同一成果物への重複承認を要求しない。
 - 音声単体、全シーン静止画、contact sheet、motion clip、旧preview動画を生成・承認する旧レビュー工程は存在しない。
 - QAも全編動画のhashへ結び付け、別の動画へ流用しない。
 

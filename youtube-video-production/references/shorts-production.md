@@ -77,6 +77,7 @@ Studioアプリで複数動画が一様に灰色の場合は、設定漏れと�
 ## 公開前チェック
 
 - 長尺の全segment MP4と全Shortsの全編MP4が最新で、各segmentを人が明示承認している。
+- 投稿用の全編MP4が最終承認済みである。承認済みレビューMP4と投稿用ファイルが同一hashなら、同じ動画への重複承認は求めない。
 - 長尺と全Shortsの `animation-quality-review.json` が最新のsegment MP4、reviewContext、実装入力に紐づいている。
 - Short自身のGoogle Doc `台本`、同期済み `台本.md`、TTS・字幕・映像設計の発話内容が一致している。
 - Google Doc上のユーザーコメントが反映済み、または要確認として未解決のまま明示されている。

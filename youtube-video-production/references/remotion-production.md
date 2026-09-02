@@ -21,8 +21,8 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 7. ルートはチャンネルComposition集合だけを読み込み、作品を直接列挙しない。
 8. 型、Lint、テストを実行する。
 9. パイプラインで長尺を章境界ベースの最大6segment、Shortsを1本ずつのMP4として生成し、segmentごとのreviewContextを用意する。
-10. 各MP4を実時間で検査し、人のsegment別承認を得る。局所修正は該当segmentだけ、横断修正は全segmentを再描画する。
-11. 全segment承認後に全編描画とQAを行う。音声単体、全シーン静止画、contact sheet、motion clip、旧preview動画はレビュー承認工程に含めない。
+10. `SKILL.md` の共通品質ゲートを分割レビューMP4へ適用し、人のsegment別承認を得る。局所修正は該当segmentだけ、横断修正は全segmentを再描画する。
+11. 全segment承認後に全編描画とQAを行い、共通品質ゲートを全編MP4へ適用して人の最終承認を得る。音声単体、全シーン静止画、contact sheet、motion clip、旧preview動画はレビュー承認工程に含めない。
 
 ## 素材境界
 
