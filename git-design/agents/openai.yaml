@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git の設計"
+  short_description: "Git の設計資料の参照先を統一する。"
+  default_prompt: "$git-design を使って、Git の設計資料の参照先または変更先を確認してください。"
