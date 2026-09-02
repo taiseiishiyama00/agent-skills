@@ -1,6 +1,6 @@
 ---
 name: youtube-video-production
-description: 設定済みYouTubeチャンネルの長尺動画・Shortsについて、企画、台本、TTS、字幕、素材、Remotion、レビュー、サムネイル、投稿、終了画面、関連動画を新規作成・修正・検証するときに使用する。一般的なYouTube相談や、制作基盤に登録されていない動画には使用しない。
+description: 設定済みYouTubeチャンネルの横動画・Shortsについて、企画、台本、TTS、字幕、素材、Remotion、レビュー、サムネイル、投稿、終了画面、関連動画を新規作成・修正・検証するときに使用する。一般的なYouTube相談や、制作基盤に登録されていない動画には使用しない。
 ---
 
 # YouTube動画制作
@@ -42,8 +42,8 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 ## 参照の振り分け
 
 - 新規登録、TTS、字幕、素材、同期、レビュー、QA、YouTube Data API操作: [references/pipeline-cli.md](references/pipeline-cli.md)
-- 長尺またはShortsの工程全体、次工程の判断: [references/workflow.md](references/workflow.md)
-- 長尺・Shorts台本のGoogle Docs共同編集、コメント反映、`台本.md` 同期: [references/script-collaboration.md](references/script-collaboration.md)
+- 横動画またはShortsの工程全体、次工程の判断: [references/workflow.md](references/workflow.md)
+- 横動画・Shorts台本のGoogle Docs共同編集、コメント反映、`台本.md` 同期: [references/script-collaboration.md](references/script-collaboration.md)
 - 社会・経済・テクノロジーなどのニュース解説台本の調査、フック、TVコント、10分以内の構成、生活への接続: [references/news-explainer-script.md](references/news-explainer-script.md)
 - Shortの台本、縦画面、安全域、サムネイル、公開前後の確認: [references/shorts-production.md](references/shorts-production.md)
 - 終了画面、チャンネル登録、Shortの関連動画、専用Edge操作: [references/youtube-studio.md](references/youtube-studio.md)
@@ -74,7 +74,7 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 - 正常フローで初めてTTS音声を生成するときは、都度の確認なしで実行する。既存音声を有料APIで再生成する必要がある場合だけ停止して許可を取り、許可後に `--allow-paid-api` を付ける。課金を伴わないキャッシュ再利用では確認を求めない。
 - `human` の承認を推測・代行しない。ユーザーが明示した承認だけを記録する。
 - 映像レビューの承認対象はMP4だけにする。音声単体、全シーン静止画、contact sheet、motion clip、旧preview動画を別の承認成果物として生成または要求しない。
-- 長尺は章境界ごとの連続MP4へ分け、初期化済みShortsは1本ずつ全編MP4を作る。分割本数に固定上限を設けない。
+- 横動画は章境界ごとの連続MP4へ分け、初期化済みShortsは1本ずつ全編MP4を作る。分割本数に固定上限を設けない。
 - 分割MP4はsegmentごとに人が確認して個別承認する。全segmentの最新hashが承認されるまで全編MP4を描画しない。
 - 区間固有の修正は指摘対象segmentだけを再描画して再承認する。共通コンポーネント、全体構成、音声、字幕時刻、共通素材など複数segmentへ影響し得る修正は全segmentを再描画して再承認する。影響範囲を判定できない場合も全segmentを対象にする。
 - 成果物の変更に伴う承認の失効範囲はパイプラインで機械的に判定し、古い承認を別の成果物へ流用しない。

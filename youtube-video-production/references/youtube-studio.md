@@ -10,10 +10,10 @@
 ## 事前検証
 
 1. `<channel-id>` のprofileにある `youtubeChannelId` とOAuthで認証された実チャンネルIDを照合する。
-2. 対象長尺ID、Short ID、終了画面で指定する動画IDを、Google Driveの `投稿/youtube-post.json` とYouTube Data APIの結果で照合する。
+2. 対象横動画ID、Short ID、終了画面で指定する動画IDを、Google Driveの `投稿/youtube-post.json` とYouTube Data APIの結果で照合する。
 3. 関連動画または終了画面に選べる公開状態か確認する。
 4. 公開状態、子ども向け設定、対象IDのいずれかが条件を満たさない場合は保存操作を止める。
-5. 長尺終了画面の表示時間はStudioの既定値ではなく、`video-plan.json` の `timing.endingFrames` を `config/channels/<channel-id>.json` の長尺FPSで割って算出する。
+5. 横動画終了画面の表示時間はStudioの既定値ではなく、`video-plan.json` の `timing.endingFrames` を `config/channels/<channel-id>.json` の横動画のFPSで割って算出する。
 6. preflight結果の対象ID、`durationSeconds`、`positionPreset` を確認する。
 
 ```powershell
@@ -55,7 +55,7 @@ node scripts/youtube-studio-diagnose.mjs --browser edge --video-id <video-id> --
 
 設定ツールは `--confirm-save` がない限り保存しない。要素不足、動画ID違い、固定動画でない状態、要素サイズ違いでは停止し、公開設定を操作しない。
 
-## 長尺の終了画面
+## 横動画の終了画面
 
 1. `https://studio.youtube.com/video/<long-video-id>/editor` を開き、終了画面を表示する。
 2. 「特定の動画」1件へ事前確認した動画IDを設定する。
@@ -96,7 +96,7 @@ Remotionの案内枠は、Studioで保存された実要素の外側へ均等に
 ## Shortの関連動画
 
 1. `https://studio.youtube.com/video/<short-video-id>/edit` を開く。
-2. 「関連動画」で事前確認した自チャンネルの長尺動画を選択する。
+2. 「関連動画」で事前確認した自チャンネルの横動画を選択する。
 3. 選択されたタイトルと動画IDを確認する。
 4. 公開設定など他の差分がないことを確認して保存する。
 
@@ -105,8 +105,8 @@ Remotionの案内枠は、Studioで保存された実要素の外側へ均等に
 ## 事後検証
 
 1. preflightとYouTube状態取得を再実行し、対象IDと公開状態が変わっていないことを確認する。
-2. 長尺エディタを再読込し、固定動画、チャンネル登録、表示時間、実寸配置が残っていることを読み取りモードで確認する。
-3. Short詳細画面を再読込し、関連動画が指定長尺になっていることを確認する。
+2. 横動画エディタを再読込し、固定動画、チャンネル登録、表示時間、実寸配置が残っていることを読み取りモードで確認する。
+3. Short詳細画面を再読込し、関連動画が指定した横動画になっていることを確認する。
 4. 実際の再生画面で、エンディング開始前には要素が出ず、開始後に動画とチャンネル登録が案内枠へ収まることをスマートフォンで確認する。
 5. Shortの再生画面で関連動画のタイトルと遷移先を確認する。
 6. 公開設定のUIや `publish` コマンドへ依頼なしに触れない。

@@ -20,7 +20,7 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 6. ブランドとComposition登録を `src/channels/<channel-id>`、作品固有の構成と演出をその `videos/<project-id>` に実装する。
 7. ルートはチャンネルComposition集合だけを読み込み、作品を直接列挙しない。
 8. 型、Lint、テストを実行する。
-9. パイプラインで長尺を章境界ごとのsegment、Shortsを1本ずつのMP4として生成し、segmentごとのreviewContextを用意する。
+9. パイプラインで横動画を章境界ごとのsegment、Shortsを1本ずつのMP4として生成し、segmentごとのreviewContextを用意する。
 10. `SKILL.md` の共通品質ゲートを分割レビューMP4へ適用し、人のsegment別承認を得る。局所修正は該当segmentだけ、横断修正は全segmentを再描画する。
 11. 全segment承認後に全編描画とQAを行い、共通品質ゲートを全編MP4へ適用して人の最終承認を得る。音声単体、全シーン静止画、contact sheet、motion clip、旧preview動画はレビュー承認工程に含めない。
 
@@ -47,7 +47,7 @@ npm run pipeline -- --channel <channel-id> remotion task <project-id> --json
 ## アニメーション品質の確認項目
 
 - segment MP4は実際の尺・fps・縦横構図で、動作の開始、接触、主動作、離脱、終了を含める。reviewContextは確認対象を動画内時刻で指定する。
-- 確認観点は、motion-physicsでは接点、重心、足運び、連動、境界ジャンプ、art-compositionでは造形、奥行き、余白、見切れ、重なり、editing-semanticsでは意味順、ビート、主体動作、長尺・縦尺の同等性とする。
+- 確認観点は、motion-physicsでは接点、重心、足運び、連動、境界ジャンプ、art-compositionでは造形、奥行き、余白、見切れ、重なり、editing-semanticsでは意味順、ビート、主体動作、横動画・縦動画の同等性とする。
 - 背景・中央線・マーカーだけが動く、綱と手など接点がずれる、状態境界で姿勢が跳ぶ、入退場が横滑りだけ、通常時に人物が切れる、縦版が横版の単純クロップになる場合は不合格とする。
 
 ## 検証

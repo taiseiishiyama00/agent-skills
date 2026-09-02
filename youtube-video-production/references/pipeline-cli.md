@@ -126,7 +126,7 @@ npm run pipeline -- --channel <channel-id> qa <project-id>
 npm run pipeline -- --channel <channel-id> approve <project-id> final
 ```
 
-- `review generate` は長尺を章境界ごとの連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。分割本数に固定上限を設けない。
+- `review generate` は横動画を章境界ごとの連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。分割本数に固定上限を設けない。
 - 初回または横断変更時はオプションなしで全segmentを生成する。局所修正時だけ `--segment <segment-id>` で該当MP4を再生成する。影響範囲が不明なら全生成する。
 - 人へ渡す前に、最新のMP4と入力hashで分割レビューMP4の共通品質ゲートを通す。
 - 人が各MP4を確認し、`approve ... review --segment <segment-id>` で個別承認する。全MP4を一度に確認した場合だけ `--all` を使用できる。
@@ -150,7 +150,7 @@ npm run pipeline -- --channel <channel-id> approve <project-id> final
 - `素材/レビュー`: 人が確認する分割MP4、segment対応表、manifest、index
 - `.pipeline/state.json`: 実行履歴と承認
 - `.pipeline/qa-report.json`: 全編動画に紐付くQA結果
-- `投稿/youtube-post.json`: 長尺・Shortの投稿文、公開設定、サムネイル、投稿ID、Studio操作対象
+- `投稿/youtube-post.json`: 横動画・Shortの投稿文、公開設定、サムネイル、投稿ID、Studio操作対象
 
 秘密鍵は作品ディレクトリへ置かない。
 
