@@ -1,0 +1,42 @@
+# 「いったん整理。」動画正本 実装対応表
+
+> この文書は派生物であり、動画要求の正本ではない。[video-standard.md](video-standard.md) の合格状態を、再現可能かつ冪等に実現する手段と検証先へ対応付ける。
+
+## 運用原則
+
+- 同じ入力、正本版、設定版で再実行した場合は同じ成果物・判定にする。
+- 既に合格状態なら再生成せず、安全なno-opまたは差分なしを返す。
+- 変更前に入力と差分を検証し、変更後に要求IDごとの事後条件を検証する。
+- 自動化できない項目は [品質レビュー手順書](../../quality-review-runbook.md) で要求ID別に判定する。
+
+## 対応表
+
+| 要求ID | 実現・検証手段 | 状態 |
+|---|---|---|
+| `ITTAN-DATA-001` | pipelineのproject初期化、storage layout、固定出力先テスト | 自動化済み |
+| `ITTAN-LONG-001` | production contractで必須章ID・順序・時間値をplan検証し、Remotion taskへ要求IDを渡す | 一部未実装: 必須章・順序の自動検証 |
+| `ITTAN-LONG-002`〜`005` | 台本手順書、出典確認、台本メタ情報、台本承認 | 手順化済み |
+| `ITTAN-SHORT-001` | pipelineが横動画冒頭を完全コピーして定型CTAを付加し、コピー一致をテスト | 自動化済み |
+| `ITTAN-SHORT-002` | channel設定、Short plan、MP4 metadata・尺・余韻検証 | 自動化済み |
+| `ITTAN-SHORT-003` | 投稿前検証、関連動画設定、実再生確認 | 半自動化済み |
+| `ITTAN-AUDIO-001` | renderer用音声とplan時刻を共通変換し、完成planの文字数/秒を検証 | 一部未実装: 文字数/秒の自動検証 |
+| `ITTAN-AUDIO-002` | 音声正規化、章別・全編ラウドネスQA、聴取検査 | 自動＋手順化済み |
+| `ITTAN-CAPTION-001` | 意味cue生成、音声アラインメント監査、同時cue検証、MP4再生検査 | 自動＋手順化済み |
+| `ITTAN-VISUAL-001` | Remotion taskの必須plan fields、review manifest、segment検査 | 自動＋手順化済み |
+| `ITTAN-VISUAL-002`〜`004` | 品質レビュー手順書をreview taskへ要求ID付きで渡す | 一部未実装: 要求ID付き判定の保存 |
+| `ITTAN-ASSET-001` | asset manifest、rights、source URL、reference ID、hash検証 | 自動化済み |
+| `ITTAN-OUTPUT-001` | channel render設定、Remotion render arguments、MP4 metadata検証 | 一部未実装: 横動画MP4 metadataの自動照合 |
+| `ITTAN-OUTPUT-002` | channel timingとvideo planの一致、timeline総尺、review range検証 | 自動化済み |
+| `ITTAN-OUTPUT-003` | end-screen preflight、12秒・配置テスト、保存後再読込 | 自動＋手順化済み |
+| `ITTAN-REVIEW-001`〜`003` | segment hash承認、全編描画ゲート、非実装者review task | 自動＋手順化済み |
+| `ITTAN-QA-001` | 全編QAと品質レビュー手順書 | 手順化済み |
+| `ITTAN-PUBLISH-001` | channel ID照合、確認フラグ、投稿状態取得、配信結果確認 | 自動＋手順化済み |
+| `ITTAN-SECURITY-001` | Git除外、secrets配置、専用ブラウザ、操作前検証 | 自動＋手順化済み |
+
+## 発話速度の実装値
+
+正本 `1.0.0` の実効発話速度は、句読点・記号・空白を除いた文字数を、utteranceの `endMs - startMs` 合計で割って検証する。
+
+2026年9月2日時点の最新横動画計画から逆算した値は、通常章6.32〜7.39文字/秒、コント章6.42文字/秒だった。この実績を含む正本範囲として、通常章6.0〜7.5文字/秒、コント章5.5〜7.0文字/秒を使う。
+
+音声生成後の実時間をこの範囲へ合わせる現在の実装は、通常章1.25倍、章ID `skit` 1.5倍のrenderer用速度変換である。倍率は手段であり正本ではない。別手段へ変更しても、完成音声が正本の文字数/秒と同期状態を満たせばよい。

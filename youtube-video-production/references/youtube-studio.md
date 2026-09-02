@@ -1,5 +1,7 @@
 # YouTube Studio限定設定
 
+> この文書は派生手順書であり、終了画面・関連動画の正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` が定める公開後の状態を、公式UIで再現・検証する方法だけを定める。
+
 終了画面とShortの関連動画は、YouTube Data APIやStudioの非公開APIではなく、YouTube Studioの表示中の公式UIで設定する。
 
 公式確認先:

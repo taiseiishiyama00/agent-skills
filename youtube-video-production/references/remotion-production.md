@@ -1,5 +1,7 @@
 # Remotion制作
 
+> この文書は派生手順書であり、映像品質の正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` にある要求IDを、Compositionとテストへ再現可能に実装する方法だけを定める。
+
 ## 責務
 
 制作全体の工程制御とパラメータは `youtube-video-pipeline` が担う。rendererでは技術共通、形式共通、チャンネル固有、作品固有を混ぜずに管理する。
