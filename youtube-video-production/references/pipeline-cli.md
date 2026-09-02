@@ -39,12 +39,13 @@ npm run pipeline -- --channel <channel-id> next <project-id> --json
 
 ```sh
 npm run pipeline -- --channel <channel-id> project init <project-id> \
-  --directory <Drive上の作品ディレクトリ名> \
   --title <動画タイトル> \
   --format <format-id> \
   --composition <Remotion Composition ID> \
   --entry src/channels/<channel-id>/videos/<project-id>/<Component>.tsx
 ```
+
+`project init` は動画タイトルをDrive上の作品ディレクトリ名に使う。日本語チャンネルでは `--title` に日本語タイトルを指定する。`<project-id>` は英小文字・数字・ハイフンの機械識別子として、CLI、metadata、rendererだけに使う。既存ディレクトリを採用するなど表示名を明示する必要がある場合だけ `--directory <作品ディレクトリ名>` を指定する。
 
 既存作品は `project adopt` で登録する。登録後に `status` と `next` を確認する。
 
