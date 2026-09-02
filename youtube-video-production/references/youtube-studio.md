@@ -10,7 +10,7 @@
 ## 事前検証
 
 1. `<channel-id>` のprofileにある `youtubeChannelId` とOAuthで認証された実チャンネルIDを照合する。
-2. 対象横動画ID、Short ID、終了画面で指定する動画IDを、Google Driveの `投稿/youtube-post.json` とYouTube Data APIの結果で照合する。
+2. 対象横動画ID、Short ID、終了画面で指定する動画IDを、パイプラインの投稿情報とYouTube Data APIの結果で照合する。
 3. 関連動画または終了画面に選べる公開状態か確認する。
 4. 公開状態、子ども向け設定、対象IDのいずれかが条件を満たさない場合は保存操作を止める。
 5. 横動画終了画面の表示時間はStudioの既定値ではなく、`video-plan.json` の `timing.endingFrames` を `config/channels/<channel-id>.json` の横動画のFPSで割って算出する。

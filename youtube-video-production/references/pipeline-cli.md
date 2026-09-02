@@ -89,7 +89,7 @@ npm run pipeline -- --channel <channel-id> captions apply <project-id> --textgri
 npm run pipeline -- --channel <channel-id> assets register <project-id> \
   --id topic-image-01 \
   --type image \
-  --source 素材/official/example.jpg \
+  --source source/images/example.jpg \
   --rights quotation \
   --category topic \
   --renderer-path input/<channel-id>/<project-id>/topic/example.jpg \
@@ -126,7 +126,7 @@ npm run pipeline -- --channel <channel-id> qa <project-id>
 npm run pipeline -- --channel <channel-id> approve <project-id> final
 ```
 
-- `review generate` は横動画を章境界ごとの連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。分割本数に固定上限を設けない。
+- `review generate` は横動画を章境界ごとの連続MP4へ分け、初期化済みShortを全編MP4として生成する。分割本数に固定上限を設けない。
 - 初回または横断変更時はオプションなしで全segmentを生成する。局所修正時だけ `--segment <segment-id>` で該当MP4を再生成する。影響範囲が不明なら全生成する。
 - 人へ渡す前に、最新のMP4と入力hashで分割レビューMP4の共通品質ゲートを通す。
 - 人が各MP4を確認し、`approve ... review --segment <segment-id>` で個別承認する。全MP4を一度に確認した場合だけ `--all` を使用できる。
@@ -138,21 +138,7 @@ npm run pipeline -- --channel <channel-id> approve <project-id> final
 
 ## 作品データ
 
-各作品では少なくとも次を管理する。
-
-- `project.json`: チャンネルID、形式ID、作品ID、Composition、出力名
-- `台本.md`: TTS入力
-- `tts-config.json`: 作品へ適用する音声設定
-- `音声/manifest.json`: 章WAV、master、入力hash
-- `caption-plan.json`: 意味チャンクとMFA時刻
-- `video-plan.json`: 映像、発話、リファレンス、素材参照、エンディング尺
-- `asset-manifest.json`: 出典、権利、用途、hash
-- `素材/レビュー`: 人が確認する分割MP4、segment対応表、manifest、index
-- `.pipeline/state.json`: 実行履歴と承認
-- `.pipeline/qa-report.json`: 全編動画に紐付くQA結果
-- `投稿/youtube-post.json`: 横動画・Shortの投稿文、公開設定、サムネイル、投稿ID、Studio操作対象
-
-秘密鍵は作品ディレクトリへ置かない。
+作品構成は `SKILL.md` の「Google Driveの作品構成」を正本とし、`project init` で機械的に作成する。人が扱う入力は `source`、公開用成果物は `output`、計画・台帳・レビュー・QA・承認状態は `.pipeline` に分ける。内部ファイルを手作業で移動・改名せず、秘密鍵は作品ディレクトリへ置かない。
 
 ## Shorts CLI
 
@@ -173,7 +159,7 @@ npm run pipeline -- --channel <channel-id> shorts render <project-id> <short-id>
 npm run pipeline -- --channel <channel-id> shorts qa <project-id> <short-id> --json
 ```
 
-Shorts固有の判断は `shorts-production.md` を併せて読む。
+`<short-id>` は内部識別子であり、Drive上にID別ディレクトリは作らない。1作品へ初期化できるShortは1本だけとする。Short固有の判断は `shorts-production.md` を併せて読む。
 
 ## YouTube Data API
 

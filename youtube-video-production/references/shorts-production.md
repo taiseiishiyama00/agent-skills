@@ -1,6 +1,6 @@
 # YouTube Shorts制作
 
-Short台本の保存、Google Docsでの共同編集、ユーザーコメントの反映、パイプライン用 `台本.md` への同期は [script-collaboration.md](script-collaboration.md) に従う。
+Short台本の保存、Google Docsでの共同編集、ユーザーコメントの反映、`source/scripts/short.md` への同期は [script-collaboration.md](script-collaboration.md) に従う。
 
 ## 事実と公式仕様
 
@@ -19,9 +19,9 @@ Short台本の保存、Google Docsでの共同編集、ユーザーコメント�
 
 ## 台本
 
-- 各ShortディレクトリのGoogle Doc `台本` を、そのShortの人間編集用正本とする。
-- Short台本確定後に生成した `台本.md` を、そのShortの発話・TTS・字幕・映像設計へ渡す制作入力とする。`台本.md` を人に直接編集させない。
-- 横動画のGoogle Doc `台本` と `台本.md` は、事実、留保、用語、既存リファレンスや素材を確認する補助コンテキストとして使ってよいが、Shortの発話元にはしない。
+- `source/scripts` のGoogle Doc `short` をShortの人間編集用正本とする。
+- Short台本確定後に同期した `short.md` を、発話・TTS・字幕・映像設計へ渡す制作入力とする。`short.md` を人に直接編集させない。
+- 横動画のGoogle Doc `long` と `long.md` は、事実、留保、用語、既存リファレンスや素材を確認する補助コンテキストとして使ってよいが、Shortの発話元にはしない。
 - 動画制作工程で横動画台本からShort台本を自動生成・再構成しない。Short台本が未記入、コメント反映中、または未確定なら、TTS、字幕、映像実装へ進まない。
 - Short台本に事実確認済みの内容との矛盾や必要な留保の欠落が見つかった場合は、黙って台本を書き換えず、矛盾を報告してGoogle Docの台本修正へ戻す。
 - 冒頭にロゴや挨拶を置かず、最初の一文で変化、疑問、重要な数字のいずれかを提示する。
@@ -58,7 +58,7 @@ Short台本の保存、Google Docsでの共同編集、ユーザーコメント�
 - 列挙は縦方向と順次表示を基本にし、横並びで意味構造を潰さない。
 - 動きの切替へ権利確認済みの効果音を同期し、Short全編MP4で画像・動き・意味順・同期を検査する。
 - 重要なオブジェクトは字幕cueに合わせて更新し、長時間の完全静止を避ける。
-- Shortは縦尺の全編MP4と、確認対象を動画内時刻で示すreviewContextを作る。音声単体、静止画、contact sheet、motion clipを別の承認成果物にしない。
+- Shortは縦尺の全編MP4を作り、確認対象はパイプラインが動画内時刻へ対応付ける。音声単体、静止画、contact sheet、motion clipを別の承認成果物にしない。
 
 ## Shortサムネイル
 
@@ -75,9 +75,9 @@ Studioアプリで複数動画が一様に灰色の場合は、設定漏れと�
 
 ## 公開前チェック
 
-- 横動画の全segment MP4と全Shortsの全編MP4が最新で、各segmentを人が明示承認している。
+- 横動画の全segment MP4と、初期化済みShortの全編MP4が最新で、各segmentを人が明示承認している。
 - 投稿用の全編MP4が最終承認済みである。承認済みレビューMP4と投稿用ファイルが同一hashなら、同じ動画への重複承認は求めない。
-- Short自身のGoogle Doc `台本`、同期済み `台本.md`、TTS・字幕・映像設計の発話内容が一致している。
+- Google Doc `short`、同期済み `short.md`、TTS・字幕・映像設計の発話内容が一致している。
 - Google Doc上のユーザーコメントが反映済み、または要確認として未解決のまま明示されている。
 - 冒頭1秒で主題が分かる。
 - 右端と下部に重要な数字、顔、字幕、CTAがない。

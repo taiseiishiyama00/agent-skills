@@ -6,7 +6,7 @@
 
 目標は、政策や専門家の正解を断定することではなく、ニュースの仕組みと視聴者自身への影響を理解できる状態にすること。原則10分以内を狙い、今回のニュースを理解するために不要な基礎知識は削る。
 
-台本の保存、Google Docsでの共同編集、ユーザーコメントの反映、パイプライン用 `台本.md` への同期は [script-collaboration.md](script-collaboration.md) に従う。
+台本の保存、Google Docsでの共同編集、ユーザーコメントの反映、`source/scripts/long.md` への同期は [script-collaboration.md](script-collaboration.md) に従う。
 
 ## 台本先頭のメタ情報
 

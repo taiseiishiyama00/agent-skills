@@ -2,14 +2,14 @@
 
 ## 正本と生成物
 
-横動画・Shortsとも、台本の人間編集用正本はGoogle Drive上のネイティブGoogleドキュメント `台本` とする。
+横動画・Shortとも、台本の人間編集用正本はGoogle Driveの `source/scripts` に置くネイティブGoogleドキュメントとする。
 
-- `台本`: 人が読む、編集する、コメントする正本
-- `台本.md`: TTS、字幕、映像設計など制作パイプラインへ渡す生成ミラー
+- `long` / `short`: 人が読む、編集する、コメントするGoogle Docの正本
+- `long.md` / `short.md`: TTS、字幕、映像設計など制作パイプラインへ渡す生成ミラー
 
-人に `台本.md` の直接編集を求めない。編集方向は原則 `台本` Google Doc → `台本.md` の一方向とし、パイプライン側の生成物をGoogle Docへ逆流させない。
+人にMarkdownミラーの直接編集を求めない。編集方向は原則Google Doc → Markdownの一方向とし、パイプライン側の生成物をGoogle Docへ逆流させない。
 
-Google Docは対象作品またはShortのディレクトリへ置く。Shortでは各Shortディレクトリごとに独立した `台本` を持つ。
+横動画のGoogle Doc `long` とShortのGoogle Doc `short` は同じ `source/scripts` に置く。Short ID別のディレクトリは作らない。
 
 ## 初稿
 
@@ -38,9 +38,9 @@ Google Docは対象作品またはShortのディレクトリへ置く。Shortで
 
 コメントが付いているGoogle Docを全文置換で作り直さない。コメントの文脈やアンカーを壊さないよう、対象範囲を編集する。
 
-## `台本.md` への同期
+## Markdownへの同期
 
-ユーザーが台本を確定した後、または次の制作工程へ進む直前に、Google Docからパイプライン用 `台本.md` を更新する。
+ユーザーが台本を確定した後、または次の制作工程へ進む直前に、Google Doc `long` から `long.md`、Google Doc `short` から `short.md` を更新する。
 
 同期時はGoogle Docsのプレーンテキストを書き出すだけではなく、パイプラインが期待するMarkdown構造へ正規化する。
 
@@ -48,14 +48,14 @@ Google Docは対象作品またはShortのディレクトリへ置く。Shortで
 - 話者行は `**話者名:** 発話` の形式へする。
 - ト書き、時間インサート、読み上げ対象外の記法は既存パイプライン契約を維持する。
 - `projectId` など機械用メタデータは作品設定から保持する。
-- Google Docにだけ存在するコメント、提案、解決済みスレッドは `台本.md` に混ぜない。
+- Google Docにだけ存在するコメント、提案、解決済みスレッドはMarkdownへ混ぜない。
 
-同期後はGoogle Docと `台本.md` の発話順・発話内容が一致していることを確認し、既存の台本パーサーまたはTTS dry-runで入力として有効であることを検証する。
+同期後はGoogle Docと対応するMarkdownの発話順・発話内容が一致していることを確認し、既存の台本パーサーまたはTTS dry-runで入力として有効であることを検証する。
 
 ## Shorts
 
 Shortsでも同じルールを使う。
 
-Short動画の発話正本は、そのShort自身のGoogle Doc `台本` とする。親の横動画Google Docや横動画 `台本.md` は、事実、留保、出典、再利用素材を確認する補助コンテキストに限る。
+Short動画の発話正本はGoogle Doc `short` とする。Google Doc `long` や `long.md` は、事実、留保、出典、再利用素材を確認する補助コンテキストに限る。
 
 横動画台本からShort台本を動画制作工程で自動生成・上書きしない。
