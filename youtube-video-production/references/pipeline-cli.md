@@ -52,10 +52,10 @@ npm run pipeline -- --channel <channel-id> project init <project-id> \
 
 ```sh
 npm run pipeline -- --channel <channel-id> tts dry-run <project-id>
-npm run pipeline -- --channel <channel-id> tts generate <project-id> --allow-paid-api
+npm run pipeline -- --channel <channel-id> tts generate <project-id>
 ```
 
-- 有料生成前に必ず `tts dry-run` で話者、区間、リクエスト数、入力サイズを確認する。
+- 初回生成は正常フローとして確認なしで実行する。既存音声を有料APIで再生成する必要がある場合だけCLIが停止するため、ユーザーの許可後に `--allow-paid-api` を付けて再実行する。
 - profileの既定話者以外が登場する場合は、作品の `tts-config.json` に安定した話者ID、台本名、Voiceを定義する。
 - TTS側の話者上限に合わせ、発話順を壊さず最大話者数以内の連続区間へ分ける。
 - 台本の独立行にある角括弧の時間インサートは読み上げず、次の発話を新しいTTS区間にする。
@@ -126,7 +126,7 @@ npm run pipeline -- --channel <channel-id> qa <project-id>
 npm run pipeline -- --channel <channel-id> approve <project-id> final
 ```
 
-- `review generate` は長尺を章境界ベースで最大6本の連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。
+- `review generate` は長尺を章境界ごとの連続MP4へ分け、初期化済み全Shortsを1本ずつ全編MP4としてGoogle Driveへ生成する。分割本数に固定上限を設けない。
 - 初回または横断変更時はオプションなしで全segmentを生成する。局所修正時だけ `--segment <segment-id>` で該当MP4を再生成する。影響範囲が不明なら全生成する。
 - 人へ渡す前に、最新のMP4と入力hashで分割レビューMP4の共通品質ゲートを通す。
 - 人が各MP4を確認し、`approve ... review --segment <segment-id>` で個別承認する。全MP4を一度に確認した場合だけ `--all` を使用できる。
@@ -164,7 +164,7 @@ npm run pipeline -- --channel <channel-id> shorts init <project-id> <short-id> \
 
 npm run pipeline -- --channel <channel-id> shorts task <project-id> <short-id> --json
 npm run pipeline -- --channel <channel-id> shorts tts <project-id> <short-id> --dry-run
-npm run pipeline -- --channel <channel-id> shorts tts <project-id> <short-id> --allow-paid-api
+npm run pipeline -- --channel <channel-id> shorts tts <project-id> <short-id>
 npm run pipeline -- --channel <channel-id> shorts captions <project-id> <short-id>
 npm run pipeline -- --channel <channel-id> shorts sync <project-id> <short-id>
 npm run pipeline -- --channel <channel-id> shorts sync <project-id> <short-id> --plans-only
