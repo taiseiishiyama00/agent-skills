@@ -1,6 +1,6 @@
 # Remotion制作
 
-> この文書は派生手順書であり、映像品質の正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` にある要求IDを、Compositionとテストへ再現可能に実装する方法だけを定める。
+> この文書は派生手順書であり、映像品質の正本ではない。対象チャンネルの `channels/<channel-id>/output-rules.md` にある要求IDを、Compositionとテストへ再現可能に実装する方法だけを定める。
 
 ## 責務
 

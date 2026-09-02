@@ -1,6 +1,6 @@
 # 動画制作ワークフロー
 
-> この文書は派生手順書であり、動画要求の正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` にある合格状態を、同じ入力から再現する工程順だけを定める。
+> この文書は派生手順書であり、動画要求の正本ではない。対象チャンネルの `channels/<channel-id>/workflow.md` と `channels/<channel-id>/output-rules.md` にある合格状態を、同じ入力から再現する工程順だけを定める。
 
 台本の作成、共同編集、コメント反映、パイプライン用Markdownへの同期は [script-collaboration.md](script-collaboration.md) に従う。
 

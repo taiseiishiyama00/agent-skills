@@ -1,6 +1,6 @@
 # 動画品質レビュー手順書
 
-> この文書は派生手順書であり、品質ゴールの正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` にある要求IDを、MP4の再生検査へ詳細化する。
+> この文書は派生手順書であり、品質ゴールの正本ではない。対象チャンネルの `channels/<channel-id>/output-rules.md` にある要求IDを、MP4の再生検査へ詳細化する。
 
 ## 入力
 

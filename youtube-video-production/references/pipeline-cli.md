@@ -1,6 +1,6 @@
 # 制作パイプラインCLI
 
-> この文書は派生手順書であり、動画要求の正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` にある要求IDを、CLIで再現可能かつ冪等に満たす方法だけを定める。
+> この文書は派生手順書であり、動画要求の正本ではない。対象チャンネルの `channels/<channel-id>/workflow.md` と `channels/<channel-id>/output-rules.md` にある要求IDを、CLIで再現可能かつ冪等に満たす方法だけを定める。
 
 ## 責務と正本
 
@@ -13,7 +13,7 @@
 - rendererの `public/assets/channels/<channel-id>`: アバター、ロゴなどチャンネル固有素材
 - rendererの `public/input/<channel-id>/<projectId>`: 描画時に同期される作品固有素材。原本ではない
 
-動画要求と数値の正本は対象チャンネルの `video-standard.md` とする。`config/channels/<channel-id>.json`、CLI、`src/` はその機械実装であり、作品固有の入力値はGoogle Drive側の作品ファイルから読む。
+動画要求と数値の正本は対象チャンネルの `workflow.md` と `output-rules.md` とする。`config/channels/<channel-id>.json`、CLI、`src/` はその機械実装であり、作品固有の入力値はGoogle Drive側の作品ファイルから読む。
 
 ## セットアップと診断
 
@@ -143,7 +143,7 @@ npm run pipeline -- --channel <channel-id> approve <project-id> final
 
 ## 作品データ
 
-作品構成は対象チャンネルの `video-standard.md` にある保存構造要求を `project init` で機械的に作成する。人が扱う入力は `source`、公開用成果物は `output`、計画・台帳・レビュー・QA・承認状態は `.pipeline` に分ける。内部ファイルを手作業で移動・改名せず、秘密鍵は作品ディレクトリへ置かない。
+作品構成は対象チャンネルの `workflow.md` にある保存構造要求を `project init` で機械的に作成する。人が扱う入力は `source`、公開用成果物は `output`、計画・台帳・レビュー・QA・承認状態は `.pipeline` に分ける。内部ファイルを手作業で移動・改名せず、秘密鍵は作品ディレクトリへ置かない。
 
 ## Shorts CLI
 

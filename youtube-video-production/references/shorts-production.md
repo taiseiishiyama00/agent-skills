@@ -1,13 +1,13 @@
 # YouTube Shorts制作
 
-> この文書は派生手順書であり、Short要求の正本ではない。対象チャンネルの `channels/<channel-id>/video-standard.md` にある要求IDを、縦動画の制作と検査へ詳細化する。
+> この文書は派生手順書であり、Short要求の正本ではない。対象チャンネルの `channels/<channel-id>/output-rules.md` にある要求IDを、縦動画の制作と検査へ詳細化する。
 
 Short台本の保存、Google Docsでの共同編集、ユーザーコメントの反映、`source/scripts/short.md` への同期は [script-collaboration.md](script-collaboration.md) に従う。
 
 ## 事実と公式仕様
 
 - Shortの最大尺、解像度、関連動画、リンク、Content IDなど変更され得るYouTube仕様は、作業時にYouTube公式ヘルプで再確認する。
-- チャンネルの数値、目標尺、安全域、余韻時間、字幕制約は対象チャンネルの `video-standard.md` を正本とし、pipelineの設定は機械実装として一致させる。
+- チャンネルの数値、目標尺、安全域、余韻時間、字幕制約は対象チャンネルの `output-rules.md` を正本とし、pipelineの設定は機械実装として一致させる。
 - Shortsの説明欄やコメント欄のURLを主要導線にしない。横動画への導線にはYouTube Studioの「関連動画」を使う。
 - 固定ピクセルの安全域をYouTube公式値として断定しない。実機UIの変動を前提に、チャンネル設定と限定公開後の表示を確認する。
 
