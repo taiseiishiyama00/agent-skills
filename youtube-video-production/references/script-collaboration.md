@@ -2,14 +2,15 @@
 
 ## 正本と生成物
 
-横動画・Shortとも、台本の人間編集用正本はGoogle Driveの `source/scripts` に置くネイティブGoogleドキュメントとする。
+横動画の台本と、呼び込み用Shortでそのまま使う冒頭部分の人間編集用正本は、Google Driveの `source/scripts` に置くネイティブGoogleドキュメント `long` とする。
 
-- `long` / `short`: 人が読む、編集する、コメントするGoogle Docの正本
+- `long`: 人が読む、編集する、コメントするGoogle Docの正本
+- `short`: `long` の冒頭コピーと定型CTAを人が確認するGoogle Docの生成ミラー
 - `long.md` / `short.md`: TTS、字幕、映像設計など制作パイプラインへ渡す生成ミラー
 
-人にMarkdownミラーの直接編集を求めない。編集方向は原則Google Doc → Markdownの一方向とし、パイプライン側の生成物をGoogle Docへ逆流させない。
+人にMarkdownミラーの直接編集を求めない。横動画はGoogle Doc `long` → `long.md` の一方向、Shortは確定した `long` → 確認用Google Doc `short` と `short.md` の一方向で生成する。
 
-横動画のGoogle Doc `long` とShortのGoogle Doc `short` は同じ `source/scripts` に置く。Short ID別のディレクトリは作らない。
+横動画のGoogle Doc `long` とShortの確認用Google Doc `short` は同じ `source/scripts` に置く。Short ID別のディレクトリは作らない。
 
 ## 初稿
 
@@ -38,7 +39,7 @@
 
 ## Markdownへの同期
 
-ユーザーが台本を確定した後、または次の制作工程へ進む直前に、Google Doc `long` から `long.md`、Google Doc `short` から `short.md` を更新する。
+ユーザーが横動画台本を確定した後、または次の制作工程へ進む直前に、Google Doc `long` から `long.md` を更新する。呼び込み用Shortは、確定した `long` の冒頭からオープニングインサート直前までを完全コピーし、定型CTAを付けてGoogle Doc `short` と `short.md` を生成する。
 
 同期時はGoogle Docsのプレーンテキストを書き出すだけではなく、パイプラインが期待するMarkdown構造へ正規化する。
 
@@ -48,12 +49,17 @@
 - `projectId` など機械用メタデータは作品設定から保持する。
 - Google Docにだけ存在するコメント、提案、解決済みスレッドはMarkdownへ混ぜない。
 
-同期後はGoogle Docと対応するMarkdownの発話順・発話内容が一致していることを確認し、既存の台本パーサーまたはTTS dry-runで入力として有効であることを検証する。
+同期後はGoogle Docと対応するMarkdownの発話順・発話内容が一致していることを確認し、既存の台本パーサーまたはTTS dry-runで入力として有効であることを検証する。Shortのコピー区間は、句読点、話者、ト書き、章境界、発話順を含めて `long` と一致することを機械的に検証する。
 
 ## Shorts
 
-Shortsでも同じルールを使う。
+呼び込み用Shortは別の要約台本を書かず、次の順で組み立てる。
 
-Short動画の発話正本はGoogle Doc `short` とする。Google Doc `long` や `long.md` は、事実、留保、出典、再利用素材を確認する補助コンテキストに限る。
+1. `long` の台本先頭から、コントとハンドリングにある強い問題提起までを完全コピーする。
+2. 横動画のオープニングインサートと、それ以降の本編はコピーしない。
+3. 解説役が「詳しくは本編動画で解説しています。」と案内する。
+4. 進行役が「ぜひ関連動画から見てください。」と案内して終える。
 
-横動画台本からShort台本を動画制作工程で自動生成・上書きしない。
+話者名と文言はチャンネルprofileのShort台本テンプレートを正本とし、上記は既定の役割と意図を示す。コピー区間をShort向けに要約、言い換え、短縮、強調し直さない。最大尺を超える場合も自動で書き換えず、横動画の冒頭を調整するか、例外として別台本にするかをユーザーへ確認する。
+
+Shortの確認用Google Doc `short` にコピー区間へのコメントが付いた場合は、同じ修正を `long` の正本へ反映してからShortを再生成する。生成ミラーだけを編集して横動画と内容を分岐させない。CTAへの変更はチャンネルprofileのテンプレート、またはその作品に対する明示的な例外として扱う。

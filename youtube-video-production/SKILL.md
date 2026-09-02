@@ -42,7 +42,7 @@ description: 設定済みYouTubeチャンネルの横動画・Shortsについて
 └─ .pipeline/        # パイプラインが管理する内部状態
 ```
 
-- 台本は `source/scripts` に置く。人が編集するGoogle Docは横動画を `long`、Shortを `short` とし、制作入力へ同期したMarkdownはそれぞれ `long.md`、`short.md` とする。
+- 台本は `source/scripts` に置く。人が編集するGoogle Doc `long` を横動画と呼び込み用Shortの共通正本とする。Short用Google Doc `short` は、横動画冒頭の完全コピーと定型CTAを確認する生成ミラーであり、別台本の正本にしない。制作入力へ同期したMarkdownはそれぞれ `long.md`、`short.md` とする。
 - `post.md` にタイトルと概要欄をまとめる。
 - 1作品には横動画1本とShort最大1本を置く。Short IDはCLI、hash、YouTube上の識別にだけ使い、DriveのディレクトリをID別に分けない。2本目のShortが必要なら別作品として初期化する。
 - `.pipeline` はレビュー分割、計画、台帳、QA、承認状態などをツールが管理する領域であり、人へ編集や承認を求めない。
