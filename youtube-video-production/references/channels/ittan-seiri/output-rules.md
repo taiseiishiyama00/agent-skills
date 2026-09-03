@@ -15,6 +15,7 @@
 - `ITTAN-AUDIO-005` 音声は48kHz、320kbpsにする。
 - `ITTAN-AUDIO-006` 各章の完成音声はIntegrated Loudness -19 LUFS、True Peak -3 dBTP、LRA 7にする。
 - `ITTAN-AUDIO-007` 全編の章間ラウドネス差は0.6 LU以内、True Peakは-1 dBTP以下にする。
+- `ITTAN-AUDIO-008` コントパートの各発話間は、原則として約0.5秒空ける。ただし、発話間に演出や動きがある場合はこの限りではなく、演出や動きが自然に伝わるよう、適切により長い間を取る。
 - `ITTAN-CAPTION-001` 字幕は意味のまとまりごとに分け、各cueの開始を対応する語頭の前後100ms以内にする。
 - `ITTAN-CAPTION-002` 同時に表示する字幕cueは1つだけにする。
 - `ITTAN-CAPTION-003` 横動画の字幕は最大2行、1行24文字以内、最終語の保持は150msにする。
