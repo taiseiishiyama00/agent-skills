@@ -209,7 +209,7 @@
     ],
     "requirementStatus": "not-implemented",
     "remaining": "ITTAN-CAPTION-003の横動画32文字とITTAN-SHORT-009のShort 24文字に対し、caption-system.tsxの制限は横動画24文字・Short 16文字のまま。",
-    "implementationSha256": "e9f6da6926f5a657c6caacc4738e5b2ba6c3612cd0552473d29ac1b31c4f5ba8",
+    "implementationSha256": "c5b59bd1e544a9779025015113c6172b79c88de3c03bee4d0fd8a3637e8cfc9f",
     "cueFormat": {
       "timebase": "milliseconds",
       "fields": [
@@ -220,8 +220,8 @@
       "schemaVersion": "2.0.0"
     },
     "captionPlanSha256": {
-      "src/generated/ittan-seiri/credit-card-fraud/long.caption-plan.json": "10c4183ec51b28f870d82b8db95c99bfc67f543f57d107e89796700ea2fabaae",
-      "src/generated/ittan-seiri/credit-card-fraud/short.caption-plan.json": "bd4ae7fd5ac117f32beb0d7e42b037c3c82d21533ed4f7b13f2ae575080d2840",
+      "src/generated/ittan-seiri/credit-card-fraud/long.caption-plan.json": "3cadb1cb077ed77b3709cebe08904aeab9b23e63b215d258ee7bcf5be867bc81",
+      "src/generated/ittan-seiri/credit-card-fraud/short.caption-plan.json": "f3642f0f9b9b3dc911f3911873c289fc04347bd8f28c76bfe731b03aec7087dc",
       "src/generated/ittan-seiri/living-road-30.caption-plan.json": "86df6bb8707a15e3987928e133997cd2b0657e24bf56b54aa524237239016993",
       "src/generated/ittan-seiri/living-road-30.promo-01.caption-plan.json": "b28ff5a78fb8c6d9779173137cfec524409e5553607114f331ed671366c3ce9b",
       "src/generated/ittan-seiri/meta-ai-team-60.caption-plan.json": "4014316d09b8b8de9922a88da9178fa96a39a4e3d013360b9bd18716189f9cca",
@@ -274,10 +274,10 @@
       }
     ],
     "entry": "src/formats/conversation-explainer/components/FrameChrome.tsx",
-    "implementationSha256": "f20849ee7cbd4c11a223f7294a026d285c86f3b9f9be6aa5290ce3c8680bf05a",
+    "implementationSha256": "7917d7f2b712cc3983771b739b378949a650bc1363b915e37dd83198270e3105",
     "responsibilities": [
       "横動画のオープニング後に、左上へCHAPTER、章番号、章タイトルを表示する",
-      "横動画とShortの右上へ、概要欄から追跡できるリファレンスIDを表示する",
+      "横動画とShortの右上へ、概要欄から追跡できるリファレンスIDと空でない資料タイトルを表示する",
       "リファレンスIDから表示データへの解決を一箇所で行い、不明なIDをエラーにする",
       "コント冒頭へ『これは「○○」の解説動画です』を表示する"
     ],
@@ -378,5 +378,72 @@
       "implementation": "render設定、MP4 metadata検証、全編品質検査",
       "status": "not-verified"
     }
-  ]
+  ],
+  "creditReviewMapping": {
+    "scope": "クレカ不正利用作品の出典名、Shortの左右下部アバター、章内で異なる主題・構図の内容図解",
+    "requirements": [
+      {
+        "id": "ITTAN-VISUAL-008",
+        "sha256": "166ca9d1642079458233e311e081d1c233a9c7db9bdfc0f8b56ea6ebf642e06f"
+      },
+      {
+        "id": "ITTAN-VISUAL-012",
+        "sha256": "736208b412c7bd1c3ee7397bb684732d60108cef65685f8c84611783434f3302"
+      },
+      {
+        "id": "ITTAN-VISUAL-002",
+        "sha256": "2004fd568828733f4b334a376c8ec77d633ddb08391ffda46dccbeacb31e8ccd"
+      }
+    ],
+    "implementationSha256": {
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx": "3f5de60a0783f3135b8aa8165999c242f67e8b7dc4b82b6244d05b1edf0c4b80",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditVisuals.tsx": "c6beafd8e7b4d1bde4b8b643f93c6160b18bf0c0a33eca582446e03ec61c691f",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx": "9583ae443e16142e08823f12b47d1fdbb9cf67c139784d24b4bf18078d8e6f2d",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/ShortCreditDiagram.tsx": "8d5cab32432972634999e23b0e3d011546c105df57e66393d50b6d52e4f0700c",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/scenes.ts": "0ad8a238e278268d853d0f21e9f366f3dc6987be2a0eeddae67e05d7fdee5eca",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/index.tsx": "4c779a29a621ceb8e980b9a530b1e2587b6ca5e0571b1b26c4ee74a48c4b2f16",
+      "src/generated/ittan-seiri/credit-card-fraud/references.json": "ff327062a19d08206cd7974cae2302a0d3d9331d0ca72ae00c153c5d79054a57"
+    },
+    "consumers": [
+      "src/channels/ittan-seiri/videos/credit-card-fraud/index.tsx"
+    ],
+    "verification": "npx vitest run tests/credit-review-regression.test.tsx",
+    "render": "YOUTUBE_WORKSPACE_ROOTとYOUTUBE_PREVIOUS_WORKSPACE_ROOTを設定し、pipeline scripts/render-credit-card-review.mjsを実行。前版の音声ハッシュ一致を検証し、映像をNVENCで再描画する。",
+    "evidence": "作品の.pipeline/review/independent-review.jsonで完成MP4の別エージェントレビューとハッシュを記録",
+    "septemberReview": {
+      "source": "2026-09-07 ユーザーの分割動画レビューと、このタスクでの回答",
+      "precedence": "途中の進行君の発話は前図を保持。章頭は図を入れる。個別図の修正指示より優先。支払いの仕組みの「あります」も前図保持。",
+      "short": "人物を上、字幕を下。注意書き2行。返金の裏では／はい、さらに／より詳しいの前を各0.5秒延長。単独CTA末尾を削除。",
+      "terminology": "図・字幕・音声をカード会社に統一。",
+      "implementationSha256": {
+        "src/channels/ittan-seiri/videos/credit-card-fraud/visual-selection.ts": "4d5f1d305345ad4c64b6064a1fd4eb7757360a9cd166de59cb59542b0eb280d3",
+        "src/channels/ittan-seiri/videos/credit-card-fraud/diagram-glyphs.json": "fb5443cb12fc1487b8e5f8928df7a611d212b4f47d1269617d612b5948ab4804",
+        "src/generated/ittan-seiri/credit-card-fraud/long.json": "302a17057ecb9c468d3ad4840c419a19be0a05ec8dd00790e512ab9504b7d9e0",
+        "src/generated/ittan-seiri/credit-card-fraud/short.json": "3562f79b72af821f50f125f0b2cb8925f54b3271e6a82e57672bcf3eba37c327",
+        "scripts/september-render.mjs": "325749d478920ff19eddac3e9bed232face0c574e33d6b430b65d2999ea91957"
+      },
+      "consumers": [
+        "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx"
+      ],
+      "verification": "npx vitest run tests/credit-september-review.test.ts tests/credit-review-regression.test.tsx; node scripts/september-render.mjs",
+      "audio": "同じ話者の既存「カード」音声を語頭対応表で接合。台詞尺を維持し、完成MP4との相互相関で同期確認。"
+    }
+  },
+  "creditThumbnailMapping": {
+    "scope": "クレカ不正利用作品のLong・Shortサムネイル。チャンネル共通配色、正式アバター、作品の権利確認済み画像を使い、主要コピーを24文字以内・前面・大面積で表示する。",
+    "requirement": {
+      "id": "ITTAN-VISUAL-018",
+      "sha256": "d5ef0b9c8f70450bd9eb8d842271426ccdbae8e3b7545749808cc31b70aa3e20"
+    },
+    "implementationSha256": {
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardThumbnails.tsx": "846ea47adcb94761adc59daa1553889a7e5d6ab43187fdf1a571d5b2df28356b",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/thumbnail-index.tsx": "2a2c586ca0d9ab5acb4fe2f78c71f8b58bc114cb901227ba4d3f843597087aa1"
+    },
+    "consumers": [
+      "src/channels/ittan-seiri/videos/credit-card-fraud/thumbnail-index.tsx"
+    ],
+    "render": "node scripts/remotion.mjs still src/channels/ittan-seiri/videos/credit-card-fraud/thumbnail-index.tsx CreditCardFraudThumbnail <outputs/thumbnail/long.png> --image-format=png; node scripts/remotion.mjs still src/channels/ittan-seiri/videos/credit-card-fraud/thumbnail-index.tsx CreditCardFraudShortThumbnail <outputs/thumbnail/short.png> --image-format=png",
+    "verification": "npm run typecheck; npm exec vitest run tests/credit-card-thumbnail-layout.test.ts。描画後に1280x720と1080x1920へ縮小し、実寸・スマートフォン相当で文字、人物、主題、重なりを目視確認する。",
+    "evidence": "作品のoutputs/thumbnailと.pipeline/related-info-qa.jsonに記録"
+  }
 }
