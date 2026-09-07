@@ -69,6 +69,14 @@
       {
         "file": "src/formats/conversation-explainer/components/ShortConversationLayout.tsx",
         "variant": "short"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+        "variant": "wide"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+        "variant": "short"
       }
     ],
     "projectBackgrounds": "public/input/<channel-id>/<project-id>/ に分離し、この対応表の一意性検証には含めない。画像・SVG・素材台帳はGitで固定する。",
@@ -81,12 +89,36 @@
   "titleCardsMapping": {
     "scope": "横動画の固定オープニング、章タイトル、12秒エンディング。Shortの作品固有オープニングとCTAは対象外。",
     "requirements": [
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-002", "sha256": "f2055d74e0bb77bd57f639225de32ce121628ed08fd691b762f789e9f221129c"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-003", "sha256": "cef2645eafdcaad3a1de002d481074373c58defb7ce95a80043749a846f29458"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-004", "sha256": "9e6a37c764630509cc1051efa31c5325855c9a96dde441bcc28a82e70e420e16"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-VISUAL-011", "sha256": "f857a21450d04c20c555c4a4900d18a83b578e05553ccb3564d80de34546feae"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-VISUAL-014", "sha256": "d312506d9e1e640d61ce6f8a87f8466ca1bc643128feb3402c6c4b136fb9ded2"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-OUTPUT-002", "sha256": "fa42dcdb148fa899ce252d0f1201531daa7e918169385362c25b7a0a4b57dfd5"}
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-LONG-002",
+        "sha256": "f2055d74e0bb77bd57f639225de32ce121628ed08fd691b762f789e9f221129c"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-LONG-003",
+        "sha256": "cef2645eafdcaad3a1de002d481074373c58defb7ce95a80043749a846f29458"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-LONG-004",
+        "sha256": "9e6a37c764630509cc1051efa31c5325855c9a96dde441bcc28a82e70e420e16"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-VISUAL-011",
+        "sha256": "f857a21450d04c20c555c4a4900d18a83b578e05553ccb3564d80de34546feae"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-VISUAL-014",
+        "sha256": "d312506d9e1e640d61ce6f8a87f8466ca1bc643128feb3402c6c4b136fb9ded2"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-OUTPUT-002",
+        "sha256": "fa42dcdb148fa899ce252d0f1201531daa7e918169385362c25b7a0a4b57dfd5"
+      }
     ],
     "entry": "src/channels/ittan-seiri/branding/TitleCards.tsx",
     "gsapImplementation": "src/formats/conversation-explainer/components/GsapTitleCards.tsx",
@@ -96,17 +128,49 @@
       "src/formats/conversation-explainer/components/EndingMusic.tsx": "c839f4a48f885fa2c8abd12ad5b3e9e265683c6099ed5ba92e71f16a891dee3a",
       "src/formats/conversation-explainer/components/end-screen-layout.ts": "9310f76f673a6865dccdb12bfac70a3eaf01fbea751f7bf945076081f0b5fcf4"
     },
-    "frames": {"opening": 72, "chapter": 75, "ending": 360},
+    "frames": {
+      "opening": 72,
+      "chapter": 75,
+      "ending": 360
+    },
     "audioSha256": {
       "assets/common/sfx/effect-lab/logo-animation1.mp3": "5eceb6bcd9cdf88016c57fa14b2ef9bc130c1eab555a69d42e278b88793d75e7",
       "assets/common/sfx/effect-lab/title1.mp3": "08561d0c13ee726265654566c185c8a26dee5a23b8d06156c30aa37adc7ca97b",
       "assets/common/music/incompetech/Carefree.mp3": "8433b770a630d9b1594fd484442c677907ece899a4d149954cd2e74fd733e311"
     },
     "consumers": [
-      {"file": "src/channels/ittan-seiri/videos/living-road-30/LivingRoad30Full.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]},
-      {"file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60Full.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]},
-      {"file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]},
-      {"file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]}
+      {
+        "file": "src/channels/ittan-seiri/videos/living-road-30/LivingRoad30Full.tsx",
+        "components": [
+          "IttanBrandOpening",
+          "IttanChapterTitle",
+          "IttanEndScreen"
+        ]
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60Full.tsx",
+        "components": [
+          "IttanBrandOpening",
+          "IttanChapterTitle",
+          "IttanEndScreen"
+        ]
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx",
+        "components": [
+          "IttanBrandOpening",
+          "IttanChapterTitle",
+          "IttanEndScreen"
+        ]
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+        "components": [
+          "IttanBrandOpening",
+          "IttanChapterTitle",
+          "IttanEndScreen"
+        ]
+      }
     ],
     "verification": "npm run title-cards:verify",
     "tests": "npx vitest run tests/ittan-title-cards.test.ts tests/title-card-verification.test.mjs tests/end-screen.test.ts",
@@ -115,10 +179,26 @@
   "captionMapping": {
     "scope": "横動画とShortの発話字幕。作品固有の見出し、図中テキスト、章タイトル、CTAは対象外。",
     "requirements": [
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-CAPTION-001", "sha256": "2a5ca5c8e4d87ea274a9601be8d72798a70f753ceb97292b46f6d32949218a34"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-CAPTION-002", "sha256": "958ba9a5458cd220980762152c26c61f9c0fcc7dc24c37f7c5e31ccd2442fbba"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-CAPTION-003", "sha256": "ab3a71c3c92ca74839a706eb40c3e6dce3e16b40e04525209f83790b37ee2af3"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-SHORT-009", "sha256": "badb4cb8cf6ce9abdeb6487c14ca3676e36fa0b5d45842c8fcdd899089f5085c"}
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-CAPTION-001",
+        "sha256": "2a5ca5c8e4d87ea274a9601be8d72798a70f753ceb97292b46f6d32949218a34"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-CAPTION-002",
+        "sha256": "958ba9a5458cd220980762152c26c61f9c0fcc7dc24c37f7c5e31ccd2442fbba"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-CAPTION-003",
+        "sha256": "ab3a71c3c92ca74839a706eb40c3e6dce3e16b40e04525209f83790b37ee2af3"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-SHORT-009",
+        "sha256": "badb4cb8cf6ce9abdeb6487c14ca3676e36fa0b5d45842c8fcdd899089f5085c"
+      }
     ],
     "entry": "src/formats/conversation-explainer/caption-system.tsx",
     "responsibilities": [
@@ -127,15 +207,19 @@
       "ミリ秒cueの一意検索とフレームからの時間変換",
       "横動画とShortの字幕描画"
     ],
-    "implementationSha256": "a8b9b7cd1cb03b2caef1cbaec1de0d7be48e7b5fc8bef578ffe3a81a3e9bef3d",
+    "implementationSha256": "e9f6da6926f5a657c6caacc4738e5b2ba6c3612cd0552473d29ac1b31c4f5ba8",
     "cueFormat": {
       "timebase": "milliseconds",
-      "fields": ["startMs", "endMs", "lines"],
+      "fields": [
+        "startMs",
+        "endMs",
+        "lines"
+      ],
       "schemaVersion": "2.0.0"
     },
     "captionPlanSha256": {
       "src/generated/ittan-seiri/credit-card-fraud/long.caption-plan.json": "10c4183ec51b28f870d82b8db95c99bfc67f543f57d107e89796700ea2fabaae",
-      "src/generated/ittan-seiri/credit-card-fraud/short.caption-plan.json": "69a1f9a2e42d4eb9be389bccb19f9edfb4e44ab617bad9de384a54af2f4ddc3c",
+      "src/generated/ittan-seiri/credit-card-fraud/short.caption-plan.json": "bd4ae7fd5ac117f32beb0d7e42b037c3c82d21533ed4f7b13f2ae575080d2840",
       "src/generated/ittan-seiri/living-road-30.caption-plan.json": "86df6bb8707a15e3987928e133997cd2b0657e24bf56b54aa524237239016993",
       "src/generated/ittan-seiri/living-road-30.promo-01.caption-plan.json": "b28ff5a78fb8c6d9779173137cfec524409e5553607114f331ed671366c3ce9b",
       "src/generated/ittan-seiri/meta-ai-team-60.caption-plan.json": "4014316d09b8b8de9922a88da9178fa96a39a4e3d013360b9bd18716189f9cca",
@@ -176,8 +260,16 @@
   "frameChromeMapping": {
     "scope": "円安動画を正本とする、横動画本編左上の章表示、各解説右上のリファレンスID、コント冒頭の解説コンテキスト。作品固有の内容ビジュアル内に記載する出典表記は対象外。",
     "requirements": [
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-014", "sha256": "ca4286c754e93b8812146efc34826c6d1b5d5fd448c1550cfa17a2d33ba4fd81"},
-      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-VISUAL-008", "sha256": "166ca9d1642079458233e311e081d1c233a9c7db9bdfc0f8b56ea6ebf642e06f"}
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-LONG-014",
+        "sha256": "ca4286c754e93b8812146efc34826c6d1b5d5fd448c1550cfa17a2d33ba4fd81"
+      },
+      {
+        "file": "references/channels/ittan-seiri/output-rules.md",
+        "id": "ITTAN-VISUAL-008",
+        "sha256": "166ca9d1642079458233e311e081d1c233a9c7db9bdfc0f8b56ea6ebf642e06f"
+      }
     ],
     "entry": "src/formats/conversation-explainer/components/FrameChrome.tsx",
     "implementationSha256": "f20849ee7cbd4c11a223f7294a026d285c86f3b9f9be6aa5290ce3c8680bf05a",
@@ -203,10 +295,22 @@
       "src/formats/conversation-explainer/components/SkitExplainerContext.tsx"
     ],
     "prohibitedSnippets": [
-      {"file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx", "text": "出典 {refs.join"},
-      {"file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx", "text": "これはクレカ不正利用と返金の解説動画です。"},
-      {"file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx", "text": "const SourceLine"},
-      {"file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx", "text": "chapterLabel="}
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+        "text": "出典 {refs.join"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+        "text": "これはクレカ不正利用と返金の解説動画です。"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx",
+        "text": "const SourceLine"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx",
+        "text": "chapterLabel="
+      }
     ],
     "verification": "npm run frame-chrome:verify",
     "tests": "npx vitest run tests/frame-chrome.test.tsx tests/chapter-pill.test.tsx tests/skit-explainer-context.test.ts tests/frame-chrome-verification.test.mjs",
