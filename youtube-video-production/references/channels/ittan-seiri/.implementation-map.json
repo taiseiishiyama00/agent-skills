@@ -192,12 +192,12 @@
       {
         "file": "references/channels/ittan-seiri/output-rules.md",
         "id": "ITTAN-CAPTION-003",
-        "sha256": "ab3a71c3c92ca74839a706eb40c3e6dce3e16b40e04525209f83790b37ee2af3"
+        "sha256": "312232b30c4add4428dbc0eadb6cd182f69f4ee897cb3f98a1ab6f7c226a8920"
       },
       {
         "file": "references/channels/ittan-seiri/output-rules.md",
         "id": "ITTAN-SHORT-009",
-        "sha256": "badb4cb8cf6ce9abdeb6487c14ca3676e36fa0b5d45842c8fcdd899089f5085c"
+        "sha256": "c78f4282dbb7fd2f2157928aa673057c6d543a3f98beaeab759bbf60973b01b3"
       }
     ],
     "entry": "src/formats/conversation-explainer/caption-system.tsx",
@@ -207,6 +207,8 @@
       "ミリ秒cueの一意検索とフレームからの時間変換",
       "横動画とShortの字幕描画"
     ],
+    "requirementStatus": "not-implemented",
+    "remaining": "ITTAN-CAPTION-003の横動画32文字とITTAN-SHORT-009のShort 24文字に対し、caption-system.tsxの制限は横動画24文字・Short 16文字のまま。",
     "implementationSha256": "e9f6da6926f5a657c6caacc4738e5b2ba6c3612cd0552473d29ac1b31c4f5ba8",
     "cueFormat": {
       "timebase": "milliseconds",
