@@ -112,6 +112,67 @@
     "tests": "npx vitest run tests/ittan-title-cards.test.ts tests/title-card-verification.test.mjs tests/end-screen.test.ts",
     "evidence": "tmp/verification/ITTAN-TITLE-CARDS.json"
   },
+  "captionMapping": {
+    "scope": "横動画とShortの発話字幕。作品固有の見出し、図中テキスト、章タイトル、CTAは対象外。",
+    "requirements": [
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-CAPTION-001", "sha256": "2a5ca5c8e4d87ea274a9601be8d72798a70f753ceb97292b46f6d32949218a34"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-CAPTION-002", "sha256": "958ba9a5458cd220980762152c26c61f9c0fcc7dc24c37f7c5e31ccd2442fbba"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-CAPTION-003", "sha256": "ab3a71c3c92ca74839a706eb40c3e6dce3e16b40e04525209f83790b37ee2af3"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-SHORT-009", "sha256": "badb4cb8cf6ce9abdeb6487c14ca3676e36fa0b5d45842c8fcdd899089f5085c"}
+    ],
+    "entry": "src/formats/conversation-explainer/caption-system.tsx",
+    "responsibilities": [
+      "caption-plan 2.0.0のschema検証",
+      "横動画24文字・Short 16文字・最大2行の制限",
+      "ミリ秒cueの一意検索とフレームからの時間変換",
+      "横動画とShortの字幕描画"
+    ],
+    "implementationSha256": "a8b9b7cd1cb03b2caef1cbaec1de0d7be48e7b5fc8bef578ffe3a81a3e9bef3d",
+    "cueFormat": {
+      "timebase": "milliseconds",
+      "fields": ["startMs", "endMs", "lines"],
+      "schemaVersion": "2.0.0"
+    },
+    "captionPlanSha256": {
+      "src/generated/ittan-seiri/credit-card-fraud/long.caption-plan.json": "10c4183ec51b28f870d82b8db95c99bfc67f543f57d107e89796700ea2fabaae",
+      "src/generated/ittan-seiri/credit-card-fraud/short.caption-plan.json": "69a1f9a2e42d4eb9be389bccb19f9edfb4e44ab617bad9de384a54af2f4ddc3c",
+      "src/generated/ittan-seiri/living-road-30.caption-plan.json": "86df6bb8707a15e3987928e133997cd2b0657e24bf56b54aa524237239016993",
+      "src/generated/ittan-seiri/living-road-30.promo-01.caption-plan.json": "b28ff5a78fb8c6d9779173137cfec524409e5553607114f331ed671366c3ce9b",
+      "src/generated/ittan-seiri/meta-ai-team-60.caption-plan.json": "4014316d09b8b8de9922a88da9178fa96a39a4e3d013360b9bd18716189f9cca",
+      "src/generated/ittan-seiri/meta-ai-team-60.numbers-01.caption-plan.json": "a8f881f8d88d13901604f2d77524af0ce373f4bc89ccb22ee17e4f36e7b27366",
+      "src/generated/ittan-seiri/meta-ai-team-60.skit-01.caption-plan.json": "962670c47332b8d79724b9d14391b9cda52a655684bde6b0251e3f713cc9c515",
+      "src/generated/ittan-seiri/yen-intervention-15trillion.caption-plan.json": "ec99461d3a2710ca76d37b3c95994b28c03d7cd0fec27fcfa4ef3788a08f030c",
+      "src/generated/ittan-seiri/yen-intervention-15trillion.konto-summary.caption-plan.json": "8b3e9445baccb7610ee8f56a2f70ab7bc411ce02fb9012064e4899deb61a521e",
+      "src/generated/ittan-seiri/yen-intervention-15trillion.skit.caption-plan.json": "dafdc98d7bf648d82bf2a8747d67bcbf24d5172f55bfc5fa74a251049b393016"
+    },
+    "consumers": [
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+      "src/channels/ittan-seiri/videos/living-road-30/LivingRoad30Full.tsx",
+      "src/channels/ittan-seiri/videos/living-road-30/LivingRoad30Short.tsx",
+      "src/channels/ittan-seiri/videos/living-road-30/plan.ts",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiSkit.tsx",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60Full.tsx",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60NumbersShort.tsx",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/plan.ts",
+      "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx",
+      "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionKontoSummaryShort.tsx",
+      "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionOpeningShort.tsx",
+      "src/channels/ittan-seiri/videos/yen-intervention-15trillion/plan.ts",
+      "src/formats/conversation-explainer/components/ConversationFrame.tsx",
+      "src/formats/conversation-explainer/components/ShortConversationLayout.tsx"
+    ],
+    "prohibitedFiles": [
+      "src/formats/conversation-explainer/captions.ts",
+      "src/formats/conversation-explainer/caption-plan-schema.ts",
+      "src/formats/conversation-explainer/components/Subtitle.tsx",
+      "src/formats/conversation-explainer/components/ShortCaption.tsx"
+    ],
+    "verification": "npm run captions:verify",
+    "tests": "npx vitest run tests/caption-system.test.ts tests/caption-verification.test.mjs tests/plan.test.ts",
+    "evidence": "tmp/verification/ITTAN-CAPTIONS.json",
+    "alignmentEvidence": "各caption-planのalignmentメタデータとハッシュを固定する。完成音声との100ms以内の実測照合は完成動画QAで別途行う。"
+  },
   "relatedRequirements": [
     {
       "id": "ITTAN-AUDIO-004",
@@ -159,11 +220,6 @@
     {
       "requirement": "`output-rules.md` の音声",
       "implementation": "音声生成、正規化、タイミング検証、ラウドネス検査",
-      "status": "not-verified"
-    },
-    {
-      "requirement": "`output-rules.md` の字幕",
-      "implementation": "cue生成、音声アラインメント、文字数と表示範囲の検査",
       "status": "not-verified"
     },
     {
