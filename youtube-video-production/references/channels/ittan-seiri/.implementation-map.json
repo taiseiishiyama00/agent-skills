@@ -173,6 +173,45 @@
     "evidence": "tmp/verification/ITTAN-CAPTIONS.json",
     "alignmentEvidence": "各caption-planのalignmentメタデータとハッシュを固定する。完成音声との100ms以内の実測照合は完成動画QAで別途行う。"
   },
+  "frameChromeMapping": {
+    "scope": "円安動画を正本とする、横動画本編左上の章表示、各解説右上のリファレンスID、コント冒頭の解説コンテキスト。作品固有の内容ビジュアル内に記載する出典表記は対象外。",
+    "requirements": [
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-014", "sha256": "ca4286c754e93b8812146efc34826c6d1b5d5fd448c1550cfa17a2d33ba4fd81"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-VISUAL-008", "sha256": "13996018fc8d50aceff02b32cc7808bb6edac49f9f5688d9354a5547d407a792"}
+    ],
+    "entry": "src/formats/conversation-explainer/components/FrameChrome.tsx",
+    "implementationSha256": "f20849ee7cbd4c11a223f7294a026d285c86f3b9f9be6aa5290ce3c8680bf05a",
+    "responsibilities": [
+      "横動画のオープニング後に、左上へCHAPTER、章番号、章タイトルを表示する",
+      "横動画とShortの右上へ、概要欄から追跡できるリファレンスIDを表示する",
+      "リファレンスIDから表示データへの解決を一箇所で行い、不明なIDをエラーにする",
+      "コント冒頭へ『これは「○○」の解説動画です』を表示する"
+    ],
+    "canonicalSource": "yen-intervention-15trillion",
+    "consumers": [
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60Full.tsx",
+      "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx",
+      "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx",
+      "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionOpeningShort.tsx",
+      "src/formats/conversation-explainer/components/ConversationFrame.tsx",
+      "src/formats/conversation-explainer/components/ShortConversationLayout.tsx"
+    ],
+    "prohibitedFiles": [
+      "src/formats/conversation-explainer/components/ChapterPill.tsx",
+      "src/formats/conversation-explainer/components/ReferenceBadge.tsx",
+      "src/formats/conversation-explainer/components/SkitExplainerContext.tsx"
+    ],
+    "prohibitedSnippets": [
+      {"file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx", "text": "出典 {refs.join"},
+      {"file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx", "text": "これはクレカ不正利用と返金の解説動画です。"},
+      {"file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx", "text": "const SourceLine"},
+      {"file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx", "text": "chapterLabel="}
+    ],
+    "verification": "npm run frame-chrome:verify",
+    "tests": "npx vitest run tests/frame-chrome.test.tsx tests/chapter-pill.test.tsx tests/skit-explainer-context.test.ts tests/frame-chrome-verification.test.mjs",
+    "evidence": "tmp/verification/ITTAN-FRAME-CHROME.json"
+  },
   "relatedRequirements": [
     {
       "id": "ITTAN-AUDIO-004",
