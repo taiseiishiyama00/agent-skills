@@ -43,6 +43,75 @@
     "registry": "assets/blender/ittan-seiri/registry.json",
     "path": "public/{avatars[].output}/provenance.json"
   },
+  "backgroundMapping": {
+    "scope": "通常の解説場面で使う動画本編の共通背景のみ。作品固有背景、チャンネル画像、オープニング、章タイトル、エンディングは対象外。",
+    "requirement": {
+      "file": "references/channels/ittan-seiri/output-rules.md",
+      "id": "ITTAN-VISUAL-007",
+      "sha256": "a37ec9a6e9c255b738c9bda904eb42b8d9373e4240692d39b96506ca6fc6262d"
+    },
+    "entry": "src/formats/conversation-explainer/components/VideoBackground.tsx",
+    "variants": {
+      "wide": "conversation-explainer-wide",
+      "wideDark": "conversation-explainer-wide-dark",
+      "short": "conversation-explainer-short"
+    },
+    "implementationSha256": {
+      "src/formats/conversation-explainer/components/VideoBackground.tsx": "53b64f8eb283e7bbc80a01a25579d6a311981614161e155f301bb12ab27f46fe",
+      "src/formats/conversation-explainer/components/KineticBackground.tsx": "43130ff535b3c417599ac51dd72f8d7a8d57ae7627b9f34b1c43ba3309a1ce32",
+      "src/formats/conversation-explainer/components/ShortKineticBackground.tsx": "52a6acd7ec41681950f0ab560b33b0a31a1461606518d0ecf3725c2606ad8697"
+    },
+    "consumers": [
+      {
+        "file": "src/formats/conversation-explainer/components/ConversationFrame.tsx",
+        "variant": "wide"
+      },
+      {
+        "file": "src/formats/conversation-explainer/components/ShortConversationLayout.tsx",
+        "variant": "short"
+      }
+    ],
+    "projectBackgrounds": "public/input/<channel-id>/<project-id>/ に分離し、この対応表の一意性検証には含めない。画像・SVG・素材台帳はGitで固定する。",
+    "channelImages": "public/assets/channels/<channel-id>/branding に分離し、この対応表の対象外とする。",
+    "build": null,
+    "verification": "npm run background:verify",
+    "tests": "npx vitest run tests/video-background.test.tsx tests/background-verification.test.mjs",
+    "evidence": "tmp/verification/ITTAN-VISUAL-007.json"
+  },
+  "titleCardsMapping": {
+    "scope": "横動画の固定オープニング、章タイトル、12秒エンディング。Shortの作品固有オープニングとCTAは対象外。",
+    "requirements": [
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-002", "sha256": "f2055d74e0bb77bd57f639225de32ce121628ed08fd691b762f789e9f221129c"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-003", "sha256": "cef2645eafdcaad3a1de002d481074373c58defb7ce95a80043749a846f29458"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-LONG-004", "sha256": "9e6a37c764630509cc1051efa31c5325855c9a96dde441bcc28a82e70e420e16"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-VISUAL-011", "sha256": "f857a21450d04c20c555c4a4900d18a83b578e05553ccb3564d80de34546feae"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-VISUAL-014", "sha256": "d312506d9e1e640d61ce6f8a87f8466ca1bc643128feb3402c6c4b136fb9ded2"},
+      {"file": "references/channels/ittan-seiri/output-rules.md", "id": "ITTAN-OUTPUT-002", "sha256": "fa42dcdb148fa899ce252d0f1201531daa7e918169385362c25b7a0a4b57dfd5"}
+    ],
+    "entry": "src/channels/ittan-seiri/branding/TitleCards.tsx",
+    "gsapImplementation": "src/formats/conversation-explainer/components/GsapTitleCards.tsx",
+    "implementationSha256": {
+      "src/channels/ittan-seiri/branding/TitleCards.tsx": "dac4989a51a4c0962a8dea45cfe7ba7d07057b57b0d1e2e8cef49e14f78bf8af",
+      "src/formats/conversation-explainer/components/GsapTitleCards.tsx": "073326cf453646600e008e0f227002a9b190f105c68e2ae39779d6153cb06e28",
+      "src/formats/conversation-explainer/components/EndingMusic.tsx": "c839f4a48f885fa2c8abd12ad5b3e9e265683c6099ed5ba92e71f16a891dee3a",
+      "src/formats/conversation-explainer/components/end-screen-layout.ts": "9310f76f673a6865dccdb12bfac70a3eaf01fbea751f7bf945076081f0b5fcf4"
+    },
+    "frames": {"opening": 72, "chapter": 75, "ending": 360},
+    "audioSha256": {
+      "assets/common/sfx/effect-lab/logo-animation1.mp3": "5eceb6bcd9cdf88016c57fa14b2ef9bc130c1eab555a69d42e278b88793d75e7",
+      "assets/common/sfx/effect-lab/title1.mp3": "08561d0c13ee726265654566c185c8a26dee5a23b8d06156c30aa37adc7ca97b",
+      "assets/common/music/incompetech/Carefree.mp3": "8433b770a630d9b1594fd484442c677907ece899a4d149954cd2e74fd733e311"
+    },
+    "consumers": [
+      {"file": "src/channels/ittan-seiri/videos/living-road-30/LivingRoad30Full.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]},
+      {"file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60Full.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]},
+      {"file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]},
+      {"file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx", "components": ["IttanBrandOpening", "IttanChapterTitle", "IttanEndScreen"]}
+    ],
+    "verification": "npm run title-cards:verify",
+    "tests": "npx vitest run tests/ittan-title-cards.test.ts tests/title-card-verification.test.mjs tests/end-screen.test.ts",
+    "evidence": "tmp/verification/ITTAN-TITLE-CARDS.json"
+  },
   "relatedRequirements": [
     {
       "id": "ITTAN-AUDIO-004",
@@ -100,7 +169,8 @@
     {
       "requirement": "`output-rules.md` の映像と素材",
       "implementation": "Remotion Composition、素材台帳、権利検証、MP4再生検査",
-      "status": "not-verified"
+      "status": "partially-verified",
+      "remaining": "ITTAN-VISUAL-007の動画本編共通背景はbackgroundMappingで検証済み。その他の映像要求と完成MP4の適合は未実証。"
     },
     {
       "requirement": "`output-rules.md` の技術仕様",
