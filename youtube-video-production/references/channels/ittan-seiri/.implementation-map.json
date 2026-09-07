@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "requirement": {
+    "file": "references/channels/ittan-seiri/output-rules.md",
+    "id": "ITTAN-VISUAL-010",
+    "sha256": "fc8fa013df18c5eb60a3498893a029f2f0f48e5073cd3ae959e58f1cc3ff344d"
+  },
+  "repository": "youtube-remotion-renderer",
+  "assets": "assets/blender/ittan-seiri/registry.json",
+  "implementation": [
+    "src/channels/ittan-seiri/branding/avatars.ts",
+    "src/channels/ittan-seiri/branding/BlenderCast.tsx",
+    "src/formats/conversation-explainer/components/blender-avatar.ts",
+    "src/formats/conversation-explainer/components/ContinuousAvatarRig.tsx",
+    "scripts/blender-avatar/render-approved-loop.py",
+    "scripts/verify-ittan-avatars.mjs"
+  ],
+  "build": "npm run avatar:shared:build",
+  "verification": "npm run avatar:verify",
+  "tests": "npx vitest run tests/blender-avatar-contract.test.ts tests/avatar-verification.test.mjs",
+  "evidence": "tmp/verification/ITTAN-VISUAL-010.json",
+  "assetsSha256": "2d50dcf8dea76c3c786c521da608f57d66e231b84cfd5dc4a1cd0a20def7eaf8"
+}
