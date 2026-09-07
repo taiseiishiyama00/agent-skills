@@ -13,11 +13,99 @@
     "src/formats/conversation-explainer/components/blender-avatar.ts",
     "src/formats/conversation-explainer/components/ContinuousAvatarRig.tsx",
     "scripts/blender-avatar/render-approved-loop.py",
-    "scripts/verify-ittan-avatars.mjs"
+    "scripts/verify-ittan-avatars.mjs",
+    "scripts/build-ittan-avatars.mjs"
   ],
   "build": "npm run avatar:shared:build",
   "verification": "npm run avatar:verify",
   "tests": "npx vitest run tests/blender-avatar-contract.test.ts tests/avatar-verification.test.mjs",
   "evidence": "tmp/verification/ITTAN-VISUAL-010.json",
-  "assetsSha256": "2d50dcf8dea76c3c786c521da608f57d66e231b84cfd5dc4a1cd0a20def7eaf8"
+  "assetsSha256": "2d50dcf8dea76c3c786c521da608f57d66e231b84cfd5dc4a1cd0a20def7eaf8",
+  "rigVerification": {
+    "forEach": "avatars",
+    "executable": "blender",
+    "args": [
+      "--background",
+      "--python-exit-code",
+      "1",
+      "{source}",
+      "--python",
+      "scripts/blender-avatar/ittan-seiri-host/validate_avatar.py"
+    ],
+    "success": {
+      "exitCode": 0,
+      "outputPrefix": "AVATAR_VALIDATION=",
+      "failures": []
+    },
+    "registry": "assets/blender/ittan-seiri/registry.json"
+  },
+  "assetProvenance": {
+    "registry": "assets/blender/ittan-seiri/registry.json",
+    "path": "public/{avatars[].output}/provenance.json"
+  },
+  "relatedRequirements": [
+    {
+      "id": "ITTAN-AUDIO-004",
+      "status": "not-verified",
+      "implementation": "src/channels/ittan-seiri/branding/BlenderCast.tsx",
+      "remaining": "完成動画の音声同期は別途実証する。音声振幅を渡していない既存のContinuousAvatarRig利用箇所は閉口で再生される。口形選択テストの合格を完成動画の同期済みとは扱わない。"
+    }
+  ],
+  "unverifiedMappings": [
+    {
+      "requirement": "`workflow.md` のGoogle Drive構成",
+      "implementation": "pipelineの初期化、Drive同期、保存構造の検証",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`workflow.md` の横動画台本作成",
+      "implementation": "Google Docsの作成と同期",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`workflow.md` のShort台本作成",
+      "implementation": "Short生成処理。最新のサマリ作成要求との適合は未実証",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`workflow.md` のMP4作成と連結",
+      "implementation": "Remotionの章別描画、Short描画、連結、別エージェントレビュー、Drive同期",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`workflow.md` の関連情報作成と投稿",
+      "implementation": "投稿情報生成、YouTube操作、投稿結果検証",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`output-rules.md` の横動画構成と内容",
+      "implementation": "台本データ、production contract、Remotionのタイムライン",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`output-rules.md` のShort内容と画面",
+      "implementation": "Short plan、縦画面Composition、尺とsafe areaの検証",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`output-rules.md` の音声",
+      "implementation": "音声生成、正規化、タイミング検証、ラウドネス検査",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`output-rules.md` の字幕",
+      "implementation": "cue生成、音声アラインメント、文字数と表示範囲の検査",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`output-rules.md` の映像と素材",
+      "implementation": "Remotion Composition、素材台帳、権利検証、MP4再生検査",
+      "status": "not-verified"
+    },
+    {
+      "requirement": "`output-rules.md` の技術仕様",
+      "implementation": "render設定、MP4 metadata検証、全編品質検査",
+      "status": "not-verified"
+    }
+  ]
 }
