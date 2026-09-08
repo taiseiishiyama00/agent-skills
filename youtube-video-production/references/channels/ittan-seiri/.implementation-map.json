@@ -10,8 +10,8 @@
   "implementation": [
     "src/channels/ittan-seiri/branding/avatars.ts",
     "src/channels/ittan-seiri/branding/BlenderCast.tsx",
-    "src/formats/conversation-explainer/components/blender-avatar.ts",
-    "src/formats/conversation-explainer/components/ContinuousAvatarRig.tsx",
+    "src/channels/ittan-seiri/formats/components/blender-avatar.ts",
+    "src/channels/ittan-seiri/formats/components/ContinuousAvatarRig.tsx",
     "scripts/blender-avatar/render-approved-loop.py",
     "scripts/verify-ittan-avatars.mjs",
     "scripts/build-ittan-avatars.mjs"
@@ -50,24 +50,24 @@
       "id": "ITTAN-VISUAL-007",
       "sha256": "a37ec9a6e9c255b738c9bda904eb42b8d9373e4240692d39b96506ca6fc6262d"
     },
-    "entry": "src/formats/conversation-explainer/components/VideoBackground.tsx",
+    "entry": "src/channels/ittan-seiri/formats/components/VideoBackground.tsx",
     "variants": {
       "wide": "conversation-explainer-wide",
       "wideDark": "conversation-explainer-wide-dark",
       "short": "conversation-explainer-short"
     },
     "implementationSha256": {
-      "src/formats/conversation-explainer/components/VideoBackground.tsx": "53b64f8eb283e7bbc80a01a25579d6a311981614161e155f301bb12ab27f46fe",
-      "src/formats/conversation-explainer/components/KineticBackground.tsx": "43130ff535b3c417599ac51dd72f8d7a8d57ae7627b9f34b1c43ba3309a1ce32",
-      "src/formats/conversation-explainer/components/ShortKineticBackground.tsx": "52a6acd7ec41681950f0ab560b33b0a31a1461606518d0ecf3725c2606ad8697"
+      "src/channels/ittan-seiri/formats/components/VideoBackground.tsx": "53b64f8eb283e7bbc80a01a25579d6a311981614161e155f301bb12ab27f46fe",
+      "src/channels/ittan-seiri/formats/components/KineticBackground.tsx": "43130ff535b3c417599ac51dd72f8d7a8d57ae7627b9f34b1c43ba3309a1ce32",
+      "src/channels/ittan-seiri/formats/components/ShortKineticBackground.tsx": "52a6acd7ec41681950f0ab560b33b0a31a1461606518d0ecf3725c2606ad8697"
     },
     "consumers": [
       {
-        "file": "src/formats/conversation-explainer/components/ConversationFrame.tsx",
+        "file": "src/channels/ittan-seiri/formats/components/ConversationFrame.tsx",
         "variant": "wide"
       },
       {
-        "file": "src/formats/conversation-explainer/components/ShortConversationLayout.tsx",
+        "file": "src/channels/ittan-seiri/formats/components/ShortConversationLayout.tsx",
         "variant": "short"
       },
       {
@@ -121,12 +121,12 @@
       }
     ],
     "entry": "src/channels/ittan-seiri/branding/TitleCards.tsx",
-    "gsapImplementation": "src/formats/conversation-explainer/components/GsapTitleCards.tsx",
+    "gsapImplementation": "src/channels/ittan-seiri/formats/components/GsapTitleCards.tsx",
     "implementationSha256": {
-      "src/channels/ittan-seiri/branding/TitleCards.tsx": "dac4989a51a4c0962a8dea45cfe7ba7d07057b57b0d1e2e8cef49e14f78bf8af",
-      "src/formats/conversation-explainer/components/GsapTitleCards.tsx": "073326cf453646600e008e0f227002a9b190f105c68e2ae39779d6153cb06e28",
-      "src/formats/conversation-explainer/components/EndingMusic.tsx": "c839f4a48f885fa2c8abd12ad5b3e9e265683c6099ed5ba92e71f16a891dee3a",
-      "src/formats/conversation-explainer/components/end-screen-layout.ts": "9310f76f673a6865dccdb12bfac70a3eaf01fbea751f7bf945076081f0b5fcf4"
+      "src/channels/ittan-seiri/branding/TitleCards.tsx": "3466a0e33a53b3fbc36e5bac92784da88c1c7e38627f8cb2d198a33e3d780c82",
+      "src/channels/ittan-seiri/formats/components/GsapTitleCards.tsx": "2870913412f70d1ec3336b3c11d6b6c92d5e85f5016c901e26e281302c8772b7",
+      "src/channels/ittan-seiri/formats/components/EndingMusic.tsx": "c839f4a48f885fa2c8abd12ad5b3e9e265683c6099ed5ba92e71f16a891dee3a",
+      "src/channels/ittan-seiri/formats/components/end-screen-layout.ts": "9310f76f673a6865dccdb12bfac70a3eaf01fbea751f7bf945076081f0b5fcf4"
     },
     "frames": {
       "opening": 72,
@@ -200,7 +200,7 @@
         "sha256": "c78f4282dbb7fd2f2157928aa673057c6d543a3f98beaeab759bbf60973b01b3"
       }
     ],
-    "entry": "src/formats/conversation-explainer/caption-system.tsx",
+    "entry": "src/channels/ittan-seiri/formats/caption-system.tsx",
     "responsibilities": [
       "caption-plan 2.0.0のschema検証",
       "横動画24文字・Short 16文字・最大2行の制限",
@@ -245,14 +245,14 @@
       "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionKontoSummaryShort.tsx",
       "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionOpeningShort.tsx",
       "src/channels/ittan-seiri/videos/yen-intervention-15trillion/plan.ts",
-      "src/formats/conversation-explainer/components/ConversationFrame.tsx",
-      "src/formats/conversation-explainer/components/ShortConversationLayout.tsx"
+      "src/channels/ittan-seiri/formats/components/ConversationFrame.tsx",
+      "src/channels/ittan-seiri/formats/components/ShortConversationLayout.tsx"
     ],
     "prohibitedFiles": [
-      "src/formats/conversation-explainer/captions.ts",
-      "src/formats/conversation-explainer/caption-plan-schema.ts",
-      "src/formats/conversation-explainer/components/Subtitle.tsx",
-      "src/formats/conversation-explainer/components/ShortCaption.tsx"
+      "src/channels/ittan-seiri/formats/captions.ts",
+      "src/channels/ittan-seiri/formats/caption-plan-schema.ts",
+      "src/channels/ittan-seiri/formats/components/Subtitle.tsx",
+      "src/channels/ittan-seiri/formats/components/ShortCaption.tsx"
     ],
     "verification": "npm run captions:verify",
     "tests": "npx vitest run tests/caption-system.test.ts tests/caption-verification.test.mjs tests/plan.test.ts",
@@ -273,8 +273,8 @@
         "sha256": "166ca9d1642079458233e311e081d1c233a9c7db9bdfc0f8b56ea6ebf642e06f"
       }
     ],
-    "entry": "src/formats/conversation-explainer/components/FrameChrome.tsx",
-    "implementationSha256": "7917d7f2b712cc3983771b739b378949a650bc1363b915e37dd83198270e3105",
+    "entry": "src/channels/ittan-seiri/formats/components/FrameChrome.tsx",
+    "implementationSha256": "11b8e99c41da041b2170a9ad59997ae525d46a2517dae8557194382d60fbf313",
     "responsibilities": [
       "横動画のオープニング後に、左上へCHAPTER、章番号、章タイトルを表示する",
       "横動画とShortの右上へ、概要欄から追跡できるリファレンスIDと空でない資料タイトルを表示する",
@@ -288,13 +288,13 @@
       "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx",
       "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionFull.tsx",
       "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenIntervention15TrillionOpeningShort.tsx",
-      "src/formats/conversation-explainer/components/ConversationFrame.tsx",
-      "src/formats/conversation-explainer/components/ShortConversationLayout.tsx"
+      "src/channels/ittan-seiri/formats/components/ConversationFrame.tsx",
+      "src/channels/ittan-seiri/formats/components/ShortConversationLayout.tsx"
     ],
     "prohibitedFiles": [
-      "src/formats/conversation-explainer/components/ChapterPill.tsx",
-      "src/formats/conversation-explainer/components/ReferenceBadge.tsx",
-      "src/formats/conversation-explainer/components/SkitExplainerContext.tsx"
+      "src/channels/ittan-seiri/formats/components/ChapterPill.tsx",
+      "src/channels/ittan-seiri/formats/components/ReferenceBadge.tsx",
+      "src/channels/ittan-seiri/formats/components/SkitExplainerContext.tsx"
     ],
     "prohibitedSnippets": [
       {
@@ -317,6 +317,39 @@
     "verification": "npm run frame-chrome:verify",
     "tests": "npx vitest run tests/frame-chrome.test.tsx tests/chapter-pill.test.tsx tests/skit-explainer-context.test.ts tests/frame-chrome-verification.test.mjs",
     "evidence": "tmp/verification/ITTAN-FRAME-CHROME.json"
+  },
+  "contentComponentsMapping": {
+    "scope": "いったん整理。の作品間で再利用する内容領域の共通コンポーネントと正規入口。",
+    "requirement": {
+      "file": "references/channels/ittan-seiri/output-rules.md",
+      "id": "ITTAN-VISUAL-024",
+      "sha256": "56bfcfa3ccb8cb0fc4c20855630c32f976308630bbbd6eadd732770b9720a929"
+    },
+    "entry": "src/channels/ittan-seiri/formats/components/content/index.ts",
+    "implementationSha256": {
+      "src/channels/ittan-seiri/formats/components/content/index.ts": "e6449a24840a31963c144db0439fe08961a717f75b8dd138ba57710334a7225e",
+      "src/channels/ittan-seiri/formats/components/content/SimpleBustSilhouette.tsx": "22df883107e5a511a371049f32cbf73f7eeb8f43d62963cd554f39021eac3d42"
+    },
+    "consumers": [
+      {
+        "file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiSkit.tsx",
+        "import": "../../formats/components/content",
+        "component": "SimpleBustSilhouette"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx",
+        "import": "../../formats/components/content",
+        "component": "SimpleBustSilhouette"
+      }
+    ],
+    "prohibitedRoots": [
+      "src/formats"
+    ],
+    "requirementStatus": "partially-implemented",
+    "remaining": "既存作品内に定義済みの内容ビジュアルは、今後の変更時に共通コンポーネントへ段階的に移行する。",
+    "verification": "npm run content-components:verify",
+    "tests": "npx vitest run tests/content-components-verification.test.mjs",
+    "evidence": "tmp/verification/ITTAN-VISUAL-024.json"
   },
   "relatedRequirements": [
     {
