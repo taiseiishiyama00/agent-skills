@@ -9,3 +9,4 @@ description: 設定済みYouTubeチャンネルの動画・Shortsを、チャン
 
 AIはこれらを読み、冪等かつ再現可能な手段を対象リポジトリへ実装する。具体的にはすべてのワークフロー作業はyoutube-video-pipelineを使うことによって実現する。
 ワークフロー中にyoutube-video-pipelineおよびyoutube-remotion-rendererに変更を加えてはいけない。機能が足りていない場合はユーザーに許可をとること。
+output-rulesやworkflowに変更があった際にはpipelineツールをそれに合わせて変更する。もし機能が不要になった場合は残さず削除する。
