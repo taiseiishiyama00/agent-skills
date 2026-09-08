@@ -327,8 +327,24 @@
     },
     "entry": "src/channels/ittan-seiri/formats/components/content/index.ts",
     "implementationSha256": {
-      "src/channels/ittan-seiri/formats/components/content/index.ts": "e6449a24840a31963c144db0439fe08961a717f75b8dd138ba57710334a7225e",
-      "src/channels/ittan-seiri/formats/components/content/SimpleBustSilhouette.tsx": "22df883107e5a511a371049f32cbf73f7eeb8f43d62963cd554f39021eac3d42"
+      "src/channels/ittan-seiri/formats/components/content/index.ts": "0634a685048a01b751c9cdc73266de97b9749fa8cd102f04199a4e77dbe2c5cd",
+      "src/channels/ittan-seiri/formats/components/content/SimpleBustSilhouette.tsx": "22df883107e5a511a371049f32cbf73f7eeb8f43d62963cd554f39021eac3d42",
+      "src/channels/ittan-seiri/formats/components/content/SimpleBulletList.tsx": "15ca6a3e7fa8d2c7c1dcc116e9f52e609d166ac1ec517d0db8643825a71cfe8c",
+      "src/channels/ittan-seiri/formats/components/content/NamedImage.tsx": "43f5d744262fb0300efe9db675b9e5dcf7c3e87502183fb0ebd400d63b8f11c3",
+      "src/channels/ittan-seiri/formats/components/content/LabeledIcon.tsx": "f9cf0d5673373c3c343eb687c577fc7aca2eb0e23a3ef4bc7f13ab920efccff5",
+      "src/channels/ittan-seiri/formats/components/content/AnimatedConnector.tsx": "447c7b7761e28535e785fb3931f83bda45760e292d350ad44932f93c8d6cebf8",
+      "src/channels/ittan-seiri/formats/components/content/VisualCard.tsx": "14b48c95fbf59e1a72822f8bf2c5c16386c1bddb0c66d85764e26921dbbfa3ae",
+      "src/channels/ittan-seiri/formats/components/content/IttanIcon.tsx": "a8183b36a9ce533d73cd115b8112aa40f87f80b3007f5dc53e3bf318ca8e5012",
+      "src/channels/ittan-seiri/formats/components/content/IttanIllustration.tsx": "614fb51c28e268c3fbbf5ed81ea52dfa15c7093062ec1f3f88198a4c81e041b6",
+      "src/channels/ittan-seiri/formats/components/content/FlowChart.tsx": "d7e3adfbc9e45d62a20aed20e621d8b2bee8d3c25f3bbc886df4868d23426651",
+      "src/channels/ittan-seiri/formats/components/content/SwimlaneDiagram.tsx": "a45fb3c107baff05bf936b5891fee7800bd3d6ef639a0326397af3f38a60e446",
+      "src/channels/ittan-seiri/formats/components/content/PuzzleCombination.tsx": "fc1bf12ec2d5ec106d57a47d8654152d2c6ecc32a9ec7c07d01af5e871799725",
+      "src/styles.css": "a04e49b84d95e53183a450e571045ae3925605cdc2f2ea08dce89f384a5cc572",
+      "package.json": "6677975d800f433c8eb04ac468578b9832c62f4dd529d113017028e2b040f2a6",
+      "package-lock.json": "7f873a18224399d99d84576067ca015aba210a7c3516a87f036918df4b0e1b07",
+      "public/assets/channels/ittan-seiri/illustrations/noto-emoji/credit-card.svg": "87d31086ceabdb60fe21ad0f8c85d7f49bb02a3e74e17950b7b01151b91d22d6",
+      "public/assets/channels/ittan-seiri/illustrations/noto-emoji/document.svg": "5b58055e4ac92eaf220492ed322cd01ac919fefa501af2eca0767f04fd01a3e1",
+      "public/assets/channels/ittan-seiri/illustrations/noto-emoji/asset-manifest.json": "2a7137dd7142093bfd79e41dbb5c822a250968c35a2f1163bbca94a6a19fce0e"
     },
     "consumers": [
       {
@@ -340,6 +356,51 @@
         "file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiTeam60SkitShort.tsx",
         "import": "../../formats/components/content",
         "component": "SimpleBustSilhouette"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenInterventionVisuals.tsx",
+        "import": "../../formats/components/content",
+        "component": "SimpleBulletList"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenInterventionVisuals.tsx",
+        "import": "../../formats/components/content",
+        "component": "NamedImage"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenInterventionVisuals.tsx",
+        "import": "../../formats/components/content",
+        "component": "LabeledIcon"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/yen-intervention-15trillion/YenInterventionVisuals.tsx",
+        "import": "../../formats/components/content",
+        "component": "AnimatedConnector"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx",
+        "import": "../../formats/components/content",
+        "component": "VisualCard"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx",
+        "import": "../../formats/components/content",
+        "component": "IttanIcon"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx",
+        "import": "../../formats/components/content",
+        "component": "SwimlaneDiagram"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx",
+        "import": "../../formats/components/content",
+        "component": "PuzzleCombination"
+      },
+      {
+        "file": "src/channels/ittan-seiri/videos/meta-ai-team-60/MetaAiSkit.tsx",
+        "import": "../../formats/components/content",
+        "component": "FlowChart"
       }
     ],
     "prohibitedRoots": [
@@ -348,7 +409,7 @@
     "requirementStatus": "partially-implemented",
     "remaining": "既存作品内に定義済みの内容ビジュアルは、今後の変更時に共通コンポーネントへ段階的に移行する。",
     "verification": "npm run content-components:verify",
-    "tests": "npx vitest run tests/content-components-verification.test.mjs",
+    "tests": "npx vitest run tests/content-components-verification.test.mjs tests/ittan-icon.test.tsx tests/ittan-illustration.test.tsx",
     "evidence": "tmp/verification/ITTAN-VISUAL-024.json"
   },
   "relatedRequirements": [
@@ -431,7 +492,7 @@
     "implementationSha256": {
       "src/channels/ittan-seiri/videos/credit-card-fraud/CreditCardFraud.tsx": "3f5de60a0783f3135b8aa8165999c242f67e8b7dc4b82b6244d05b1edf0c4b80",
       "src/channels/ittan-seiri/videos/credit-card-fraud/CreditVisuals.tsx": "c6beafd8e7b4d1bde4b8b643f93c6160b18bf0c0a33eca582446e03ec61c691f",
-      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx": "9583ae443e16142e08823f12b47d1fdbb9cf67c139784d24b4bf18078d8e6f2d",
+      "src/channels/ittan-seiri/videos/credit-card-fraud/CreditDiagram.tsx": "ceed9b7e1f49bb3c3e78beca01350ac5d0b505004eaffbe50db3177b5a20228e",
       "src/channels/ittan-seiri/videos/credit-card-fraud/ShortCreditDiagram.tsx": "8d5cab32432972634999e23b0e3d011546c105df57e66393d50b6d52e4f0700c",
       "src/channels/ittan-seiri/videos/credit-card-fraud/scenes.ts": "0ad8a238e278268d853d0f21e9f366f3dc6987be2a0eeddae67e05d7fdee5eca",
       "src/channels/ittan-seiri/videos/credit-card-fraud/index.tsx": "4c779a29a621ceb8e980b9a530b1e2587b6ca5e0571b1b26c4ee74a48c4b2f16",
