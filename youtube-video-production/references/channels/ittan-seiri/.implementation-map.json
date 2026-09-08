@@ -415,15 +415,23 @@
   "audioGenerationMapping": {
     "scope": "音声生成、発話分割、速度補正、発話間隔",
     "requirements": ["ITTAN-AUDIO-001", "ITTAN-AUDIO-002", "ITTAN-AUDIO-009", "ITTAN-AUDIO-010", "ITTAN-AUDIO-011"],
+    "workflowRequirement": {
+      "file": "references/channels/ittan-seiri/workflow.md",
+      "section": "音声生成フェーズ",
+      "sha256": "62c3360bfb4add36ec08f4bef0954dc82b0668b553e15cbd55ff72a5aaa5f361"
+    },
     "requirementSha256": "57357467cf9ca331bd5ab45303a0226d20626dfc963b939fe9e3ae7520766257",
     "repository": "youtube-video-pipeline",
     "method": [
+      "有料TTS APIの応答は後処理より先にsource/audio/<対象>/.segmentsへ保存し、同じ生成条件では再利用する。",
+      "章単位の完成音声とmanifestもsource/audio/<対象>に残し、後工程の失敗や再実行で削除しない。",
       "章をまたがず、推定発話時間が約1分を超えない最後の話者交代位置でTTS生成をチャンク化する。",
       "生成したチャンクをMFAの語境界アラインメントで発話単位へ分割する。",
       "分割した発話の間に0.5秒の無音を入れて章単位に連結する。",
       "目標の実効発話速度より遅い発話だけをatempoで短縮し、速い発話は引き伸ばさない。"
     ],
     "implementationSha256": {
+      "src/storage-layout.mjs": "01ea9d0873b2e68c17f31718f1dfaea6486d638d6edd0d4593ad23753ed6c1c9",
       "config/channels/ittan-seiri.json": "1c6160abc9fd9f09ff8470a9913dda05ff9b2d7efa9281e8202f1edcf03c8ae2",
       "src/tts-segments.mjs": "8c45ee8b8778e20224e607b1385fe9f43885a8b3fed9834254fec60ff9815e56",
       "src/tts-source.mjs": "5ddae5df1c7d6826a9433473186412aaeb66196cecc1d93834cf25b95282b816",
@@ -433,9 +441,10 @@
       "src/speech-retiming.mjs": "67cfa955b830b892a99f853e0381bef0a821863a4a36d7c08578722e46288cd4",
       "scripts/produce-credit-card-fraud.mjs": "e398e2eeb9edda36dc9505624ef211c4ecdaf91a6648891d55492b0f2f6cd1e4",
       "scripts/credit-card-fraud-media.mjs": "5c64018ab1cd76a3771e9d76fa606f747ee3fe8439ac60f991663d7e0447cf5d",
-      "scripts/check-credit-card-fraud.mjs": "84d3e12f86d7bb28ac141d59f1363eaaa096b5c5be6f24158c9c8f873e988394"
+      "scripts/check-credit-card-fraud.mjs": "84d3e12f86d7bb28ac141d59f1363eaaa096b5c5be6f24158c9c8f873e988394",
+      "test/storage-layout.test.mjs": "c667f6d76ee50966298d196c79b7023ba01dc65bf1d8e182874405ddcdc44416"
     },
-    "consumers": ["tools/generate-tts.mjs", "scripts/check-credit-card-fraud.mjs"],
+    "consumers": ["src/storage-layout.mjs", "tools/generate-tts.mjs", "scripts/check-credit-card-fraud.mjs", "test/storage-layout.test.mjs"],
     "verification": "npm test",
     "paidVerification": "クレカ作品のTTSを再生成し、MFA align/build後にscripts/check-credit-card-fraud.mjsを実行する。"
   },
