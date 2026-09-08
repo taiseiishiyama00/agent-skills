@@ -17,10 +17,12 @@
 │   │   ├── long/
 │   │   │   ├── .segments/（TTS APIが返した生成音声）
 │   │   │   ├── <章>.wav
+│   │   │   ├── full.wav
 │   │   │   └── manifest.json
 │   │   └── short/
 │   │       ├── .segments/（TTS APIが返した生成音声）
 │   │       ├── <章>.wav
+│   │       ├── full.wav
 │   │       └── manifest.json
 │   └── videos/
 │       ├── long/
@@ -41,12 +43,26 @@
 
 - 横動画用ショート動画用それぞれの台本を `source/scripts` にGoogle Docsで作成する。
 - 台本は人間主体で作成する。それ以外の特定のフローは設けない。
+- 見出し1を動画タイトルにする。
+- 横動画は見出し2を `chapter: <chapter-id> | <表示名>` とし、`skit`、`opening`、`chapter-01` から始まる連番、`summary` の順に置く。
+- Shortには章見出しを置かない。
+- 発話は標準テキストの段落ごとに `<speaker-id>: <発話本文>` と書く。speaker-idはチャンネル設定の `host` または `explainer` を使う。
 
 ## 音声生成フェーズ
+
+MCP Tool: `youtube-video-pipeline.generate_audio_from_google_doc`
+
+- 入力は `channelId`、`documentUrl`、`target`、`allowPaidGeneration` とする。`documentUrl` は `source/scripts` 直下のGoogle Docs URL、`target` は `long` または `short` とする。
+- まず `allowPaidGeneration: false` で呼び出し、保存済みキャッシュだけで完了できるか、未生成グループに課金が必要かを確認する。
+- `payment-required` が返った場合は課金が発生することをユーザーへ明示する。ユーザーが生成を指示した後だけ、同じ入力を `allowPaidGeneration: true` にして再実行する。
+- 横動画は各発話を句読点・記号・空白を除いて360文字以内とし、章をまたがず、同じ数え方による合計360文字以内で発話をグルーピングする。Shortは章分けせず1グループとする。
+- ToolはMFAで発話境界を特定し、横動画は章平均、Shortは全体平均で最低発話速度を満たす場合だけ速くする。遅くする補正は行わない。
+- 話者が切り替わる位置にだけ0.5秒の無音を挿入する。
 
 - 横動画とShortのTTS音声は、それぞれ `source/audio/long` と `source/audio/short` に保存する。
 - 有料APIが返した音声は、アラインメント、分割、速度補正などの後処理より先に `source/audio/<対象>/.segments` へ保存する。後工程が失敗しても削除せず、再実行時に再利用する。
 - 章単位の完成音声と、入力・生成音声のハッシュおよび再利用元を記録した `manifest.json` も `source/audio/<対象>` に残す。
+- 章単位の完成音声を連結した `full.wav` も `source/audio/<対象>` に残す。
 - 同じ入力、モデル、音声、生成指示に対応する保存済み音声がある場合は、有料APIを呼び直さず保存済み音声を使う。再生成は入力または設定を変えた場合に限り、課金が発生することを明示して実行する。
 
 ## MP4作成フェーズ
