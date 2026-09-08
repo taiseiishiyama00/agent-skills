@@ -17,7 +17,7 @@
 - `ITTAN-AUDIO-006` 各章の完成音声はIntegrated Loudness -19 LUFS、True Peak -3 dBTP、LRA 7にする。
 - `ITTAN-AUDIO-007` 全編の章間ラウドネス差は0.6 LU以内、True Peakは-1 dBTP以下にする。
 - `ITTAN-AUDIO-009` Shortは実効発話速度を平均6.5〜7.0文字/秒にする。
-- `ITTAN-AUDIO-010` 横動画の通常パートにおける進行君と解説さんの発話間は、原則として約0.8秒空ける。
+- `ITTAN-AUDIO-010` 横動画の通常パートにおける進行君と解説さんの発話間は、原則として約0.5秒空ける。
 - `ITTAN-AUDIO-011` Shortの通常パートにおける進行君と解説さんの発話間は、原則として約0.5秒空ける。
 - `ITTAN-CAPTION-001` 字幕は意味のまとまりごとに分け、各cueの開始を対応する語頭の前後100ms以内にする。
 - `ITTAN-CAPTION-002` 同時に表示する字幕cueは1つだけにする。
