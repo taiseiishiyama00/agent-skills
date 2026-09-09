@@ -16,25 +16,24 @@
 │   ├── assets/
 │   │   ├── manifest.json
 │   │   └── （作品固有の画像・動画・資料）
-│   ├── references.json
 │   ├── audio/
 │   │   ├── long/
 │   │   │   ├── .segments/（TTS APIが返した生成音声）
 │   │   │   ├── <章>.wav
 │   │   │   ├── full.wav
-│   │   │   └── manifest.json
+│   │   │   └── manifest.json（発話時刻・出典を含む）
 │   │   └── short/
 │   │       ├── .segments/（TTS APIが返した生成音声）
 │   │       ├── <章>.wav
 │   │       ├── full.wav
-│   │       └── manifest.json
+│   │       └── manifest.json（発話時刻・出典を含む）
 │   ├── visuals/
 │   │   ├── long/
 │   │   │   └── <章>/
-│   │   │       ├── <発話ID>.png
+│   │   │       ├── <scene-id>.png
 │   │   │       └── manifest.json
 │   │   └── short/
-│   │       ├── <発話ID>.png
+│   │       ├── <scene-id>.png
 │   │       └── manifest.json
 │   └── videos/
 │       ├── long/
@@ -65,11 +64,10 @@
 
 | 目的 | MCP Tool |
 | --- | --- |
-| Google Docs台本から音声を生成する | `youtube-video-pipeline.generate_audio_from_google_doc` |
+| Google Docs台本から音声と発話・出典manifestを生成する | `youtube-video-pipeline.generate_audio_from_google_doc` |
 | 利用可能な描画コンポーネントを取得する | `youtube-video-pipeline.list_visual_components` |
-| シーン設計に必要な作品情報を取得する | `youtube-video-pipeline.get_video_scene_context` |
-| 内容ビジュアルで使う素材を収集する | `youtube-video-pipeline.collect_visual_assets` |
-| レビュー用の内容ビジュアルPNGを生成する | `youtube-video-pipeline.render_content_visuals_from_scene_plan` |
+| 音声manifestからシーン設計に必要な発話時刻と出典を取得する | `youtube-video-pipeline.get_video_scene_context` |
+| 必要素材を収集し、座標・描画時間を含むシーン設計からレビュー用PNGを生成する | `youtube-video-pipeline.render_content_visuals_from_scene_plan` |
 | 人間が確認した内容ビジュアルを承認する | `youtube-video-pipeline.approve_content_visuals` |
 | 承認済みのシーン設計から章別MP4またはShortを生成する | `youtube-video-pipeline.render_video_from_approved_scene_plan` |
 | 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_reviewed_videos` |
