@@ -76,13 +76,27 @@ MCP Tool: `youtube-video-pipeline.generate_audio_from_google_doc`
 
 ## MP4作成フェーズ
 
+MCP Tool: `youtube-video-pipeline.list_visual_components`
+
+- 入力は `channelId` と、任意の `target` とする。
+- rendererの機械可読レジストリを正本として、利用可能な宣言的描画コンポーネント、その用途、入力スキーマ、必要素材、横動画・Short対応、使用例を取得する。
+- Google Material SymbolsとNoto Emojiの検索Toolは設けない。Toolのスキーマで両方に対応していることとID指定形式をAIへ知らせ、AIが適切な正式IDを選ぶ。
+
+MCP Tool: `youtube-video-pipeline.get_video_scene_context`
+
+- 入力は `channelId`、`projectSource`、`target`、`chapterId` とする。`chapterId` は横動画で必須、Shortでは指定しない。
+- 対象章またはShortの発話、内容ビジュアルの必須切替地点、利用可能な出典、`source/assets/manifest.json` に登録済みの独自素材を取得する。
+- コンポーネントやGoogle素材IDの推薦は行わず、シーン設計に必要な事実だけを返す。
+
 MCP Tool: `youtube-video-pipeline.render_video_from_scene_plan`
 
-- 入力は `channelId`、`projectSource`、`target`、`chapterId`、`scenePlan` とする。`projectSource` は取得元の種別と場所を持ち、初版はGoogle Driveの作品フォルダURLへ対応する。`chapterId` は横動画で必須、Shortでは指定しない。
+- 入力は `channelId`、`projectSource`、`target`、`chapterId`、`assets`、`scenePlan` とする。`projectSource` は取得元の種別と場所を持ち、初版はGoogle Driveの作品フォルダURLへ対応する。`chapterId` は横動画で必須、Shortでは指定しない。
+- `assets` は章またはShort全体で一つだけ渡す素材辞書とし、各素材へ一意の `id` を付ける。各シーンの画像入力は取得元やメタ情報を重複して持たず、`assetId` でこの辞書を参照する。カード、フロー図、パズル、人物・事例ストーリー等の内部画像も同じ方式に統一する。
+- 独自素材は `sourceUrl` または `localPath` のどちらかで入力する。いずれも `rights` と `rightsVerified: true` を必須とし、`creator`、`licenseUrl`、`attribution` は任意とする。`sourcePageUrl` は使用しない。Toolは独自素材を `source/assets` へ保存し、同じ `id` と権利情報をmanifestへ登録する。
+- `source/assets` に登録済みの独自素材は、`project-asset` と相対pathで `assets` へ指定できる。
+- Google Material Symbolsは `google-material-symbol` と正式な `symbolId`、Google Noto Emojiは `google-noto-emoji` と正式な `emojiId` で `assets` へ指定する。実行時に固定バージョンから解決し、取得元とライセンスを実行記録へ残した後、一時ファイルを削除する。Google素材を `source/assets` へキャッシュしない。
 - 横動画は1章、Shortは全編のシーン設計JSONを1回の呼び出しで渡す。Toolは検証済みJSONを `.pipeline` へ保存し、一時TSXと一時素材からRemotionを実行する。作品固有TSXはrendererへ残さない。
-- Toolは `source/audio/<対象>/manifest.json` とWAV、`source/references.json`、`source/assets/manifest.json` を作品フォルダから解決する。
-- 独自取得素材は `source/assets` からの相対パスで指定し、同じパスの `sourceUrl`、`rights`、`rightsVerified: true` が素材manifestになければ停止する。外部動画の音声は使用しない。
-- Google Material SymbolsとGoogle Noto Emojiは固定バージョンの全正式IDを指定できる。Noto EmojiはGoogle公式リポジトリの固定コミットから実行時に一時取得し、取得元とライセンスを実行記録へ残した後、一時ファイルを削除する。
+- Toolは `source/audio/<対象>/manifest.json` とWAV、`source/references.json`、`source/assets/manifest.json` を作品フォルダから解決する。外部動画の音声は使用しない。
 - 内容ビジュアルは登録済みの宣言的コンポーネントだけを使用し、任意のHTML、React、CSS、絶対座標を入力として受け付けない。内容ビジュアル以外の配置とサイズはチャンネル共通コンポーネントで固定する。
 - `skit` は通常レイアウトを基礎とし、ヘッダーへシーン設計の `topic` から「これは○○の解説動画です。」と表示して出典を表示しない。
 - 横動画の `opening` は固定オープニング72フレームの後に音声と内容ビジュアルを表示する。通常章と `summary` は章タイトル75フレームの後に表示し、`summary` の末尾には固定エンディング360フレームを含める。
