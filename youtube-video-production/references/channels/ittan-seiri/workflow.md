@@ -46,8 +46,12 @@
 │   │   └── video.mp4
 │   ├── short/
 │   │   └── video.mp4
-│   ├── thumbnail
-│   └── 投稿情報
+│   ├── thumbnail/
+│   │   ├── long.jpg
+│   │   └── short.jpg
+│   └── 投稿情報/
+│       ├── long.md
+│       └── short.md
 └── .pipeline/
 ```
 
@@ -69,10 +73,10 @@
 | 人間が確認した内容ビジュアルを承認する | `youtube-video-pipeline.approve_content_visuals` |
 | 承認済みのシーン設計から章別MP4またはShortを生成する | `youtube-video-pipeline.render_video_from_approved_scene_plan` |
 | 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_reviewed_videos` |
+| サムネイル、タイトル、概要欄などの投稿情報を作成する | `youtube-video-pipeline.create_youtube_post_assets` |
 
 ## MCP Tool未実装のフェーズ
 
 | 目的 | MCP Tool |
 | --- | --- |
-| サムネイル、タイトル、概要などの投稿情報を作成する | 未実装 |
 | 横動画とShortをYouTubeへ限定公開で投稿し、投稿情報、関連動画、終了画面を設定する | 未実装 |
