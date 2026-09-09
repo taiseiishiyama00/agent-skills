@@ -53,15 +53,7 @@
 
 ## 台本作成フェーズ
 
-- 横動画用ショート動画用それぞれの台本を `source/scripts` にGoogle Docsで作成する。
-- 台本は人間主体で作成する。それ以外の特定のフローは設けない。
-- 見出し1を動画タイトルにする。
-- 横動画は見出し2を `chapter: <chapter-id> | <表示名>` とし、`skit`、`opening`、`chapter-01` から始まる連番、`summary` の順に置く。
-- Shortは見出し2を `segment: skit | 冒頭コント`、`segment: summary | 解説サマリ` の順に置く。見出しは区間判定だけに使い、映像のインサートにはしない。
-- 発話は標準テキストの段落ごとに `<speaker-id>: <発話本文>` と書く。speaker-idはチャンネル設定の `host` または `explainer` を使う。
-- 横動画の通常章では `explainer:` の標準テキスト段落1つを1回答、`summary` では `host:` の標準テキスト段落1つを1要点として扱う。シーン設計は対象段落ごとに対応する内容ビジュアルを持つ。
-- Shortの `summary` では `explainer:` の標準テキスト段落1つを1回答として扱う。シーン設計は解説サマリの先頭と対象段落ごとに対応する内容ビジュアルを持つ。
-- Short末尾の固定CTAはGoogle Docsへ書かず、チャンネル設定から音声生成時に自動追加する。
+[台本テンプレート](script-template.md)を参照し、横動画用とShort用の台本をそれぞれ `source/scripts` にGoogle Docsで作成する。
 
 ## 音声生成フェーズ
 
