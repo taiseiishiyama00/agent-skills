@@ -68,6 +68,7 @@
 | 利用可能な描画コンポーネントを取得する | `youtube-video-pipeline.list_visual_components` |
 | 音声manifestからシーン設計に必要な発話時刻と出典を取得する | `youtube-video-pipeline.get_video_scene_context` |
 | 必要素材を収集し、座標・描画時間を含むシーン設計からレビュー用PNGを生成する | `youtube-video-pipeline.render_content_visuals_from_scene_plan` |
+| 指定したSceneだけを試作または修正してレビュー用PNGを生成する | `youtube-video-pipeline.render_content_visual_from_scene` |
 | シーン設計から章別MP4またはShortを生成する | `youtube-video-pipeline.render_segment_video_from_scene_plan` |
 | 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_videos` |
 | サムネイル、タイトル、概要欄などの投稿情報を作成する | `youtube-video-pipeline.create_youtube_post_assets` |
