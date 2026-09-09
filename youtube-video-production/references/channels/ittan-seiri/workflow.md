@@ -28,6 +28,14 @@
 │   │       ├── <章>.wav
 │   │       ├── full.wav
 │   │       └── manifest.json
+│   ├── visuals/
+│   │   ├── long/
+│   │   │   └── <章>/
+│   │   │       ├── <発話ID>.png
+│   │   │       └── manifest.json
+│   │   └── short/
+│   │       ├── <発話ID>.png
+│   │       └── manifest.json
 │   └── videos/
 │       ├── long/
 │       │   └── <章>.mp4
@@ -74,7 +82,7 @@ MCP Tool: `youtube-video-pipeline.generate_audio_from_google_doc`
 - 横動画は章をまたいで話者が切り替わる場合も、前章の末尾へ0.5秒の無音を入れる。
 - 同じ入力、モデル、音声、生成指示に対応する保存済み音声がある場合は、有料APIを呼び直さず保存済み音声を使う。再生成は入力または設定を変えた場合に限り、課金が発生することを明示して実行する。
 
-## MP4作成フェーズ
+## 内容ビジュアル作成・レビューフェーズ
 
 MCP Tool: `youtube-video-pipeline.list_visual_components`
 
@@ -88,12 +96,19 @@ MCP Tool: `youtube-video-pipeline.get_video_scene_context`
 - 対象章またはShortの発話、内容ビジュアルの必須切替地点、利用可能な出典、`source/assets/manifest.json` に登録済みの独自素材を取得する。
 - コンポーネントやGoogle素材IDの推薦は行わず、シーン設計に必要な事実だけを返す。
 
-MCP Tool: `youtube-video-pipeline.render_video_from_scene_plan`
+MCP Tool: `youtube-video-pipeline.collect_visual_assets`
+
+- 入力は `channelId`、`projectSource`、`target`、`chapterId`、`assets` とする。`chapterId` は横動画で必須、Shortでは指定しない。
+- 権利確認済みの独自素材を、画面生成より先に `source/assets` へ一度だけ保存する。
+- 独自素材は `sourceUrl` または `localPath` のどちらかで入力する。いずれも `rights` と `rightsVerified: true` を必須とし、`creator`、`licenseUrl`、`attribution` は任意とする。`sourcePageUrl` は使用しない。
+- Toolは同じ `id` と権利情報を `source/assets/manifest.json` へ登録し、後続Toolで使う `project-asset` と相対pathを返す。
+- Google Material SymbolsとGoogle Noto Emojiは `source/assets` へ保存せず、入力された固定IDの定義をそのまま返す。
+
+MCP Tool: `youtube-video-pipeline.render_content_visuals_from_scene_plan`
 
 - 入力は `channelId`、`projectSource`、`target`、`chapterId`、`assets`、`scenePlan` とする。`projectSource` は取得元の種別と場所を持ち、初版はGoogle Driveの作品フォルダURLへ対応する。`chapterId` は横動画で必須、Shortでは指定しない。
 - `assets` は章またはShort全体で一つだけ渡す素材辞書とし、各素材へ一意の `id` を付ける。各シーンの画像入力は取得元やメタ情報を重複して持たず、`assetId` でこの辞書を参照する。カード、フロー図、パズル、人物・事例ストーリー等の内部画像も同じ方式に統一する。
-- 独自素材は `sourceUrl` または `localPath` のどちらかで入力する。いずれも `rights` と `rightsVerified: true` を必須とし、`creator`、`licenseUrl`、`attribution` は任意とする。`sourcePageUrl` は使用しない。Toolは独自素材を `source/assets` へ保存し、同じ `id` と権利情報をmanifestへ登録する。
-- `source/assets` に登録済みの独自素材は、`project-asset` と相対pathで `assets` へ指定できる。
+- 独自素材は `collect_visual_assets` が返した `project-asset` と相対pathで指定する。`sourceUrl` と `localPath` は受け付けず、画面生成時に素材を二重保存しない。
 - Google Material Symbolsは `google-material-symbol` と正式な `symbolId`、Google Noto Emojiは `google-noto-emoji` と正式な `emojiId` で `assets` へ指定する。実行時に固定バージョンから解決し、取得元とライセンスを実行記録へ残した後、一時ファイルを削除する。Google素材を `source/assets` へキャッシュしない。
 - 横動画は1章、Shortは全編のシーン設計JSONを1回の呼び出しで渡す。Toolは検証済みJSONを `.pipeline` へ保存し、一時TSXと一時素材からRemotionを実行する。作品固有TSXはrendererへ残さない。
 - Toolは `source/audio/<対象>/manifest.json` とWAV、`source/references.json`、`source/assets/manifest.json` を作品フォルダから解決する。外部動画の音声は使用しない。
@@ -102,6 +117,24 @@ MCP Tool: `youtube-video-pipeline.render_video_from_scene_plan`
 - 横動画の `opening` は固定オープニング72フレームの後に音声と内容ビジュアルを表示する。通常章と `summary` は章タイトル75フレームの後に表示し、`summary` の末尾には固定エンディング360フレームを含める。
 - 横動画の本編章と `summary` の各内容ビジュアルには1件以上の出典IDを必須とする。`skit` は出典を禁止し、`opening` は出典なしを許可する。
 - Shortはコント中に「これは○○の解説動画です。」を表示して出典を表示しない。インサートを挟まず解説サマリへ移り、サマリ開始時から内容ビジュアルと1件以上の出典を表示する。固定CTAでは直前の表示を維持する。
+- 各内容ビジュアルは、コンポーネントの推奨フレームで導入アニメーション完了後の完成状態を切り出す。短い発話でもレビューPNGには全要素を表示する。
+- PNGは内容ビジュアル単体ではなく、見出し、出典、アバター、字幕を含む実際の動画サイズの全画面とする。
+- 横動画は `source/visuals/long/<章>/<発話ID>.png`、Shortは `source/visuals/short/<発話ID>.png` へ保存し、入力ハッシュと画像ハッシュをmanifestへ記録する。
+- 生成後は人間に全PNGのレビューを依頼する。修正が必要な場合はシーン設計を直して再生成する。
+
+MCP Tool: `youtube-video-pipeline.approve_content_visuals`
+
+- 入力は `channelId`、`projectSource`、`target`、`chapterId` と、`visualIds` または `all: true`、任意の `note` とする。
+- 人間が明示的に確認した後だけ呼び出す。画像単位の承認と、対象章またはShort全体の一括承認に対応する。
+- 承認はシーン設計と生成PNGのハッシュへ結び付ける。画像、素材、シーン設計が変わった場合は古い承認を無効とする。
+
+## 分割MP4作成フェーズ
+
+MCP Tool: `youtube-video-pipeline.render_video_from_approved_scene_plan`
+
+- 入力は `channelId`、`projectSource`、`target`、`chapterId` とする。`chapterId` は横動画で必須、Shortでは指定しない。
+- 対象の全内容ビジュアルについて最新PNGの人間承認が揃っていない場合は実行しない。
+- 保存済みの、PNGレビューに使用したものと同一のシーン設計と素材からアニメーション付き動画を再描画する。PNG自体を動画素材として動かさない。
 - Toolは音素時刻を使い、発話中の話者だけ正式Blenderアバターを日本語5母音と閉口の口形でリップシンクする。
 - 自動QAに失敗した生成物は破棄し、既存MP4を変更しない。合格した再生成動画は同じ固定ファイル名の既存MP4を置き換える。
 
