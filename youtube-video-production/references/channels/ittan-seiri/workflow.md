@@ -74,9 +74,5 @@
 | 承認済みのシーン設計から章別MP4またはShortを生成する | `youtube-video-pipeline.render_video_from_approved_scene_plan` |
 | 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_reviewed_videos` |
 | サムネイル、タイトル、概要欄などの投稿情報を作成する | `youtube-video-pipeline.create_youtube_post_assets` |
-
-## MCP Tool未実装のフェーズ
-
-| 目的 | MCP Tool |
-| --- | --- |
-| 横動画とShortをYouTubeへ限定公開で投稿し、投稿情報、関連動画、終了画面を設定する | 未実装 |
+| 横動画またはShortをYouTubeへ限定公開で投稿する | `youtube-video-pipeline.upload_youtube_video` |
+| 再投稿前に投稿記録と一致する非公開または限定公開動画を削除する | `youtube-video-pipeline.delete_uploaded_youtube_video` |
