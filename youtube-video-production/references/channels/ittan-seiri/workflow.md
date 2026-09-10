@@ -5,7 +5,7 @@
 | 順序 | 工程 | MCP Tool | 使用するTool |
 | --- | --- | --- | --- |
 | 1 | 横動画用とShort用の台本を作成する | なし | — |
-| 2-A | 台本全体と各`visualId`の対象発話から、内容ビジュアル画像を生成する | あり | `youtube-video-pipeline.generate_content_visuals_from_google_doc` |
+| 2-A | 台本全体と各`visualId`の対象発話から、GPT Image 2.5で内容ビジュアル画像を生成する | あり | `youtube-video-pipeline.generate_content_visuals_from_google_doc` |
 | 2-B | 台本から横動画用とShort用の未生成TTS生データを生成する。2-Aと並行してよい | あり | `youtube-video-pipeline.generate_tts_from_google_doc` |
 | 3-A | 生成されたすべての内容ビジュアル画像を提示し、人の確認を受ける | なし | — |
 | 3-B | 保存済みTTS生データから横動画用とShort用の完成音声とmanifestを加工する。3-Aと並行してよく、両者は並列実行する | あり | `youtube-video-pipeline.process_audio_from_google_doc` |
@@ -94,7 +94,7 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 
 人の確認はToolで記録せず、制作を次のフェーズへ進めるための会話上の条件として扱う。
 
-1. Image 2.5で内容ビジュアル画像を生成して`source/visuals`へ保存した後、画像を提示して人の確認を待つ。確認されるまでRemotion実装へ進まない。
+1. GPT Image 2.5で内容ビジュアル画像を生成して`source/visuals`へ保存した後、画像を提示して人の確認を待つ。確認されるまでRemotion実装へ進まない。
 2. 横動画用とShort用の音声生成後、成果物を提示して人の確認を待つ。確認後に確定タイムラインを取得してRemotion実装を行い、音声とRemotion作品素材の両方が揃うまでMP4生成へ進まない。
 3. 横動画の全章とShortの分割MP4生成後、固定アバター、章表示、字幕、Ref、内容ビジュアルとアニメーションを確認できる形で提示し、人の確認を待つ。確認されるまで完成版生成へ進まない。
 4. 横動画とShortの完成版生成後、成果物を提示して人の最終確認を待つ。確認されるまで投稿用成果物の作成やYouTube投稿へ進まない。
