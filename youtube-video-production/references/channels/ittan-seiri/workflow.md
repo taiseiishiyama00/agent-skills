@@ -30,11 +30,9 @@
 │   ├── visuals/
 │   │   ├── long/
 │   │   │   └── <章>/
-│   │   │       ├── <scene-id>.png
-│   │   │       └── manifest.json
+│   │   │       └── <scene-id>.png
 │   │   └── short/
-│   │       ├── <scene-id>.png
-│   │       └── manifest.json
+│   │       └── <scene-id>.png
 │   └── videos/
 │       ├── long/
 │       │   └── <章>.mp4
@@ -58,6 +56,21 @@
 
 [台本テンプレート](script-template.md)を参照し、横動画用とShort用の台本をそれぞれ `source/scripts` にGoogle Docsで作成する。
 
+## Image 2.5による内容ビジュアル生成フェーズ
+
+このフェーズではMCP Toolを使わない。台本に記載されたすべてのビジュアル挿入位置を抽出し、挿入位置ごとにImage 2.5で1枚の内容ビジュアル画像を生成する。各生成時には、局所的な発話だけでなく台本全体と対象の挿入位置をコンテキストとして与え、作品全体の意味、前後関係、重複しない構図を反映させる。
+
+生成画像はGoogle Driveの`source/visuals/long/<章>/<scene-id>.png`または`source/visuals/short/<scene-id>.png`へ保存する。画像生成、保存、確認に`youtube-video-pipeline`のMCP Toolを追加・使用しない。
+
+## Remotionによる内容ビジュアル実装フェーズ
+
+内容ビジュアル画像の確認後、このフェーズもMCP Toolを使わずに実施する。画像を実際に確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
+
+- `youtube-remotion-renderer/src/channels/ittan-seiri/videos/<video-id>/`を作り、`content-visuals.json`と`index.tsx`を置く。
+- Google Driveで確認済みの画像を`youtube-remotion-renderer/public/input/ittan-seiri/<video-id>/`へ複製する。
+- `content-visuals.json`にはtarget、章、挿入位置、出典IDを記録し、内容、座標、動きは`index.tsx`の`ContentVisual`へ実装する。
+- アバター、字幕、背景、章表示、出典表示は作品側に再実装しない。共通コンポーネントは任意に再利用できるが、それだけに限定しない。
+
 ## MCP Toolによる制作フェーズ
 
 各Toolの入力、処理、分岐、保存先、検証はToolのスキーマ、説明、実行結果に従う。
@@ -65,10 +78,7 @@
 | 目的 | MCP Tool |
 | --- | --- |
 | Google Docs台本から音声と発話・出典manifestを生成する | `youtube-video-pipeline.generate_audio_from_google_doc` |
-| 利用可能な描画コンポーネントを取得する | `youtube-video-pipeline.list_visual_components` |
-| 音声manifestからシーン設計に必要な発話時刻と出典を取得する | `youtube-video-pipeline.get_video_scene_context` |
-| 必要素材を収集し、座標・描画時間を含むシーン設計からレビュー用PNGを生成する | `youtube-video-pipeline.render_content_visuals_from_scene_plan` |
-| シーン設計から章別MP4またはShortを生成する | `youtube-video-pipeline.render_segment_video_from_scene_plan` |
+| `videoId`で指定したRemotion作品素材を内容ビジュアルとして章別MP4またはShortを生成する | `youtube-video-pipeline.render_segment_video` |
 | 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_videos` |
 | サムネイル、タイトル、概要欄などの投稿情報を作成する | `youtube-video-pipeline.create_youtube_post_assets` |
 | 横動画またはShortをYouTubeへ限定公開で投稿する | `youtube-video-pipeline.upload_youtube_video` |
@@ -78,9 +88,9 @@
 
 人の確認はToolで記録せず、制作を次のフェーズへ進めるための会話上の条件として扱う。
 
-1. 横動画用とShort用の音声生成後、成果物を提示して人の確認を待つ。確認されるまで内容ビジュアル生成へ進まない。
-2. レビュー用PNG生成後、固定アバター、章表示、字幕、Ref、内容ビジュアルを確認できる形で提示し、人の確認を待つ。確認されるまで章別MP4またはShort生成へ進まない。
-3. 横動画の全章とShortの分割MP4生成後、成果物を提示して人の確認を待つ。確認されるまで完成版生成へ進まない。
+1. Image 2.5で内容ビジュアル画像を生成して`source/visuals`へ保存した後、画像を提示して人の確認を待つ。確認されるまでRemotion実装へ進まない。
+2. 横動画用とShort用の音声生成後、成果物を提示して人の確認を待つ。音声とRemotion作品素材の両方が揃うまでMP4生成へ進まない。
+3. 横動画の全章とShortの分割MP4生成後、固定アバター、章表示、字幕、Ref、内容ビジュアルとアニメーションを確認できる形で提示し、人の確認を待つ。確認されるまで完成版生成へ進まない。
 4. 横動画とShortの完成版生成後、成果物を提示して人の最終確認を待つ。確認されるまで投稿用成果物の作成やYouTube投稿へ進まない。
 
 修正指示があった場合は対象フェーズの成果物を再生成し、同じ確認をもう一度行う。
