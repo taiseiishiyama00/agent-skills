@@ -5,8 +5,9 @@
 | 順序 | 工程 | MCP Tool | 使用するTool |
 | --- | --- | --- | --- |
 | 1 | 横動画用とShort用の台本を作成する | なし | — |
-| 2-A | 台本全体と各`visualId`の対象発話から、GPT Image 2.5で内容ビジュアル画像を生成する | あり | `youtube-video-pipeline.generate_content_visuals_from_google_doc` |
-| 2-B | 台本から横動画用とShort用の未生成TTS生データを生成する。2-Aと並行してよい | あり | `youtube-video-pipeline.generate_tts_from_google_doc` |
+| 2-A | 台本全体と各`visualId`の対象発話から、内容ビジュアルの固定生成パラメータを取得する | あり | `youtube-video-pipeline.prepare_content_visuals_from_google_doc` |
+| 2-B | 取得した生成パラメータを使い、Chat/Codex内蔵のGPT Image 2.5で内容ビジュアル画像を生成して保存する | なし | — |
+| 2-C | 台本から横動画用とShort用の未生成TTS生データを生成する。2-Aおよび2-Bと並行してよい | あり | `youtube-video-pipeline.generate_tts_from_google_doc` |
 | 3-A | 生成されたすべての内容ビジュアル画像を提示し、人の確認を受ける | なし | — |
 | 3-B | 保存済みTTS生データから横動画用とShort用の完成音声とmanifestを加工する。3-Aと並行してよく、両者は並列実行する | あり | `youtube-video-pipeline.process_audio_from_google_doc` |
 | 4 | 完成音声を提示し、人の確認を受ける | なし | — |
@@ -80,6 +81,19 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 
 [台本テンプレート](script-template.md)を参照し、横動画用とShort用の台本をそれぞれ `source/scripts` にGoogle Docsで作成する。
 
+### Chat/Codexによる内容ビジュアル画像生成
+
+`prepare_content_visuals_from_google_doc`を横動画用とShort用の台本にそれぞれ実行し、各`visualId`の`generationParameters`を取得する。このToolは画像生成や保存を行わず、Chat/Codex内蔵のGPT Image 2.5へ渡すプロンプトと画像設定を機械的に確定するためだけに使う。
+
+1. `generationParameters`を配列順に処理し、1つの`visualId`につき画像生成を1回ずつ独立して実行する。複数のvisualを1回の生成へまとめない。
+2. 新規生成では直前に生成した画像や会話中の別画像を参照画像として渡さず、対象要素の`prompt`を省略、要約、翻訳、再構成せずそのまま画像生成へ渡す。`model`、`quality`、`size`は生成意図として維持し、少なくとも`prompt`に記載された縦横比と向きを変えない。
+3. PipelineのOpenAI APIやAPIキーは使用せず、Chat/Codex内蔵の画像生成だけを使う。
+4. 生成後は画像そのものを確認し、対象発話を具体的に表していること、指定の向きであること、単一の完成画像であること、主要要素が見切れていないことを確認する。また、アバター、話者、字幕、Ref ID、出典、章表示、チャンネル名、動画フレーム、共通UI、共通背景装飾、透かし、不要な文字が含まれていないことを確認する。
+5. 不適合な画像だけを再生成する。再生成時は元の`prompt`を維持し、確認で見つかった不適合の修正指示だけを末尾に追加する。他のvisualのプロンプトや画像を混ぜない。
+6. 合格した画像を`fileName`の名前で`destinationPath`へ保存し、横動画用とShort用の全画像を人へ提示する。
+
+この工程は内容ビジュアルだけを対象とする。アバター、字幕、背景、章表示、出典表示など、動画の共通部品を画像内に生成しない。
+
 ### Remotionによる内容ビジュアル実装
 
 画像と確定尺を確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
@@ -94,7 +108,7 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 
 人の確認はToolで記録せず、制作を次のフェーズへ進めるための会話上の条件として扱う。
 
-1. GPT Image 2.5で内容ビジュアル画像を生成して`source/visuals`へ保存した後、画像を提示して人の確認を待つ。確認されるまでRemotion実装へ進まない。
+1. Chat/Codex内蔵のGPT Image 2.5で内容ビジュアル画像を生成して`source/visuals`へ保存した後、画像を提示して人の確認を待つ。確認されるまでRemotion実装へ進まない。
 2. 横動画用とShort用の音声生成後、成果物を提示して人の確認を待つ。確認後に確定タイムラインを取得してRemotion実装を行い、音声とRemotion作品素材の両方が揃うまでMP4生成へ進まない。
 3. 横動画の全章とShortの分割MP4生成後、固定アバター、章表示、字幕、Ref、内容ビジュアルとアニメーションを確認できる形で提示し、人の確認を待つ。確認されるまで完成版生成へ進まない。
 4. 横動画とShortの完成版生成後、成果物を提示して人の最終確認を待つ。確認されるまで投稿用成果物の作成やYouTube投稿へ進まない。
