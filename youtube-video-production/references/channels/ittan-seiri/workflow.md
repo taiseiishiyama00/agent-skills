@@ -30,9 +30,9 @@
 │   ├── visuals/
 │   │   ├── long/
 │   │   │   └── <章>/
-│   │   │       └── <scene-id>.png
+│   │   │       └── <visual-id>.png
 │   │   └── short/
-│   │       └── <scene-id>.png
+│   │       └── <visual-id>.png
 │   └── videos/
 │       ├── long/
 │       │   └── <章>.mp4
@@ -60,15 +60,16 @@
 
 このフェーズではMCP Toolを使わない。台本に記載されたすべてのビジュアル挿入位置を抽出し、挿入位置ごとにImage 2.5で1枚の内容ビジュアル画像を生成する。各生成時には、局所的な発話だけでなく台本全体と対象の挿入位置をコンテキストとして与え、作品全体の意味、前後関係、重複しない構図を反映させる。
 
-生成画像はGoogle Driveの`source/visuals/long/<章>/<scene-id>.png`または`source/visuals/short/<scene-id>.png`へ保存する。画像生成、保存、確認に`youtube-video-pipeline`のMCP Toolを追加・使用しない。
+生成画像はGoogle Driveの`source/visuals/long/<章>/<visual-id>.png`または`source/visuals/short/<visual-id>.png`へ保存する。画像生成、保存、確認に`youtube-video-pipeline`のMCP Toolを追加・使用しない。
 
 ## Remotionによる内容ビジュアル実装フェーズ
 
-内容ビジュアル画像の確認後、このフェーズもMCP Toolを使わずに実施する。画像を実際に確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
+内容ビジュアル画像の確認と音声加工の完了後、`get_content_visual_timeline`で各`visualId`の正確な表示開始、終了、尺、frame数を取得する。その後の実装自体にはMCP Toolを使わない。画像と確定尺を確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
 
-- `youtube-remotion-renderer/src/channels/ittan-seiri/videos/<video-id>/`を作り、`content-visuals.json`と`index.tsx`を置く。
+- `youtube-remotion-renderer/src/channels/ittan-seiri/videos/<video-id>/`を作り、`index.tsx`を置く。
 - Google Driveで確認済みの画像を`youtube-remotion-renderer/public/input/ittan-seiri/<video-id>/`へ複製する。
-- `content-visuals.json`にはtarget、章、挿入位置、出典IDを記録し、内容、座標、動きは`index.tsx`の`ContentVisual`へ実装する。
+- 挿入位置、表示時間、出典は台本と加工済み音声manifestを正本とし、Remotion側へ重複保存しない。
+- `index.tsx`の`ContentVisual`は`remotionAssetId`ごとに描画を切り替え、Toolから受け取る相対frameと`durationInFrames`の範囲内でアニメーションする。
 - アバター、字幕、背景、章表示、出典表示は作品側に再実装しない。共通コンポーネントは任意に再利用できるが、それだけに限定しない。
 
 ## MCP Toolによる制作フェーズ
@@ -77,8 +78,10 @@
 
 | 目的 | MCP Tool |
 | --- | --- |
-| Google Docs台本から音声と発話・出典manifestを生成する | `youtube-video-pipeline.generate_audio_from_google_doc` |
-| `videoId`で指定したRemotion作品素材を内容ビジュアルとして章別MP4またはShortを生成する | `youtube-video-pipeline.render_segment_video` |
+| Google Docs台本から未生成のTTS生データだけを生成する | `youtube-video-pipeline.generate_tts_from_google_doc` |
+| 保存済みTTS生データから音声と発話・出典manifestを加工する | `youtube-video-pipeline.process_audio_from_google_doc` |
+| 台本のvisual IDと加工済み音声から各内容ビジュアルの確定表示時間を取得する | `youtube-video-pipeline.get_content_visual_timeline` |
+| visual IDとRemotion素材IDの対応を指定し、作品素材を内容ビジュアルとして章別MP4またはShortを生成する | `youtube-video-pipeline.render_segment_video` |
 | 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_videos` |
 | サムネイル、タイトル、概要欄などの投稿情報を作成する | `youtube-video-pipeline.create_youtube_post_assets` |
 | 横動画またはShortをYouTubeへ限定公開で投稿する | `youtube-video-pipeline.upload_youtube_video` |
