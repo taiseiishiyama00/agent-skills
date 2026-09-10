@@ -87,12 +87,13 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 
 ### Remotionによる内容ビジュアル実装
 
-画像と確定尺を確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
+画像と音声の確認後、[発話同期アニメーションの制作・検証手順](speech-animation.md)に従って、意味単位の分解、要素の分離、発話に対応した演出の実装、実描画の検証を行う。実装自体にはMCP Toolを使わない。
 
 - `youtube-remotion-renderer/src/channels/ittan-seiri/videos/<video-id>/`を作り、`index.tsx`を置く。
 - Google Driveで確認済みの画像を`youtube-remotion-renderer/public/input/ittan-seiri/<video-id>/`へ複製する。
 - 挿入位置、表示時間、出典は台本と加工済み音声manifestを正本とし、Remotion側へ重複保存しない。
 - `index.tsx`の`ContentVisual`は`remotionAssetId`ごとに描画を切り替え、Toolから受け取る相対frameと`durationInFrames`の範囲内でアニメーションする。
+- 発話同期の実装契約と実行例は`youtube-remotion-renderer/src/channels/ittan-seiri/videos/README.md`を参照する。
 - アバター、字幕、背景、章表示、出典表示は作品側に再実装しない。共通コンポーネントは任意に再利用できるが、それだけに限定しない。
 
 ### 人による確認と進行条件
