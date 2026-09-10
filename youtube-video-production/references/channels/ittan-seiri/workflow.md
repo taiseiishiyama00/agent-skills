@@ -83,11 +83,11 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 
 このフェーズではMCP Toolを使わない。台本に記載されたすべてのビジュアル挿入位置を抽出し、挿入位置ごとにImage 2.5で1枚の内容ビジュアル画像を生成する。各生成時には、局所的な発話だけでなく台本全体と対象の挿入位置をコンテキストとして与え、作品全体の意味、前後関係、重複しない構図を反映させる。
 
-生成画像はGoogle Driveの`source/visuals/long/<章>/<visual-id>.png`または`source/visuals/short/<visual-id>.png`へ保存する。画像生成、保存、確認に`youtube-video-pipeline`のMCP Toolを追加・使用しない。
+生成画像はGoogle Driveの`source/visuals/long/<章>/<visual-id>.png`または`source/visuals/short/<visual-id>.png`へ保存する。
 
 ### Remotionによる内容ビジュアル実装
 
-内容ビジュアル画像の確認と音声加工の完了後、`get_content_visual_timeline`で各`visualId`の正確な表示開始、終了、尺、frame数を取得する。その後の実装自体にはMCP Toolを使わない。画像と確定尺を確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
+画像と確定尺を確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
 
 - `youtube-remotion-renderer/src/channels/ittan-seiri/videos/<video-id>/`を作り、`index.tsx`を置く。
 - Google Driveで確認済みの画像を`youtube-remotion-renderer/public/input/ittan-seiri/<video-id>/`へ複製する。
