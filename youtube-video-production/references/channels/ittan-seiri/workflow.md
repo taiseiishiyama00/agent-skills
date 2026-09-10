@@ -1,5 +1,27 @@
 # 「いったん整理。」制作ワークフロー
 
+## 制作フロー
+
+| 順序 | 工程 | MCP Tool | 使用するTool |
+| --- | --- | --- | --- |
+| 1 | 横動画用とShort用の台本を作成する | なし | — |
+| 2-A | 台本全体から内容ビジュアル画像を生成し、人の確認を受ける | なし | — |
+| 2-B | 台本から横動画用とShort用の未生成TTS生データを生成する。2-Aと並行してよい | あり | `youtube-video-pipeline.generate_tts_from_google_doc` |
+| 3 | 保存済みTTS生データから横動画用とShort用の完成音声とmanifestを加工する。両者は並列実行する | あり | `youtube-video-pipeline.process_audio_from_google_doc` |
+| 4 | 完成音声を提示し、人の確認を受ける | なし | — |
+| 5 | 画像と音声の確認後、各`visualId`の確定表示時間を取得する | あり | `youtube-video-pipeline.get_content_visual_timeline` |
+| 6 | 確認済み画像と確定表示時間から、作品固有のRemotionアニメーションを実装する | なし | — |
+| 7 | `visualId`と`remotionAssetId`を対応付け、横動画の章別MP4とShortを生成する | あり | `youtube-video-pipeline.render_segment_video` |
+| 8 | 生成したすべての分割MP4を提示し、人の確認を受ける | なし | — |
+| 9 | 確認済みの章別MP4を連結し、横動画とShortの完成版を配置する | あり | `youtube-video-pipeline.finalize_videos` |
+| 10 | 完成版を提示し、人の最終確認を受ける | なし | — |
+| 11 | サムネイル、タイトル、概要欄などの投稿用成果物を作成する | あり | `youtube-video-pipeline.create_youtube_post_assets` |
+| 12 | 横動画またはShortをYouTubeへ限定公開で投稿する | あり | `youtube-video-pipeline.upload_youtube_video` |
+
+再投稿が必要な場合だけ、投稿記録と一致する非公開または限定公開動画を`youtube-video-pipeline.delete_uploaded_youtube_video`で削除してから手順12を再実行する。
+
+Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolのスキーマ、説明、実行結果を正本とする。以下ではToolを使わない工程だけを説明する。
+
 ## 制作物
 
 - 1作品につき、横動画1本とShort1本を制作する。
@@ -51,17 +73,19 @@
 └── .pipeline/
 ```
 
-## 台本作成フェーズ
+## Toolを使わない工程
+
+### 台本作成
 
 [台本テンプレート](script-template.md)を参照し、横動画用とShort用の台本をそれぞれ `source/scripts` にGoogle Docsで作成する。
 
-## Image 2.5による内容ビジュアル生成フェーズ
+### Image 2.5による内容ビジュアル生成
 
 このフェーズではMCP Toolを使わない。台本に記載されたすべてのビジュアル挿入位置を抽出し、挿入位置ごとにImage 2.5で1枚の内容ビジュアル画像を生成する。各生成時には、局所的な発話だけでなく台本全体と対象の挿入位置をコンテキストとして与え、作品全体の意味、前後関係、重複しない構図を反映させる。
 
 生成画像はGoogle Driveの`source/visuals/long/<章>/<visual-id>.png`または`source/visuals/short/<visual-id>.png`へ保存する。画像生成、保存、確認に`youtube-video-pipeline`のMCP Toolを追加・使用しない。
 
-## Remotionによる内容ビジュアル実装フェーズ
+### Remotionによる内容ビジュアル実装
 
 内容ビジュアル画像の確認と音声加工の完了後、`get_content_visual_timeline`で各`visualId`の正確な表示開始、終了、尺、frame数を取得する。その後の実装自体にはMCP Toolを使わない。画像と確定尺を確認し、内容と構図に合う登場、移動、拡大、強調、場面転換等のアニメーションを作品固有のRemotionコードとして実装する。
 
@@ -71,22 +95,7 @@
 - `index.tsx`の`ContentVisual`は`remotionAssetId`ごとに描画を切り替え、Toolから受け取る相対frameと`durationInFrames`の範囲内でアニメーションする。
 - アバター、字幕、背景、章表示、出典表示は作品側に再実装しない。共通コンポーネントは任意に再利用できるが、それだけに限定しない。
 
-## MCP Toolによる制作フェーズ
-
-各Toolの入力、処理、分岐、保存先、検証はToolのスキーマ、説明、実行結果に従う。
-
-| 目的 | MCP Tool |
-| --- | --- |
-| Google Docs台本から未生成のTTS生データだけを生成する | `youtube-video-pipeline.generate_tts_from_google_doc` |
-| 保存済みTTS生データから音声と発話・出典manifestを加工する | `youtube-video-pipeline.process_audio_from_google_doc` |
-| 台本のvisual IDと加工済み音声から各内容ビジュアルの確定表示時間を取得する | `youtube-video-pipeline.get_content_visual_timeline` |
-| visual IDとRemotion素材IDの対応を指定し、作品素材を内容ビジュアルとして章別MP4またはShortを生成する | `youtube-video-pipeline.render_segment_video` |
-| 横動画の章別MP4を連結し、横動画とShortの完成版を配置する | `youtube-video-pipeline.finalize_videos` |
-| サムネイル、タイトル、概要欄などの投稿情報を作成する | `youtube-video-pipeline.create_youtube_post_assets` |
-| 横動画またはShortをYouTubeへ限定公開で投稿する | `youtube-video-pipeline.upload_youtube_video` |
-| 再投稿前に投稿記録と一致する非公開または限定公開動画を削除する | `youtube-video-pipeline.delete_uploaded_youtube_video` |
-
-## 人による確認と進行条件
+### 人による確認と進行条件
 
 人の確認はToolで記録せず、制作を次のフェーズへ進めるための会話上の条件として扱う。
 
