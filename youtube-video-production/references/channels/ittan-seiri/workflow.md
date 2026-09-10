@@ -5,9 +5,10 @@
 | 順序 | 工程 | MCP Tool | 使用するTool |
 | --- | --- | --- | --- |
 | 1 | 横動画用とShort用の台本を作成する | なし | — |
-| 2-A | 台本全体から内容ビジュアル画像を生成し、人の確認を受ける | なし | — |
+| 2-A | 台本全体と各`visualId`の対象発話から、内容ビジュアル画像を生成する | あり | `youtube-video-pipeline.generate_content_visuals_from_google_doc` |
 | 2-B | 台本から横動画用とShort用の未生成TTS生データを生成する。2-Aと並行してよい | あり | `youtube-video-pipeline.generate_tts_from_google_doc` |
-| 3 | 保存済みTTS生データから横動画用とShort用の完成音声とmanifestを加工する。両者は並列実行する | あり | `youtube-video-pipeline.process_audio_from_google_doc` |
+| 3-A | 生成されたすべての内容ビジュアル画像を提示し、人の確認を受ける | なし | — |
+| 3-B | 保存済みTTS生データから横動画用とShort用の完成音声とmanifestを加工する。3-Aと並行してよく、両者は並列実行する | あり | `youtube-video-pipeline.process_audio_from_google_doc` |
 | 4 | 完成音声を提示し、人の確認を受ける | なし | — |
 | 5 | 画像と音声の確認後、各`visualId`の確定表示時間を取得する | あり | `youtube-video-pipeline.get_content_visual_timeline` |
 | 6 | 確認済み画像と確定表示時間から、作品固有のRemotionアニメーションを実装する | なし | — |
@@ -78,12 +79,6 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 ### 台本作成
 
 [台本テンプレート](script-template.md)を参照し、横動画用とShort用の台本をそれぞれ `source/scripts` にGoogle Docsで作成する。
-
-### Image 2.5による内容ビジュアル生成
-
-このフェーズではMCP Toolを使わない。台本に記載されたすべてのビジュアル挿入位置を抽出し、挿入位置ごとにImage 2.5で1枚の内容ビジュアル画像を生成する。各生成時には、局所的な発話だけでなく台本全体と対象の挿入位置をコンテキストとして与え、作品全体の意味、前後関係、重複しない構図を反映させる。
-
-生成画像はGoogle Driveの`source/visuals/long/<章>/<visual-id>.png`または`source/visuals/short/<visual-id>.png`へ保存する。
 
 ### Remotionによる内容ビジュアル実装
 

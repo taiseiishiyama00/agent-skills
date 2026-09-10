@@ -7,7 +7,7 @@ description: 設定済みYouTubeチャンネルの動画・Shortsを、チャン
 
 チャンネルごとのToolの利用目的と要求は `references/channels/<channel-id>/workflow.md` と `references/channels/<channel-id>/output-rules.md` にある。
 
-AIはこれらを読み、MCP Toolを使うと明記されたフェーズでは対応Toolを一意の実行入口として使用する。内容ビジュアル画像の生成と作品固有のRemotion実装はMCP Toolを使わず、`workflow.md`の手順に従う。
+AIはこれらを読み、MCP Toolを使うと明記されたフェーズでは対応Toolを一意の実行入口として使用する。内容ビジュアル画像は対応Toolで生成し、作品固有のRemotion実装だけはMCP Toolを使わず`workflow.md`の手順に従う。
 
 `workflow.md` のMCP Toolを使う各フェーズには、目的とToolの対応だけを記載する。入力スキーマ、実行手順、分岐条件、保存先、検証条件はMCP Toolを正本とし、`workflow.md` へ複製しない。
 
