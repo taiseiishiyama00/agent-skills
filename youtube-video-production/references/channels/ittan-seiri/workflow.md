@@ -11,7 +11,7 @@
 | 3 | 2-C完了後、保存済みTTS生データから横動画用とShort用の完成音声とmanifestを加工する。2-Bと並行してよい | あり | `youtube-video-pipeline.process_audio_from_google_doc` |
 | 4 | 内容ビジュアル画像と完成音声をまとめて提示し、人の確認を受ける | なし | — |
 | 5 | 画像と音声の確認後、各`visualId`の確定表示時間を取得する | あり | `youtube-video-pipeline.get_content_visual_timeline` |
-| 6 | 確認済み画像と確定表示時間から、作品固有のRemotionアニメーションを実装する | なし | — |
+| 6 | 確認済み画像を参考に独立したRemotionコンポーネントを再構築し、発話同期と構造検証を行う | なし | — |
 | 7 | `visualId`と`remotionAssetId`を対応付け、横動画の章別MP4とShortを生成する | あり | `youtube-video-pipeline.render_segment_video` |
 | 8 | 生成したすべての分割MP4を提示し、人の確認を受ける | なし | — |
 | 9 | 確認済みの章別MP4を連結し、横動画とShortの完成版を配置する | あり | `youtube-video-pipeline.finalize_videos` |
@@ -87,10 +87,10 @@ Toolを使う工程の入力、処理、分岐、保存先、検証は各Toolの
 
 ### Remotionによる内容ビジュアル実装
 
-画像と音声の確認後、[発話同期アニメーションの制作・検証手順](speech-animation.md)に従って、意味単位の分解、要素の分離、発話に対応した演出の実装、実描画の検証を行う。実装自体にはMCP Toolを使わない。
+画像と音声の確認後、[発話同期アニメーションの制作・検証手順](speech-animation.md)に従って、意味単位の分解、コンポーネントの再構築、構造検証、発話に対応した演出の実装、実描画の検証を行う。手順2の構造検証に合格するまで分割MP4生成へ進まない。実装自体にはMCP Toolを使わない。
 
 - `youtube-remotion-renderer/src/channels/ittan-seiri/videos/<video-id>/`を作り、`index.tsx`を置く。
-- Google Driveで確認済みの画像を`youtube-remotion-renderer/public/input/ittan-seiri/<video-id>/`へ複製する。
+- Google Driveで確認済みの画像はデザイン参照用として制作時に読む。動画の描画依存には加えない。画像の扱いとコンポーネントの作り方は[speech-animation.mdの手順2](speech-animation.md#2-参考画像から独立したコンポーネントを再構築する)を正本とする。
 - 挿入位置、表示時間、出典は台本と加工済み音声manifestを正本とし、Remotion側へ重複保存しない。
 - `index.tsx`の`ContentVisual`は`remotionAssetId`ごとに描画を切り替え、Toolから受け取る相対frameと`durationInFrames`の範囲内でアニメーションする。
 - 発話同期の実装契約と実行例は`youtube-remotion-renderer/src/channels/ittan-seiri/videos/README.md`を参照する。
