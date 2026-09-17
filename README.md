@@ -8,15 +8,13 @@
 
 | スキル | 概要 |
 |---|---|
+| `azure-devops-work-item-entry` | Azure DevOps の Bug / Product Backlog Item を画面の表示項目に合わせて作成・更新する。 |
 | `csharp-coding-rules` | C# / .NET 実装で DI、1 ファイル 1 型、コメントに頼らない可読性を守るためのコーディングルール。 |
-| `debug-red-green` | バグ修正、失敗テスト、flaky テスト、回帰、実行時エラー、ログベースのデバッグ用。 |
-| `develop-feature-workflow` | TOBE 設計から最小 diff 実装、検証、レビューまで通す機能開発ワークフロー。 |
-| `youtube-video-production` | 設定済みの複数YouTubeチャンネルで、横動画・Shorts制作、レビュー、投稿を安全に進める。 |
-| `japanese-repo-writing` | リポジトリ作業の日本語コミュニケーションと、日本語 Markdown ドキュメント作成用。 |
 | `plan-mode-preflight` | Plan Modeの前にリードオンリーで事前調査し、根拠付きの修正方針と実装To Doを整理する。 |
-| `resolve-git-conflicts` | merge、rebase、cherry-pick、pull などで発生した Git コンフリクト解消用。 |
-| `review-pr-diff` | PR やブランチ差分を中心にしたコードレビュー用。 |
+| `product-design` | 会社での製品設計に関する参照先と変更先を定めるユーザー共通ルール。 |
+| `tobe-asis-gap-writing` | 説明文を TOBE / ASIS / GAP / 対応方針 の構造で整理して書く。 |
 | `update-agent-skills` | グローバルとプロジェクトのスキルを同期して更新し、必要なPR作成まで行う。 |
+| `youtube-video-production` | 設定済みの複数YouTubeチャンネルで、横動画・Shorts制作、レビュー、投稿を安全に進める。 |
 
 ## 共通手順と対象固有値の境界
 
@@ -46,25 +44,25 @@ git clone https://github.com/taiseiishiyama00/agent-skills.git $HOME\.agent-skil
 
 このリポジトリを通常の作業ディレクトリに clone し、Codex 用の `~/.agent-skills` と Claude Code 用の `~/.claude/skills` をそこへ向けます。
 
+既存の `~/.agent-skills` や `~/.claude/skills` が通常ディレクトリの場合は、リンクを作る前に退避します。
+
 ```powershell
 git clone https://github.com/taiseiishiyama00/agent-skills.git $HOME\repos\agent-skills
-cd $HOME\repos\agent-skills
-.\scripts\install-windows.ps1
+New-Item -ItemType Junction -Path $HOME\.agent-skills -Target $HOME\repos\agent-skills
+New-Item -ItemType Junction -Path $HOME\.claude\skills -Target $HOME\repos\agent-skills
 ```
-
-`install-windows.ps1` は、既存の `~/.agent-skills` または `~/.claude/skills` が通常ディレクトリならバックアップしてから junction を作成します。既存の対象がリンクなら、そのリンクだけを作り直します。
 
 Unix 系環境では次を使います。
 
 ```sh
 git clone https://github.com/taiseiishiyama00/agent-skills.git ~/repos/agent-skills
-cd ~/repos/agent-skills
-sh scripts/install-unix.sh
+ln -s ~/repos/agent-skills ~/.agent-skills
+ln -s ~/repos/agent-skills ~/.claude/skills
 ```
 
 ## Codex で認識させる
 
-1. このリポジトリを `~/.agent-skills` として配置するか、`scripts/install-windows.ps1` / `scripts/install-unix.sh` でリンクする。
+1. このリポジトリを `~/.agent-skills` として配置するか、`~/.agent-skills` からリンクする。
 2. Codex を新しいセッションで起動する。
 3. 起動後、`~/.agent-skills/<skill-name>/SKILL.md` が読み込まれ、スキル一覧に表示されることを確認する。
 
@@ -72,7 +70,7 @@ sh scripts/install-unix.sh
 
 ## Claude Code で認識させる
 
-1. このリポジトリを `~/.claude/skills` として配置するか、`scripts/install-windows.ps1` / `scripts/install-unix.sh` でリンクする。
+1. このリポジトリを `~/.claude/skills` として配置するか、`~/.claude/skills` からリンクする。
 2. Claude Code を新しいセッションで起動する。
 3. 起動後、`~/.claude/skills/<skill-name>/SKILL.md` が読み込まれ、スキル一覧に表示されることを確認する。
 
@@ -128,5 +126,5 @@ git push
 ## 注意
 
 - このリポジトリは個人用スキルを管理する source of truth として扱います。
-- ローカルだけにある未管理スキルを失わないよう、セットアップスクリプトは既存の `~/.agent-skills` と `~/.claude/skills` を削除せずバックアップします。
+- ローカルだけにある未管理スキルを失わないよう、リンクを作る前に既存の `~/.agent-skills` と `~/.claude/skills` を削除せず退避します。
 - プラグイン由来やシステム由来のスキルは、このリポジトリでは管理しません。

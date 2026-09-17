@@ -1,5 +1,5 @@
 ---
-name: git-design
+name: product-design
 description: 会社での製品設計に関する参照先と変更先を定めるユーザー共通ルール。
 ---
 
