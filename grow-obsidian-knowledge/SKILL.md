@@ -12,10 +12,28 @@ description: 依頼内容にかかわらず、コード調査・修正・レビ�
 - vault の正本は GitHub の `taiseiishiyama00/obsidian-knowledge`、ローカルは通常 `$HOME/repos/obsidian-knowledge`。
 - vault の構成、ノートの記法、書かないものは vault の `README.md` を正本とし、このスキルでは複製しない。
 
+## ノートの読み書き
+
+ノートの読み書きは、すべて MCP サーバー `obsidian`（MCPVault、`@bitbonsai/mcpvault`）のツール経由で行う。ファイル読み取り・全文検索・ファイル編集のツールやシェルでノートを直接読み書きしない。Git は同期（pull / commit / push）にだけ使う。
+
+| 目的 | ツール |
+|---|---|
+| 関連ノートを探す | `search_notes`（`limit` を絞り、抜粋だけ見る）、`list_all_tags`、`list_directory` |
+| 本文を読む前に概要を見る | `get_frontmatter`、`get_note_outline`、`get_notes_info` |
+| 必要な部分だけ読む | `read_note_lines`、`read_note`、`read_multiple_notes` |
+| 追記・修正する | `patch_note`（部分置換）、`write_note`（新規作成、`append`） |
+| frontmatter・タグを更新する | `update_frontmatter`（`merge: true`）、`manage_tags` |
+| リンク先を解決する | `wiki_link` |
+| 名前変更・削除 | `move_note`、`delete_note`（`trashMode: none`。Git 履歴から復元できる） |
+
+- 読み込みは「検索 → frontmatter・アウトライン → 必要な行だけ本文」の順に絞り、関係のないノートの本文を読まない。
+- `move_note` はリンクを書き換えない。名前を変えたら `search_notes` で `[[旧名]]` を探し、`patch_note` で書き換える。
+- `obsidian` のツールが使えない場合は、直接編集に切り替えず、ユーザーに MCP の接続状態を確認するよう伝えて vault の作業を止める。起動コマンドは `npx -y @bitbonsai/mcpvault@<version> <vault のローカルパス>`。
+
 ## 1. 作業開始時に参照する
 
 1. vault の `main` を `git pull --ff-only` で最新化する。ローカルにない場合は clone する。
-2. 作業対象のリポジトリ名、技術、キーワードで `notes/` と `inbox/` を検索し、関連ノートがあれば読んでから作業する。
+2. 作業対象のリポジトリ名、技術、キーワードで関連ノートを検索し、関連ノートがあれば必要な部分を読んでから作業する。
 3. ノートの内容が現在のコードや設定と矛盾する場合は、現物を正とし、後述の手順でノートを修正する。
 
 ## 2. 残す知識を選ぶ
@@ -57,7 +75,7 @@ description: 依頼内容にかかわらず、コード調査・修正・レビ�
 
 定期実行（1 日 1 回程度）またはユーザーが「棚卸して」と依頼したときに、vault 全体を精査して不要な情報を削除する。削除した内容は Git 履歴から復元できるため、残す理由のない情報は削除してよい。
 
-1. vault の `main` を最新化し、`notes/` と `inbox/` の全ノートを読む。
+1. vault の `main` を最新化し、`get_vault_stats`、`list_all_tags`、各ノートの `get_frontmatter` と `get_note_outline` で全体を把握する。重複や矛盾の疑いがあるノートだけ本文を読む。
 2. 次の観点で精査し、修正または削除する。
    - 重複: 同じトピックのノート、または同じ事実を複数ノートに書いているもの。1 つのノートへ統合し、他方は削除してリンクを付け替える。
    - 古い情報: `sources` の現物（リポジトリ、ドキュメント）を参照できる場合は内容を照合し、矛盾する記述を修正または削除する。参照できない場合は、更新日が古いことだけを理由に削除しない。
