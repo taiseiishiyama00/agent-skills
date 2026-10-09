@@ -10,7 +10,7 @@
 |---|---|
 | `azure-devops-work-item-entry` | Azure DevOps の Bug / Product Backlog Item を画面の表示項目に合わせて作成・更新する。 |
 | `csharp-coding-rules` | C# / .NET 実装で DI、1 ファイル 1 型、コメントに頼らない可読性を守るためのコーディングルール。 |
-| `grow-obsidian-knowledge` | 作業中に得た再利用可能な知識を Obsidian vault（`obsidian-knowledge`）へ追記・統合して育てる。 |
+| `grow-obsidian-knowledge` | 作業中に得た再利用可能な知識を Obsidian vault（`obsidian-knowledge`）へ追記・統合して育て、手順として固まった知識はスキルへ昇格する。 |
 | `plan-mode-preflight` | Plan Modeの前にリードオンリーで事前調査し、根拠付きの修正方針と実装To Doを整理する。 |
 | `tobe-asis-gap-writing` | 説明文を TOBE / ASIS / GAP / 対応方針 の構造で整理して書く。 |
 | `update-agent-skills` | グローバルとプロジェクトのスキルを同期して更新し、必要なPR作成まで行う。 |
