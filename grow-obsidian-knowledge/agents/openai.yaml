@@ -1,4 +1,4 @@
 interface:
   display_name: "Grow Obsidian Knowledge"
-  short_description: "Grow reusable work knowledge in the Obsidian vault and promote it to skills"
-  default_prompt: "Use $grow-obsidian-knowledge to record reusable knowledge from this work into the Obsidian vault and promote mature procedures to Agent Skills."
+  short_description: "Capture and grow reusable work context in the Obsidian vault"
+  default_prompt: "Use $grow-obsidian-knowledge to record reusable knowledge from this work into the Obsidian vault."
