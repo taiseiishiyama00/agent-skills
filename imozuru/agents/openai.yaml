@@ -1,0 +1,4 @@
+interface:
+  display_name: "Imozuru"
+  short_description: "知らない分野を、原文にたどりつくまで芋づる式に掘る。"
+  default_prompt: "$imozuru を使って、この分野の用語・人・場を特定し、原文を芋づる式に集めてください。"
