@@ -1,0 +1,4 @@
+interface:
+  display_name: "yomiyasu"
+  short_description: "AIが生成した日本語を、意味と条件を保ったまま自然な日本語へ推敲する。"
+  default_prompt: "$yomiyasu を使って、この文章を推敲してください。"

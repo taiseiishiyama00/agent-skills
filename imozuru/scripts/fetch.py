@@ -32,6 +32,11 @@ from pathlib import Path
 # （大陸塗りの試しで 2,904 字の本物の記事が 3,000 の下限で落ちた）。
 MIN_TEXT_CHARS = 3000
 MIN_HTML_CHARS = 1000
+# 和文（日本語・中国語）の PDF は、英語より少ない字数で中身がある。
+# 本文の空白以外の字のうち和文の字がこの割合を超える PDF は、HTML と同じ下限で判定する。
+CJK_RATIO_FOR_PDF = 0.3
+# 和文の字＝かな・漢字・全角の英数字と記号
+_CJK = re.compile(r"[\u3000-\u30ff\u3400-\u9fff\uf900-\ufaff\uff00-\uffef]")
 MAX_BYTES = 40_000_000
 # 本文ではなく壁に当たったと分かる言い回し。小文字で照合する。
 WALL_PATTERNS = (
@@ -64,9 +69,22 @@ class _Redirect308(urllib.request.HTTPRedirectHandler):
 _OPENER = urllib.request.build_opener(_Redirect308)
 
 
+def ascii_url(url: str) -> str:
+    """パスとクエリにそのまま入った日本語の字などを % で符号化する。
+
+    urllib は要求の行を ASCII で組むので、辞書の項目名や自治体のファイル名を符号化せずに
+    書いたリンクは UnicodeEncodeError で止まる（和竿の漆塗りの試しで 36 本中 2 本）。
+    safe に % を入れるので、符号化済みの URL は変わらない。国際化ドメイン名は扱わない。
+    """
+    p = urllib.parse.urlsplit(url)
+    path = urllib.parse.quote(p.path, safe="/%:@!$&'()*+,;=~")
+    query = urllib.parse.quote(p.query, safe="=&%/:+?@!$'()*,;~")
+    return urllib.parse.urlunsplit((p.scheme, p.netloc, path, query, p.fragment))
+
+
 def download(url: str) -> tuple[bytes, str]:
     """URL を取りに行き、本体と Content-Type を返す。"""
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 imozuru"})
+    req = urllib.request.Request(ascii_url(url), headers={"User-Agent": "Mozilla/5.0 imozuru"})
     with _OPENER.open(req, timeout=90) as res:
         return res.read(MAX_BYTES), res.headers.get("Content-Type", "")
 
@@ -107,6 +125,12 @@ def decode_text(body: bytes, ctype: str = "") -> str:
         except UnicodeDecodeError:
             continue
     return min((body.decode(c, errors="replace") for c in candidates), key=lambda t: t.count("�"))
+
+
+def mostly_cjk(text: str) -> bool:
+    """本文の空白以外の字のうち、和文の字の割合が CJK_RATIO_FOR_PDF を超えるか。"""
+    chars = re.sub(r"\s", "", text)
+    return bool(chars) and len(_CJK.findall(chars)) / len(chars) > CJK_RATIO_FOR_PDF
 
 
 def missing(*commands: str) -> list[str]:
@@ -245,7 +269,8 @@ def html_to_md(url: str, out: Path, body: bytes | None = None, ctype: str = "") 
     ctype は body の Content-Type。文字コードの名乗りを読むのに使う。
     """
     if HAS_AX:
-        res = subprocess.run(["ax", url, "--md", "--all"], capture_output=True,
+        # URL は「--」の後ろに置く。「-」で始まる文字列をオプションとして読ませない
+        res = subprocess.run(["ax", "--md", "--all", "--", url], capture_output=True,
                              encoding="utf-8", errors="replace")
         text = res.stdout
     else:
@@ -270,7 +295,7 @@ def ax_save(url: str, out: Path) -> bool:
     ax が無いときは urllib で取り直す。
     """
     if HAS_AX:
-        subprocess.run(["ax", url, "-o", str(out)], capture_output=True)
+        subprocess.run(["ax", "-o", str(out), "--", url], capture_output=True)
     else:
         try:
             out.write_bytes(download(url)[0])
@@ -288,27 +313,37 @@ MIN_TRANSCRIPT_CHARS = 300
 def youtube_to_md(url: str, out: Path) -> str:
     """yt-dlp で字幕だけ落とし（動画は落とさない）、時刻つきの本文にする。
 
-    手動の字幕を優先し、無ければ自動字幕。日本語→英語の順。自動字幕は同じ文が
+    手動の字幕を優先し（日本語→英語の順）、無ければ動画の元の言語の自動字幕。自動字幕は同じ文が
     次の区間にも繰り返し出るので、直前と同じ文は捨てる。
 
     自動字幕は誤変換が多い（大陸塗りの試しで「線画」が「洗画」）。どちらを使ったかを
     見出しに残し、読み手が引用を動画で確かめるべきか分かるようにする。手動と自動は
     同じファイル名で出てくるので、まず手動だけで取り、無いときだけ自動で取り直す。
     題名の出力は --encoding で UTF-8 に決める。Windows でパイプに出すと、決めない限り cp932 になる。
+
+    自動字幕は、動画の元の言語のもの（en-orig など）だけを取る。ja,en を指定すると、
+    英語の動画では ja が機械翻訳の字幕になり、YouTube はそれに 429 Too Many Requests を返す。
+    yt-dlp はそこで止まり、英語の字幕も残さない（テスラの自動運転の試しで YouTube が3本とも
+    落ちた・2026-10-19）。ja-orig,en-orig の指定でも足りない。AI の吹き替えが付いた動画では
+    吹き替えの音声にも ja-orig が付き、中身は翻訳になる（CVPR の講演 jPCV4GKX9Dw）。そこで手動の回で
+    動画の言語（元の音声の言語）も出させ、自動の回ではその言語の -orig だけを指定する。
     """
     tmp = out.parent / f".{out.stem}-subs"
     tmp.mkdir(exist_ok=True)
-    kind = "手動"
+    kind, langs = "手動", "ja,en"
     for flag in ("--write-subs", "--write-auto-subs"):
         meta = subprocess.run(
             ["yt-dlp", "--no-update", "--skip-download", flag, "--encoding", "utf-8",
-             "--sub-langs", "ja,en", "--sub-format", "vtt", "--no-simulate",
-             "--print", "%(title)s\t%(uploader)s\t%(upload_date)s",
-             "-o", str(tmp / "v.%(ext)s"), url],
+             "--sub-langs", langs, "--sub-format", "vtt", "--no-simulate",
+             "--print", "%(title)s\t%(uploader)s\t%(upload_date)s\t%(language|)s",
+             "-o", str(tmp / "v.%(ext)s"), "--", url],
             capture_output=True, encoding="utf-8", errors="replace")
         if any(tmp.glob("*.vtt")):
             break
         kind = "自動（誤変換あり・引用は動画で確かめる）"
+        # 言語は en-US のように地域つきで来るが、字幕は en-orig。分からなければ日本語か英語の元の字幕
+        spoken = meta.stdout.rstrip("\n").split("\t")[-1].split("-")[0]
+        langs = f"{spoken}-orig" if spoken else "ja-orig,en-orig"
     vtts = sorted(tmp.glob("*.vtt"), key=lambda p: (".ja" not in p.name, p.name))
     lines, last = [], ""
     if vtts:
@@ -330,7 +365,7 @@ def youtube_to_md(url: str, out: Path) -> str:
     tmp.rmdir()
     head = meta.stdout.strip().split("\t")
     title = head[0] if head and head[0] else url
-    info = " / ".join(head[1:]) if len(head) > 1 else ""
+    info = " / ".join(head[1:3]) if len(head) > 1 else ""
     body = "\n".join(lines)
     out.write_text(f"# {title}\n\n{url}\n{info}\n字幕: {kind + ' ' + vtts[0].name if vtts else 'なし'}\n\n{body}\n",
                    encoding="utf-8")
@@ -354,8 +389,25 @@ def save_verified(saved: Path, kept: Path, destination: Path) -> Path:
     return target
 
 
+def valid_source_name(name: str) -> bool:
+    """保存する原文の名前は、パスではなく単一のファイル名に限る。"""
+    device = name.split(".", 1)[0].rstrip(" ").upper()
+    return (bool(name.strip(" .")) and name == name.rstrip(" .")
+            and not any(c in name for c in "/\\:")
+            and not any(ord(c) < 32 or 127 <= ord(c) <= 159 for c in name)
+            and device not in {"CON", "PRN", "AUX", "NUL", "CONIN$", "CONOUT$"}
+            and not re.fullmatch(r"(?:COM|LPT)[1-9¹²³]", device))
+
+
 def fetch_source(sources: Path, name: str, url: str, destination: Path) -> int:
     """sources は今回の取得専用の一時置き場。取得・変換・検査中は保存済みの原文に触れない。"""
+    if not valid_source_name(name):
+        print(f"FAIL\t{name!r}\t原文の名前は単一のファイル名にする")
+        return 1
+    # file:// や ftp:// を渡すと urllib が手元のファイルまで読み、sources/ に写してしまう
+    if urllib.parse.urlsplit(url).scheme.lower() not in {"http", "https"}:
+        print(f"FAIL\t{name}\thttp(s) の URL だけを取りに行く")
+        return 1
 
     if X_POST.match(url):
         print(f"FAIL\t{name}\tX はログインの壁で本文が取れない（URL を map.md に残す）")
@@ -431,7 +483,8 @@ def fetch_source(sources: Path, name: str, url: str, destination: Path) -> int:
         kept = saved = sources / f"{name}.md"
         text = html_to_md(f"https://arxiv.org/html/{arxiv_id.group(1)}", kept)
 
-    floor = MIN_TEXT_CHARS if saved.suffix == ".pdf" else MIN_HTML_CHARS
+    # PDF は英語の論文を基準に高い下限。和文の PDF だけは HTML と同じ下限にする
+    floor = MIN_TEXT_CHARS if saved.suffix == ".pdf" and not mostly_cjk(text) else MIN_HTML_CHARS
     head = text[:4000].lower()
     wall = next((p for p in WALL_PATTERNS if p in head), None)
     if len(text) < floor or (wall and len(text) < MIN_TEXT_CHARS * 4):
@@ -455,6 +508,9 @@ def main() -> int:
         print(__doc__, file=sys.stderr)
         return 2
     sources, name, url = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+    if not valid_source_name(name):
+        print(f"FAIL\t{name!r}\t原文の名前は単一のファイル名にする")
+        return 1
     sources.mkdir(parents=True, exist_ok=True)
     # 変換や FAIL の後始末は一時置き場だけで行う。同名の原文を検査前に上書きしない。
     # 保存先の中に作るので、成功時の replace はファイルシステムをまたがない。
