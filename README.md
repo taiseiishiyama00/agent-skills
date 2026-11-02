@@ -10,6 +10,7 @@
 |---|---|
 | `grow-obsidian-knowledge` | 作業中に得た再利用可能な知識を Obsidian vault（`obsidian-knowledge`）へ追記・統合して育てる。 |
 | `imozuru` | 知らない分野を、原文にたどりつくまで芋づる式に掘る。[MaryCache/imozuru](https://github.com/MaryCache/imozuru)（MIT、v2.1.0、`659f46c`）の `skills/imozuru/` を取り込んだもの。 |
+| `pr-review` | PR をユーザーストーリー、設計、コードの順に、利用者と対話しながらレビューする。 |
 | `yomiyasu` | AI が生成した日本語を、意味と条件を保ったまま自然な日本語へ推敲する。[nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT、v2.4.0、`41e5aec`）の `skills/yomiyasu/` を取り込んだもの。 |
 | `youtube-video-production` | 設定済みの複数YouTubeチャンネルで、横動画・Shorts制作、レビュー、投稿を安全に進める。 |
 

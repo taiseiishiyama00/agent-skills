@@ -1,0 +1,4 @@
+interface:
+  display_name: "PRレビュー"
+  short_description: "PRをユーザーストーリー、設計、コードの順に対話的にレビュー"
+  default_prompt: "$pr-review を使って、このPRをレビューしてください。"
