@@ -75,6 +75,7 @@ PR を「何が変わったか」「どう作られたか」「コードに問�
 
 - Mermaid の `sequenceDiagram` で書き、クラスを 1 レーンにする。左端は起点となるユーザーや呼び出し元にする。クラスのないコードでは、モジュールやコンポーネントをレーンにする。
 - 変更後の流れを描き、PR で変更した部分を `rect` で囲む。
+- 呼び出しの矢印には、やることとメソッド名を `<br/>` で改行して書く。処理の意味と実際のコードの両方を図から追えるようにするためである。戻りの矢印には返す内容を書く。
 - 図の下に、このストーリーでの各クラスの責務の変化と、設計上の懸念（責務の置き場所、依存の向き、既存の仕組みとの二重化）を短く書く。コードの書き方の指摘はフェーズ 3 に回す。
 - ユーザー体験が変わらない変更は、設計に影響があるときだけ最後に加える。
 
@@ -86,10 +87,10 @@ sequenceDiagram
     participant C as OrderController
     participant S as OrderService
     participant R as StockRepository
-    User->>C: 注文を確定
-    C->>S: Confirm(order)
+    User->>C: 注文を確定する<br/>PostOrder(request)
+    C->>S: 注文の確定を依頼する<br/>Confirm(order)
     rect rgba(255, 200, 0, 0.2)
-        S->>R: FindStock(itemId)
+        S->>R: 在庫数を取得する<br/>FindStock(itemId)
         R-->>S: 在庫数
         S-->>C: 在庫切れエラー
     end
