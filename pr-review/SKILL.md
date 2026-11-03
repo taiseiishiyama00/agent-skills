@@ -165,24 +165,22 @@ sequenceDiagram
 
 ### 3. PR にコメントする
 
-push 後の最新コミットに対してコメントする。修正で行番号がずれるため、指摘の位置は最新コミットで取り直す。全件を 1 回で投稿し、通知を 1 件にまとめる。
+開発者へのコメントを 1 件ずつ、該当するファイルの行へ投稿する。全体へのコメントは投稿しない。開発者が直す場所をすぐ開けるようにするためである。
 
-- GitHub: `gh api repos/{owner}/{repo}/pulls/<番号>/reviews --input -` に次の JSON を渡す。
+- 修正で行番号がずれるため、位置は push 後の最新コミットで取り直す。
+- 問題の箇所が PR の差分の外にあるときや、設計への指摘で特定の行がないときは、差分の中で最も関係する行に付ける。
+- 本文は平易な日本語で、何が問題でどう直すかを 1〜2 文で書く。Markdown の見出し、箇条書き、装飾、コードブロックは使わず、プレーンテキストにする。
 
-  ```json
-  {
-    "commit_id": "<最新コミットの SHA>",
-    "event": "COMMENT",
-    "body": "<全体のコメントと、こちらで修正した内容のコミットごとの要約>",
-    "comments": [
-      {"path": "path/to/file", "line": 42, "side": "RIGHT", "body": "<コメント本文>"}
-    ]
-  }
-  ```
+例:
 
-- Azure DevOps: `az devops invoke --area git --resource pullRequestThreads --http-method POST` でスレッドを作る。行へのコメントは `threadContext` の `filePath`、`rightFileStart`、`rightFileEnd` で位置を指定する。全体のコメントと修正の要約は `threadContext` のないスレッドにする。
+```text
+在庫が 0 のときも注文が確定します。確定の前に在庫を確認してください。
+```
 
-設計への指摘のように特定の行に紐づかない内容や、PR の差分に含まれない行への指摘は、全体のコメントに書く。
+投稿のコマンドは次のとおり。
+
+- GitHub: `gh api repos/{owner}/{repo}/pulls/<番号>/comments -f commit_id=<最新コミットの SHA> -f path=<パス> -F line=<行番号> -f side=RIGHT -f body=<本文>`
+- Azure DevOps: `az devops invoke --area git --resource pullRequestThreads --http-method POST` でスレッドを作り、`threadContext` の `filePath`、`rightFileStart`、`rightFileEnd` で位置を指定する。
 
 ## 終了
 
