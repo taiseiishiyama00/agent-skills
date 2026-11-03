@@ -1,0 +1,7 @@
+interface:
+  display_name: "ワークフロー共通ルール"
+  short_description: "ワークフロー系スキルが共通で使う止まり方と書式"
+  default_prompt: "$workflow-base の共通ルールを読み込んでください。"
+
+policy:
+  allow_implicit_invocation: false
