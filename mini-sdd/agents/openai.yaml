@@ -1,4 +1,4 @@
 interface:
   display_name: "ミニSDD"
-  short_description: "ユーザーストーリーごとに設計、テスト設計、TDDを繰り返し、PR作成まで対話的に実装"
+  short_description: "ユーザーストーリーごとに設計とTDDを繰り返し、PR作成まで対話的に実装"
   default_prompt: "$mini-sdd を使って、この機能を実装してください。"
