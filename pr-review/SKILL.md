@@ -74,6 +74,7 @@ PR を「何が変わったか」「どう作られたか」「コードに問�
 フェーズ 1 の順に、ユーザーストーリーごとの処理の流れを、クラスごとのスイムレーンにする。
 
 - Mermaid の `sequenceDiagram` で書き、クラスを 1 レーンにする。左端は起点となるユーザーや呼び出し元にする。クラスのないコードでは、モジュールやコンポーネントをレーンにする。
+- 流れが複数のプロジェクト（csproj など）にまたがるときは、プロジェクトごとのレーンを `box` で囲み、名前を `<サービス名><br/><プロジェクト名>` にする。`box` は入れ子にできないため、同じサービスの `box` は色をそろえて隣に並べ、サービスの境界を色で示す。矢印が色の境界を越える箇所で、サービス間の呼び出しが見えるようにするためである。起点のユーザーは囲まない。
 - 変更後の流れを描き、PR で変更した部分を `rect` で囲む。
 - 呼び出しの矢印には、やることとメソッド名を `<br/>` で改行して書く。処理の意味と実際のコードの両方を図から追えるようにするためである。戻りの矢印には返す内容を書く。
 - 図の下に、このストーリーでの各クラスの責務の変化と、設計上の懸念（責務の置き場所、依存の向き、既存の仕組みとの二重化）を短く書く。コードの書き方の指摘はフェーズ 3 に回す。
@@ -84,14 +85,25 @@ PR を「何が変わったか」「どう作られたか」「コードに問�
 ```mermaid
 sequenceDiagram
     actor User as 利用者
-    participant C as OrderController
-    participant S as OrderService
-    participant R as StockRepository
+    box rgba(70, 130, 255, 0.15) 注文サービス<br/>Order.Api
+        participant C as OrderController
+    end
+    box rgba(70, 130, 255, 0.15) 注文サービス<br/>Order.Application
+        participant S as OrderService
+    end
+    box rgba(70, 180, 90, 0.15) 在庫サービス<br/>Stock.Api
+        participant T as StockController
+    end
+    box rgba(70, 180, 90, 0.15) 在庫サービス<br/>Stock.Infrastructure
+        participant R as StockRepository
+    end
     User->>C: 注文を確定する<br/>PostOrder(request)
     C->>S: 注文の確定を依頼する<br/>Confirm(order)
     rect rgba(255, 200, 0, 0.2)
-        S->>R: 在庫数を取得する<br/>FindStock(itemId)
-        R-->>S: 在庫数
+        S->>T: 在庫数を問い合わせる<br/>GET /stocks/{itemId}
+        T->>R: 在庫数を取得する<br/>FindStock(itemId)
+        R-->>T: 在庫数
+        T-->>S: 在庫数
         S-->>C: 在庫切れエラー
     end
     C-->>User: 在庫切れを表示
