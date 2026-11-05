@@ -14,14 +14,10 @@
 | `pr-review` | PR をユーザーストーリー、設計、コードの順に、利用者と対話しながらレビューし、修正のコミットと PR コメントまで行う。 |
 | `workflow-base` | ワークフロー系スキル（`mini-sdd`、`pr-review`）が共通で使う止まり方と書式。単独では使わない。 |
 | `yomiyasu` | AI が生成した日本語を、意味と条件を保ったまま自然な日本語へ推敲する。[nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT、v2.4.0、`41e5aec`）の `skills/yomiyasu/` を取り込んだもの。 |
-| `youtube-video-production` | 設定済みの複数YouTubeチャンネルで、横動画・Shorts制作、レビュー、投稿を安全に進める。 |
 
 ## 共通手順と対象固有値の境界
 
 スキルには複数の対象で再利用する判断・手順・安全条件だけを書き、チャンネル名、作品名、環境固有パス、設定値などの具体は対象repoの設定へ置きます。同じ情報をスキルとrepoへ重複させません。具体を共通へ昇格するのは、2つ目の利用先でも責務と条件が一致すると確認できた場合だけです。
-
-`youtube-video-production` は全チャンネル共通の制作手順を所有し、チャンネル具体は `youtube-video-pipeline/config/channels/<channel-id>.json`、作品具体は `youtube-production/channels/<channel-id>/projects` を正本とします。
-
 ## 使い方
 
 ### 方法 1: `~/.agent-skills` として直接 clone する
