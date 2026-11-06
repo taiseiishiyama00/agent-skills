@@ -1,0 +1,4 @@
+interface:
+  display_name: "スキル作成"
+  short_description: "スキルを骨格と育てていく部分に分けて作成、修正"
+  default_prompt: "$skill-authoring を使って、この内容をスキルにしてください。"

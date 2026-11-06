@@ -10,8 +10,9 @@
 |---|---|
 | `grow-obsidian-knowledge` | 作業中に得た再利用可能な知識を Obsidian vault（`obsidian-knowledge`）へ追記・統合して育てる。 |
 | `imozuru` | 知らない分野を、原文にたどりつくまで芋づる式に掘る。[MaryCache/imozuru](https://github.com/MaryCache/imozuru)（MIT、v2.1.0、`659f46c`）の `skills/imozuru/` を取り込んだもの。 |
-| `mini-sdd` | ユーザーストーリーを固め、ストーリーごとに設計と TDD を繰り返して PR 作成まで、利用者と対話しながら実装する。 |
+| `mini-sdd` | 利用者が出したユーザーストーリーと機能要件を観点表で十分か判定し、ストーリーごとに設計と TDD を繰り返して PR 作成まで、利用者と対話しながら実装する。 |
 | `pr-review` | PR をユーザーストーリー、設計、コードの順に、利用者と対話しながらレビューし、修正のコミットと PR コメントまで行う。 |
+| `skill-authoring` | スキルを長く変わらない骨格と使いながら育てていく部分に分け、育てていく部分を別ファイルにして作成、修正する。 |
 | `workflow-base` | ワークフロー系スキル（`mini-sdd`、`pr-review`）が共通で使う止まり方と書式。単独では使わない。 |
 | `yomiyasu` | AI が生成した日本語を、意味と条件を保ったまま自然な日本語へ推敲する。[nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT、v2.4.0、`41e5aec`）の `skills/yomiyasu/` を取り込んだもの。 |
 
@@ -74,37 +75,7 @@ ln -s ~/repos/agent-skills ~/.claude/skills
 
 ## スキルの追加・更新
 
-スキルは次の構成にします。
-
-```text
-<skill-name>/
-  SKILL.md
-  agents/
-    openai.yaml
-```
-
-`SKILL.md` の先頭には YAML frontmatter を置きます。
-
-```markdown
----
-name: example-skill
-description: このスキルをいつ使うか、何をするかを簡潔に書く。
----
-
-# Example Skill
-
-## 目的
-
-...
-```
-
-基本ルール:
-
-- `name` はディレクトリ名と同じ lowercase hyphen-case にする。
-- `description` には、何をするスキルかだけでなく、どんな依頼で発火してほしいかを書く。
-- 本文は、Codex や Claude Code が読んで作業できる手順にする。
-- `agents/openai.yaml` には、UI 表示用の `display_name`、`short_description`、`default_prompt` を置く。
-- README や補助資料をスキルディレクトリ内に増やしすぎず、必要最小限にする。
+スキルの構成と書き方は、`skill-authoring` スキルに従います。
 
 ## 更新の流れ
 
