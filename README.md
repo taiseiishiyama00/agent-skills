@@ -8,12 +8,13 @@
 
 | スキル | 概要 |
 |---|---|
+| `doc-creation` | フォーマット決定、フレームワークに沿った材料収集と構成案作成、1 枚（1 章）ずつの作成とレビューまで、利用者と対話しながら資料を作成する。 |
 | `grow-obsidian-knowledge` | 作業中に得た再利用可能な知識を Obsidian vault（`obsidian-knowledge`）へ追記・統合して育てる。 |
 | `imozuru` | 知らない分野を、原文にたどりつくまで芋づる式に掘る。[MaryCache/imozuru](https://github.com/MaryCache/imozuru)（MIT、v2.1.0、`659f46c`）の `skills/imozuru/` を取り込んだもの。 |
 | `mini-sdd` | 利用者が出したユーザーストーリーと機能要件を観点表で十分か判定し、ストーリーごとに設計と TDD を繰り返して PR 作成まで、利用者と対話しながら実装する。 |
 | `pr-review` | PR をユーザーストーリー、設計、コードの順に、利用者と対話しながらレビューし、修正のコミットと PR コメントまで行う。 |
 | `skill-authoring` | スキルを長く変わらない骨格と使いながら育てていく部分に分け、育てていく部分を別ファイルにして作成、修正する。 |
-| `workflow-base` | ワークフロー系スキル（`mini-sdd`、`pr-review`）が共通で使う止まり方と書式。単独では使わない。 |
+| `workflow-base` | ワークフロー系スキル（`mini-sdd`、`pr-review`、`doc-creation`）が共通で使う止まり方と書式。単独では使わない。 |
 | `yomiyasu` | AI が生成した日本語を、意味と条件を保ったまま自然な日本語へ推敲する。[nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT、v2.4.0、`41e5aec`）の `skills/yomiyasu/` を取り込んだもの。 |
 
 ## 共通手順と対象固有値の境界

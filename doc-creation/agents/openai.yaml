@@ -1,0 +1,4 @@
+interface:
+  display_name: "資料作成"
+  short_description: "フォーマット決定から材料収集、構成案、1枚ずつの作成とレビューまで対話的に進行"
+  default_prompt: "$doc-creation を使って、資料を作成してください。"
