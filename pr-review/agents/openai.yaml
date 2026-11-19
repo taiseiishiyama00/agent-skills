@@ -1,4 +1,4 @@
 interface:
   display_name: "PRレビュー"
-  short_description: "PRをユーザーストーリー、設計、コードの順に対話的にレビュー"
+  short_description: "設計インプットを基準にズレ・逸脱・抜け・無駄・不揃い・致命的バグを評価しアクションまで行う"
   default_prompt: "$pr-review を使って、このPRをレビューしてください。"
