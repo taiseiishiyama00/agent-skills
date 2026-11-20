@@ -1,0 +1,7 @@
+interface:
+  display_name: "共通コーディングルール"
+  short_description: "実装・レビュースキルが共通で参照する禁止事項"
+  default_prompt: "$coding-rules の禁止事項を読み込んでください。"
+
+policy:
+  allow_implicit_invocation: false

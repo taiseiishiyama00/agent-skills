@@ -12,7 +12,7 @@
 - 仕様書やチケットの対応方針から外れた独自機能・独自バリデーションがねじ込まれていないか。
 - 今回の要件に不要な責務追加や公開 API 変更（`PublicAPI.Unshipped.txt` 等）が発生していないか。
 - 機能・プラグインの配置先（必須基盤パッケージ vs 拡張・汎用パッケージ等）が責務と合っているか。
-- 共通コーディングルール（[../../workflow-base/references/coding-rules.md](../../workflow-base/references/coding-rules.md)）に違反していないか。
+- 共通コーディングルール（[../../coding-rules/references/prohibitions.md](../../coding-rules/references/prohibitions.md)）に違反していないか。
 
 ## 2. 抜け漏れ
 

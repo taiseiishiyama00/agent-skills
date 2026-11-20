@@ -127,7 +127,7 @@ description: 機能の追加や変更を実装するときに使用する。作�
 ### クラス設計
 
 1. workflow-base のスイムレーンで処理の流れを描く。今回の変更部分は、このストーリーで変更する部分とする。
-2. 共通コーディングルール（[../workflow-base/references/coding-rules.md](../workflow-base/references/coding-rules.md)）に従う。
+2. 共通コーディングルール（[../coding-rules/references/prohibitions.md](../coding-rules/references/prohibitions.md)）に従う。
 3. 図の下に、新規または変更するクラスを次の形式で並べる。既存の似たコードの構成と命名に合わせる。
 
 ```markdown
