@@ -76,7 +76,7 @@ SDD の仕様書、関連チケットの対応方針、PR の説明から「要�
 
 ## フェーズ 3: 設計優先の評価
 
-フェーズ 1 の想定設計と、評価観点表（[references/review-criteria.md](references/review-criteria.md)）を基準に実装を評価する。
+フェーズ 1 の想定設計、共通コーディングルール（[../workflow-base/references/coding-rules.md](../workflow-base/references/coding-rules.md)）、および評価観点表（[references/review-criteria.md](references/review-criteria.md)）を基準に実装を評価する。
 
 - 設計の整合性を最優先し、細かいバグや好みの指摘は省く。バグは致命的なもの（ビルド不能、実行時例外、データ破損など）だけを拾う。
 - 差分の外（既存の類似実装、enum 分岐、ジェネレーター、ファクトリ、登録箇所、呼び出し元、テスト）も必ず読み、コードで裏付けが取れたものだけを指摘する。
